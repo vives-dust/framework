@@ -1,0 +1,9 @@
+version: 3.0
+services:
+  redis:
+    image: 'redis'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  ingest:
+    build:
+      context: ./ingest
