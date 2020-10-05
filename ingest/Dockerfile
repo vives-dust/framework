@@ -11,5 +11,5 @@ FROM node:12-alpine
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --only=production
-COPY --from=builder ./dist ./dist
+COPY --from=builder /usr/src/app/dist ./dist
 CMD [ "node", "dist/app.js" ]

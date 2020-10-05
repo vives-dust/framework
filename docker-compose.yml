@@ -1,4 +1,4 @@
-version: 3.0
+version: '3.0'
 services:
   redis:
     image: 'redis'
@@ -7,3 +7,4 @@ services:
   ingest:
     build:
       context: ./ingest
+    env_file: ./ingest/.env

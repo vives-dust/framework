@@ -1,16 +1,23 @@
-console.log("Hello world")
+import Redis from './RedisClient'
+import Mqtt from './MqttClient'
 
-import { Tedis } from 'tedis'
+const mqtt = new Mqtt( {
+    host: process.env.MQTT_HOST,
+    port: process.env.MQTT_PORT ? parseInt(<string>process.env.MQTT_PORT) : undefined,
+    protocol: process.env.MQTT_PROTOCOL,
+    topic: process.env.MQTT_TOPIC,
+    username: process.env.MQTT_USERNAME,
+    password: process.env.MQTT_PASSWORD
+})
+const redis = new Redis({
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT ? parseInt(<string>process.env.REDIS_PORT) : undefined,
+    key: process.env.REDIS_KEY
+})
 
-const host: string = process.env.REDIS_HOST || '127.0.0.1'
-const port: number = parseInt(<string>process.env.REDIS_PORT, 10) || 6379
+console.log('Ingest ready...')
 
-const tedis = new Tedis({ port, host });
-
-(async () => {
-    console.log("*** CONSUMER ***")
-    while (true) {
-        const message  = await tedis.blpop(0, 'temp-sensor-iot-app')
-        console.log(message[1])
-    }
-})()
+mqtt.on('message', (message, topic) => {
+    redis.push(message)
+    console.log('message:', message)
+})
