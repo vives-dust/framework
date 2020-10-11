@@ -28,7 +28,7 @@ services:
     depends_on: 
       - influxdb
     ports:
-      - 3000:3000
+      - 3000
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -43,9 +43,17 @@ services:
       traefik.enable: true
       traefik.http.routers.aera_grafana.rule: Host(`${GRAFANA_URL}`)
       traefik.http.services.aera_grafana.loadbalancer.server.port: 3000
-      traefik.port: 3000
+      # traefik.port: 3000
       traefik.docker.network: reverse_proxy
+    networks:
+      - default
+     - reverse_proxy
 
 volumes:
   influxdb-data:
   redis-data:
+
+networks:
+  reverse_proxy:
+    external:
+      name: reverse_proxy
