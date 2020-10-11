@@ -8,3 +8,23 @@ services:
     build:
       context: ./ingest
     env_file: ./ingest/.env
+  process:
+    build:
+      context: ./process
+    env_file: ./process/.env
+  influxdb:
+    image: 'influxdb'
+  grafana:
+    image: 'grafana/grafana'
+    ports:
+      - 3000:3000
+    environment:
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_BASIC_ENABLED=false
+      - GF_ENABLE_GZIP=true
+      - GF_INSTALL_PLUGINS=redis-datasource
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/config.ini:/etc/grafana/config.ini
