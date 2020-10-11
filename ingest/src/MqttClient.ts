@@ -40,8 +40,12 @@ export default class MqttClient extends EventEmitter{
         this.emit('message', message.toString(), topic)
     }
 
-    public close() {
+    public close() :Promise<void>{
         this.client.unsubscribe(this.topic)
-        this.client.end()
+        return new Promise( (resolve) => {
+            this.client.end( false, {},  () => {
+                resolve()
+            })
+        })
     }
 }

@@ -15,6 +15,8 @@ const redis = new Redis({
     key: process.env.REDIS_KEY
 })
 
+let stop = false;
+
 console.log('Ingest ready...')
 
 mqtt.on('message', (message, topic) => {
@@ -25,5 +27,11 @@ mqtt.on('message', (message, topic) => {
 process.on('SIGTERM', () => {
     console.info('SIGTERM signal received.');
     console.log('Closing MQTT connection.');
-    mqtt.close();
+    mqtt.close()
+    .then( () => { 
+        console.log('MQTT connection closed.')
+        console.log('Closing Redis connection.')
+        redis.close() 
+        console.log('Redis connection closed.')
+    })
 });
