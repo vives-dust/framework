@@ -72,7 +72,7 @@ function processData(input :any) :Data {
 
 function getBestRssi(gateways :any) :number{
     const rssis = gateways.map( (gateway :any) => gateway.rssi)
-    return Math.min(...rssis)
+    return Math.max(...rssis)
 }
 
 function getBestSnr(gateways :any) :number{
