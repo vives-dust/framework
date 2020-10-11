@@ -2,12 +2,14 @@ datasources:
   - name: 'Redis'
     type: 'redis-datasource'
     org_id: 1
+    type: 'proxy'
     url: 'redis://redis:6379'
     is_default: false
     version: 1
     editable: true
   - name: 'InfluxDB'
     type: 'influxdb'
+    type: 'proxy'
     org_id: 1
     url: 'http://influxdb:8086'
     database: 'tph'
