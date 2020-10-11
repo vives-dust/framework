@@ -32,6 +32,12 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/config.ini:/etc/grafana/config.ini
+    labes:
+      traefik.enable: true
+      traefik.http.routers.grafana.rule: Host(`${GRAFANA_URL}`)
+      traefik.http.services.grafana.loadbalancer.server.port: 3000
+      traefik.port: 3000
+      traefik.docker.network: reverse_proxy
 
 volumes:
   influxdb-data:
