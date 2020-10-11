@@ -12,8 +12,12 @@ services:
     build:
       context: ./process
     env_file: ./process/.env
+    volumes:
+      - redis-data:/data
   influxdb:
     image: 'influxdb'
+    volumes:
+      - influxdb-data:/var/lib/influxdb
   grafana:
     image: 'grafana/grafana'
     ports:
@@ -28,3 +32,7 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/config.ini:/etc/grafana/config.ini
+
+volumes:
+  influxdb-data:
+  redis-data:
