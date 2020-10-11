@@ -21,14 +21,14 @@ export default class InfluxDbClient {
     console.log('data', data)
     this.influxdb.writeMeasurement('tph', [{
       tags: {
-        frequency: data.frequency,
         dataRate: data.dataRate,
         codingRate: data.codingRate,
         devId: data.dev_id,
         hardwareSerial: data.hardwareSerial
       },
       fields: { 
-        tempearture: data.temperature,
+        frequency: data.frequency,
+        temperature: data.temperature,
         humidity: data.humidity,
         pressure: data.pressure,
         battery: data.battery,
