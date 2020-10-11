@@ -21,3 +21,9 @@ mqtt.on('message', (message, topic) => {
     redis.push(message)
     console.log('message:', message)
 })
+
+process.on('SIGTERM', () => {
+    console.info('SIGTERM signal received.');
+    console.log('Closing MQTT connection.');
+    mqtt.close();
+});

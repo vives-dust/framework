@@ -39,4 +39,9 @@ export default class MqttClient extends EventEmitter{
     private onMessage = ( topic: string, message: Buffer) => {
         this.emit('message', message.toString(), topic)
     }
+
+    public close() {
+        this.client.unsubscribe(this.topic)
+        this.client.end()
+    }
 }

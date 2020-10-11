@@ -24,4 +24,8 @@ export default class RedisClient{
     public async push(value: string) {
         await this.redis.rpush(this.key, value)
     }
+
+    public close() {
+        this.redis.close()
+    }
 }
