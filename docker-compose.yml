@@ -7,10 +7,15 @@ services:
   ingest:
     build:
       context: ./ingest
+    depends_on: 
+      - redis
     env_file: ./ingest/.env
   process:
     build:
       context: ./process
+    depends_on:
+      - redis
+      - influxdb
     env_file: ./process/.env
     volumes:
       - redis-data:/data
@@ -20,6 +25,8 @@ services:
       - influxdb-data:/var/lib/influxdb
   grafana:
     image: 'grafana/grafana'
+    depends_on: 
+      - influxdb
     ports:
       - 3000:3000
     environment:
