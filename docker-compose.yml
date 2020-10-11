@@ -47,7 +47,7 @@ services:
       traefik.docker.network: reverse_proxy
     networks:
       - default
-     - reverse_proxy
+      - reverse_proxy
 
 volumes:
   influxdb-data:
