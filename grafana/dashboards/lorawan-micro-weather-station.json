@@ -583,7 +583,7 @@
             {
               "key": "devId",
               "operator": "=",
-              "value": "dev-001"
+              "value": "/^$DeviceId$/"
             }
           ]
         }
