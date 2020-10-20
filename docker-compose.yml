@@ -21,12 +21,12 @@ services:
     env_file: ./process/.env
     volumes:
       - redis-data:/data
-      restart: unless-stopped
+    restart: unless-stopped
   influxdb:
     image: 'influxdb'
     volumes:
       - influxdb-data:/var/lib/influxdb
-      restart: unless-stopped
+    restart: unless-stopped
   grafana:
     image: 'grafana/grafana'
     depends_on: 
