@@ -582,7 +582,7 @@
           "tags": [
             {
               "key": "devId",
-              "operator": "=",
+              "operator": "=~",
               "value": "/^$DeviceId$/"
             }
           ]

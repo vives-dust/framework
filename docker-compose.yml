@@ -4,12 +4,14 @@ services:
     image: 'redis'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+    restart: unless-stopped
   ingest:
     build:
       context: ./ingest
     depends_on: 
       - redis
     env_file: ./ingest/.env
+    restart: unless-stopped
   process:
     build:
       context: ./process
@@ -19,16 +21,19 @@ services:
     env_file: ./process/.env
     volumes:
       - redis-data:/data
+    restart: unless-stopped
   influxdb:
     image: 'influxdb'
     volumes:
       - influxdb-data:/var/lib/influxdb
+    restart: unless-stopped
   grafana:
     image: 'grafana/grafana'
     depends_on: 
       - influxdb
     ports:
       - 3000
+    restart: unless-stopped
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_ANONYMOUS_ENABLED=true
