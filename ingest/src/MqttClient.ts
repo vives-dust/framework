@@ -29,6 +29,7 @@ export default class MqttClient extends EventEmitter{
         this.client = mqtt.connect({ host, port, protocol, username, password})
         this.client.on('connect', this.onConnect)
         this.client.on('message', this.onMessage)
+        this.client.on('error', this.onError)
     }
 
     private onConnect = () => {
@@ -47,5 +48,9 @@ export default class MqttClient extends EventEmitter{
                 resolve()
             })
         })
+    }
+
+    private onError(error: Error) {
+        console.log("MQTT Error", error)
     }
 }
