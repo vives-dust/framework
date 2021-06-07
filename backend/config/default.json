@@ -12,7 +12,9 @@
     "secret": "4sNSgfjJ+MYNnse86gVRWo2RZ0g=",
     "authStrategies": [
       "jwt",
-      "local"
+      "local",
+      "api-key",
+      "anonymous"
     ],
     "jwtOptions": {
       "header": {
@@ -33,6 +35,9 @@
         "key": "<github oauth key>",
         "secret": "<github oauth secret>"
       }
+    },
+    "api-key": {
+      "key": "abc"
     }
   },
   "mongodb": "mongodb://localhost:27017/backend"

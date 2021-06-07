@@ -53,13 +53,15 @@ export default function(app: Application): void {
 
   // Here you can also add service specific event publishers
   // e.g. the publish the `users` service `created` event to the `admins` channel
-  // app.service('users').publish('created', () => app.channel('admins'));
+  app.service('sensors').publish('created', () => app.channel('authenticated'));
   
   // With the userid and email organization from above you can easily select involved users
-  // app.service('messages').publish(() => {
+  // app.publish((data: any) => {
+  //   console.log('measurement channel', data);
   //   return [
-  //     app.channel(`userIds/${data.createdBy}`),
-  //     app.channel(`emails/${data.recipientEmail}`)
+  //     app.channel('authenticated'),
+  //     app.channel(`userIds/${data._id}`),
+  //     app.channel('foo/bar'),
   //   ];
   // });
 }

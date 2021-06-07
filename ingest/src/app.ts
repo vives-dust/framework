@@ -2,12 +2,12 @@ import Redis from './RedisClient'
 import Mqtt from './MqttClient'
 
 const mqtt = new Mqtt( {
-    host: process.env.MQTT_HOST,
+    host: 'eu.thethings.network',
     port: process.env.MQTT_PORT ? parseInt(<string>process.env.MQTT_PORT) : undefined,
     protocol: process.env.MQTT_PROTOCOL,
-    topic: process.env.MQTT_TOPIC,
-    username: process.env.MQTT_USERNAME,
-    password: process.env.MQTT_PASSWORD
+    topic: '+/devices/+/up',
+    username: 'micro-weather-station',
+    password: 'ttn-account-v2._mqNsGv9UNbVzyXhumlhXnDEZhInxDQPmXZYBwv9RyY'
 })
 const redis = new Redis({
     host: process.env.REDIS_HOST,
@@ -18,6 +18,7 @@ const redis = new Redis({
 let stop = false;
 
 console.log('Ingest ready...')
+console.log(mqtt)
 
 mqtt.on('message', (message, topic) => {
     redis.push(message)

@@ -27,12 +27,14 @@ services:
     volumes:
       - influxdb-data:/var/lib/influxdb
     restart: unless-stopped
+    ports:
+      - 8086:8086
   grafana:
     image: 'grafana/grafana'
     depends_on: 
       - influxdb
     ports:
-      - 3000
+      - 3000:3000
     restart: unless-stopped
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -44,21 +46,21 @@ services:
       - ./grafana/provisioning:/etc/grafana/provisioning
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/config.ini:/etc/grafana/config.ini
-    labels:
-      traefik.enable: true
-      traefik.http.routers.aera_grafana.rule: Host(`${GRAFANA_URL}`)
-      traefik.http.services.aera_grafana.loadbalancer.server.port: 3000
-      # traefik.port: 3000
-      traefik.docker.network: reverse_proxy
-    networks:
-      - default
-      - reverse_proxy
+    # labels:
+    #   traefik.enable: true
+    #   traefik.http.routers.aera_grafana.rule: Host(`${GRAFANA_URL}`)
+    #   traefik.http.services.aera_grafana.loadbalancer.server.port: 3000
+    #   # traefik.port: 3000
+    #   traefik.docker.network: reverse_proxy
+    # networks:
+    #   - default
+    #   - reverse_proxy
 
 volumes:
   influxdb-data:
   redis-data:
 
-networks:
-  reverse_proxy:
-    external:
-      name: reverse_proxy
+# networks:
+#   reverse_proxy:
+#     external:
+#       name: reverse_proxy
