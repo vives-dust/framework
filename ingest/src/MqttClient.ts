@@ -27,6 +27,7 @@ export default class MqttClient extends EventEmitter{
         } = options
         this.topic = topic
         this.client = mqtt.connect({ host, port, protocol, username, password})
+        console.log(`MQTT settings: ${protocol}://${host}:${port}`)
         this.client.on('connect', this.onConnect)
         this.client.on('message', this.onMessage)
         this.client.on('error', this.onError)
@@ -34,6 +35,7 @@ export default class MqttClient extends EventEmitter{
 
     private onConnect = () => {
         console.log('MQTT connected')
+        console.log(`Subscribing to topic: ${this.topic}`)
         this.client.subscribe(this.topic)
     }
 
