@@ -1,1 +1,1 @@
-# LoRaWAN Micro Weather Station App
+# DUST Framework
