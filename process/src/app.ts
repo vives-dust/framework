@@ -11,11 +11,11 @@ interface Data {
 
     time: string,
     frequency: number,
-    dataRate: string,
     codingRate: string,
     airtime: number,
     rssi: number,
     snr: number,
+    spreadFactor: number,
     counter: number,
     gateways: number,
 }
@@ -44,6 +44,7 @@ let stop = false;
                 influxdb.save(data)
             } catch (error) {
                 console.error('input has wrong format', input)
+                console.error(error)
             }
         }
     }
@@ -51,21 +52,21 @@ let stop = false;
 
 function processData(input :any) :Data {
     return {
-        temperature: input.payload_fields.temperature,
-        pressure: input.payload_fields.pressure,
-        humidity: input.payload_fields.humidity,
-        battery: input.payload_fields.batteryVoltage,
-        dev_id: input.dev_id,
-        hardwareSerial: input.hardware_serial,
+        temperature: input.uplink_message.decoded_payload.temperature,
+        pressure: input.uplink_message.decoded_payload.pressure,
+        humidity: input.uplink_message.decoded_payload.humidity,
+        battery: input.uplink_message.decoded_payload.batteryVoltage,
+        dev_id: input.end_device_ids.device_id,
+        hardwareSerial: input.end_device_ids.dev_eui,
 
-        time: input.metadata.time,
-        frequency: input.metadata.frequency,
-        dataRate: input.metadata.data_rate,
-        codingRate: input.metadata.coding_rate,
-        airtime: input.metadata.airtime,
-        rssi: getBestRssi(input.metadata.gateways),
-        snr: getBestSnr(input.metadata.gateways),
-        counter: input.counter,
+        time: input.received_at,
+        frequency: input.uplink_message.settings.frequency,
+        codingRate: input.uplink_message.settings.coding_rate,
+        airtime: (input.uplink_message.consumed_airtime).replace('s', ''),
+        rssi: getBestRssi(input.rx_metadata),
+        snr: getBestSnr(input.rx_metadata),
+        spreadFactor: input.uplink_message.settings.data_rate.lora.spreading_factor,
+        counter: input.uplink.message.f_cnt,
         gateways: input.metadata.gateways.length
     }
 }
