@@ -66,7 +66,7 @@ function processData(input :any) :Data {
         rssi: getBestRssi(input.uplink_message.rx_metadata),
         snr: getBestSnr(input.uplink_message.rx_metadata),
         spreadFactor: input.uplink_message.settings.data_rate.lora.spreading_factor,
-        counter: input.uplink.message.f_cnt,
+        counter: input.uplink_message.f_cnt,
         gateways: input.metadata.gateways.length
     }
 }
