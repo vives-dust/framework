@@ -67,7 +67,7 @@ function processData(input :any) :Data {
         snr: getBestSnr(input.uplink_message.rx_metadata),
         spreadFactor: input.uplink_message.settings.data_rate.lora.spreading_factor,
         counter: input.uplink_message.f_cnt,
-        gateways: input.metadata.gateways.length
+        gateways: input.uplink_message.rx_metadata.filter( (g :any) => g.gateway_id !== "packetbroker").length
     }
 }
 
