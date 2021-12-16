@@ -10,7 +10,7 @@ services:
       context: ./ingest
     depends_on: 
       - redis
-    env_file: ./ingest.env
+    env_file: ./.ingest.env
     restart: unless-stopped
   process:
     build:
@@ -18,7 +18,7 @@ services:
     depends_on:
       - redis
       - influxdb
-    env_file: ./process.env
+    env_file: ./.process.env
     volumes:
       - redis-data:/data
     restart: unless-stopped
