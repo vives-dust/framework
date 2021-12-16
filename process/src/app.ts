@@ -63,11 +63,11 @@ function processData(input :any) :Data {
         frequency: input.uplink_message.settings.frequency,
         codingRate: input.uplink_message.settings.coding_rate,
         airtime: (input.uplink_message.consumed_airtime).replace('s', ''),
-        rssi: getBestRssi(input.rx_metadata),
-        snr: getBestSnr(input.rx_metadata),
+        rssi: getBestRssi(input.uplink_message.rx_metadata),
+        snr: getBestSnr(input.uplink_message.rx_metadata),
         spreadFactor: input.uplink_message.settings.data_rate.lora.spreading_factor,
-        counter: input.uplink.message.f_cnt,
-        gateways: input.metadata.gateways.length
+        counter: input.uplink_message.f_cnt,
+        gateways: input.uplink_message.rx_metadata.filter( (g :any) => g.gateway_id !== "packetbroker").length
     }
 }
 
