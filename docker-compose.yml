@@ -39,6 +39,7 @@ services:
       - GF_AUTH_ANONYMOUS_ENABLED=true
       - GF_AUTH_BASIC_ENABLED=false
       - GF_ENABLE_GZIP=true
+      - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/dust.json
       - PLUGINS=redis-datasource
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
@@ -46,8 +47,8 @@ services:
       - ./grafana/config.ini:/etc/grafana/config.ini
     labels:
       traefik.enable: true
-      traefik.http.routers.aera_grafana.rule: Host(`${GRAFANA_URL}`)
-      traefik.http.services.aera_grafana.loadbalancer.server.port: 3000
+      traefik.http.routers.dust_grafana.rule: Host(`${GRAFANA_URL}`)
+      traefik.http.services.dust_grafana.loadbalancer.server.port: 3000
       # traefik.port: 3000
       traefik.docker.network: reverse_proxy
     networks:

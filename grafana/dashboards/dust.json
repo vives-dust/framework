@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:10",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -13,11 +12,12 @@
       }
     ]
   },
-  "description": "DIY LoRaWAN temperature, humidity and pressure sensor",
+  "description": "",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1602436155074,
+  "id": 1,
+  "iteration": 1639679702799,
   "links": [],
   "panels": [
     {
@@ -40,55 +40,32 @@
               }
             ]
           },
-          "unit": "celsius"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
+        "h": 5,
+        "w": 5,
         "x": 0,
         "y": 0
       },
       "id": 7,
       "options": {
         "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [],
-          "values": false
-        },
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "6.7.3",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "groupBy": [
@@ -114,7 +91,7 @@
             [
               {
                 "params": [
-                  "temperature"
+                  "moistureLevel_1"
                 ],
                 "type": "field"
               },
@@ -135,7 +112,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Temperature",
+      "title": "Moisture -10cm",
       "type": "stat"
     },
     {
@@ -158,55 +135,32 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 6,
+        "h": 5,
+        "w": 5,
+        "x": 5,
         "y": 0
       },
-      "id": 8,
+      "id": 14,
       "options": {
         "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [],
-          "values": false
-        },
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "6.7.3",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "groupBy": [
@@ -232,7 +186,7 @@
             [
               {
                 "params": [
-                  "humidity"
+                  "moistureLevel_2"
                 ],
                 "type": "field"
               },
@@ -253,7 +207,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Humidity",
+      "title": "Moisture -20cm",
       "type": "stat"
     },
     {
@@ -272,59 +226,36 @@
               },
               {
                 "color": "red",
-                "value": ""
+                "value": 80
               }
             ]
           },
-          "unit": "pressurehpa"
+          "unit": "none"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
+        "h": 5,
+        "w": 5,
+        "x": 10,
         "y": 0
       },
-      "id": 9,
+      "id": 15,
       "options": {
         "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [],
-          "values": false
-        },
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "6.7.3",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "groupBy": [
@@ -350,13 +281,13 @@
             [
               {
                 "params": [
-                  "pressure"
+                  "moistureLevel_3"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -371,7 +302,102 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Pressure",
+      "title": "Moisture -45cm",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 1,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 15,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.3.7",
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Moisture -60cm",
       "type": "stat"
     },
     {
@@ -385,16 +411,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
+                "color": "green",
                 "value": null
               },
               {
-                "color": "yellow",
-                "value": 1.9
-              },
-              {
-                "color": "green",
-                "value": 2
+                "color": "red",
+                "value": 80
               }
             ]
           },
@@ -403,50 +425,27 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
+        "h": 5,
+        "w": 4,
+        "x": 20,
         "y": 0
       },
       "id": 10,
       "options": {
         "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "defaults": {
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [],
-          "values": false
-        },
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "mean"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "6.7.3",
+      "pluginVersion": "7.3.7",
       "targets": [
         {
           "groupBy": [
@@ -493,7 +492,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Voltage",
+      "title": "Battery Voltage",
       "type": "stat"
     },
     {
@@ -512,10 +511,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 10,
+        "w": 24,
         "x": 0,
-        "y": 4
+        "y": 5
       },
       "hiddenSeries": false,
       "id": 3,
@@ -532,11 +531,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.3.7",
       "pointradius": 0.5,
       "points": true,
       "renderer": "flot",
@@ -546,6 +544,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "alias": "-10cm",
           "groupBy": [
             {
               "params": [
@@ -569,7 +568,7 @@
             [
               {
                 "params": [
-                  "temperature"
+                  "moistureLevel_1"
                 ],
                 "type": "field"
               },
@@ -586,99 +585,9 @@
               "value": "/^$DeviceId$/"
             }
           ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Temperature",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "celsius",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 4
-      },
-      "hiddenSeries": false,
-      "id": 5,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 0.5,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
+          "alias": "-20cm",
           "groupBy": [
             {
               "params": [
@@ -696,13 +605,13 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "pressure"
+                  "moistureLevel_2"
                 ],
                 "type": "field"
               },
@@ -719,99 +628,9 @@
               "value": "/^$DeviceId$/"
             }
           ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Pressure",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "pressurehpa",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 12
-      },
-      "hiddenSeries": false,
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 0.5,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
+          "alias": "-45cm",
           "groupBy": [
             {
               "params": [
@@ -829,13 +648,13 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "humidity"
+                  "moistureLevel_3"
                 ],
                 "type": "field"
               },
@@ -852,99 +671,9 @@
               "value": "/^$DeviceId$/"
             }
           ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Humidity",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
         },
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 12
-      },
-      "hiddenSeries": false,
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true,
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pluginVersion": "7.2.0",
-      "pointradius": 0.5,
-      "points": true,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
+          "alias": "-60cm",
           "groupBy": [
             {
               "params": [
@@ -962,13 +691,13 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "battery"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
@@ -991,7 +720,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Battery",
+      "title": "Soil Moisture",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1007,8 +736,7 @@
       },
       "yaxes": [
         {
-          "decimals": 2,
-          "format": "volt",
+          "format": "none",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1048,7 +776,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 21
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1065,17 +793,15 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.3.7",
       "pointradius": 0.5,
       "points": true,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:157",
           "alias": "SNR",
           "yaxis": 2
         }
@@ -1191,7 +917,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1596",
           "decimals": 2,
           "format": "dBm",
           "label": null,
@@ -1201,7 +926,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1597",
           "decimals": 1,
           "format": "dB",
           "label": "",
@@ -1235,10 +959,10 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 21
+        "y": 15
       },
       "hiddenSeries": false,
-      "id": 13,
+      "id": 2,
       "legend": {
         "avg": false,
         "current": false,
@@ -1252,26 +976,19 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "alertThreshold": true,
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.2.0",
+      "pluginVersion": "7.3.7",
       "pointradius": 0.5,
       "points": true,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "alias": "SNR",
-          "yaxis": 2
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Number of gateways",
           "groupBy": [
             {
               "params": [
@@ -1295,7 +1012,7 @@
             [
               {
                 "params": [
-                  "gateways"
+                  "battery"
                 ],
                 "type": "field"
               },
@@ -1318,7 +1035,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "LoRaWAN - # Gateways",
+      "title": "Battery",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1334,9 +1051,8 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1596",
-          "decimals": 0,
-          "format": "none",
+          "decimals": 2,
+          "format": "volt",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1344,8 +1060,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:1597",
-          "format": "dB",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1382,8 +1097,8 @@
       "gridPos": {
         "h": 9,
         "w": 12,
-        "x": 12,
-        "y": 30
+        "x": 0,
+        "y": 24
       },
       "heatmap": {},
       "hideZeroBuckets": false,
@@ -1464,10 +1179,149 @@
       "yBucketBound": "auto",
       "yBucketNumber": null,
       "yBucketSize": null
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "InfluxDB",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 13,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.7",
+      "pointradius": 0.5,
+      "points": true,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "SNR",
+          "yaxis": 2
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Number of gateways",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "gateways"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "LoRaWAN - # Gateways",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 0,
+          "format": "none",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "dB",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "5m",
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1475,14 +1329,15 @@
       {
         "allValue": null,
         "current": {
-          "text": "dev-001",
-          "value": "dev-001"
+          "selected": true,
+          "text": "eui-70b3d57ed0049f81",
+          "value": "eui-70b3d57ed0049f81"
         },
         "datasource": "InfluxDB",
         "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": "Device ID",
         "multi": false,
         "name": "DeviceId",
@@ -1519,10 +1374,7 @@
     ]
   },
   "timezone": "",
-  "title": "LoRaWAN Micro Weather Station",
+  "title": "Dust Prototype",
   "uid": "gw1r1lKGz",
-  "variables": {
-    "list": []
-  },
   "version": 1
 }

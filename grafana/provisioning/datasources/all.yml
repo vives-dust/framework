@@ -12,7 +12,7 @@ datasources:
     access: 'proxy'
     org_id: 1
     url: 'http://influxdb:8086'
-    database: 'tph'
+    database: 'dust-staging'
     version: 1
     editable: true
     is_default: true

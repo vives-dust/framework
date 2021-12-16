@@ -2,9 +2,10 @@ import Redis from './RedisClient'
 import InfluxDB from './InfluxDbClient'
 
 interface Data {
-    temperature: number,
-    pressure: number,
-    humidity: number,
+    moistureLevel_1: number,
+    moistureLevel_2: number,
+    moistureLevel_3: number,
+    moistureLevel_4: number,
     battery: number,
     dev_id: string,
     hardwareSerial: string,
@@ -52,9 +53,10 @@ let stop = false;
 
 function processData(input :any) :Data {
     return {
-        temperature: input.uplink_message.decoded_payload.temperature,
-        pressure: input.uplink_message.decoded_payload.pressure,
-        humidity: input.uplink_message.decoded_payload.humidity,
+        moistureLevel_1: input.uplink_message.decoded_payload.moistureLevel_1,
+        moistureLevel_2: input.uplink_message.decoded_payload.moistureLevel_2,
+        moistureLevel_3: input.uplink_message.decoded_payload.moistureLevel_3,
+        moistureLevel_4: input.uplink_message.decoded_payload.moistureLevel_4,
         battery: input.uplink_message.decoded_payload.batteryVoltage,
         dev_id: input.end_device_ids.device_id,
         hardwareSerial: input.end_device_ids.dev_eui,
