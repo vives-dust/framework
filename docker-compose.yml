@@ -54,7 +54,13 @@ services:
     networks:
       - default
       - reverse_proxy
-
+  weatherapi:
+    build:
+      context: ./weatherapi
+    depends_on:
+      - influxdb
+    env_file: ./.weatherapi.env
+    restart: unless-stopped
 volumes:
   influxdb-data:
   redis-data:
