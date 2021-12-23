@@ -7,6 +7,7 @@ interface Data {
     moistureLevel_3: number,
     moistureLevel_4: number,
     battery: number,
+    internalTemperature: number,
     dev_id: string,
     hardwareSerial: string,
 
@@ -58,6 +59,7 @@ function processData(input :any) :Data {
         moistureLevel_3: input.uplink_message.decoded_payload.moistureLevel_3,
         moistureLevel_4: input.uplink_message.decoded_payload.moistureLevel_4,
         battery: input.uplink_message.decoded_payload.batteryVoltage,
+        internalTemperature: input.uplink_message.decoded_payload.internalTemperature,
         dev_id: input.end_device_ids.device_id,
         hardwareSerial: input.end_device_ids.dev_eui,
 

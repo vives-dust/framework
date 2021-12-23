@@ -32,6 +32,7 @@ export default class InfluxDbClient {
         moistureLevel_3: data.moistureLevel_3,
         moistureLevel_4: data.moistureLevel_4,
         battery: data.battery,
+        internalTemperature: data.internalTemperature,
         time: data.time,
         rssi: data.rssi,
         snr: data.snr,
