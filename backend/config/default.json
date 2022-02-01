@@ -28,5 +28,10 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb://mongodb:27017"
+  "mongodb": "mongodb://mongodb:27017",
+  "influxdb": {
+    "host": "influxdb",
+    "port": 8086,
+    "database": "dust-staging"
+  }
 }
