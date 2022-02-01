@@ -61,6 +61,12 @@ services:
       - influxdb
     env_file: ./.weatherapi.env
     restart: unless-stopped
+  weatherstation:
+    image: 'telegraf'
+    container_name: 'weatherstation-telegraf'
+    restart: unless-stopped
+    volumes:
+      - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
 volumes:
   influxdb-data:
   redis-data:
