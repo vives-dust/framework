@@ -2,7 +2,14 @@ import { Db } from 'mongodb';
 import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
 import { Application } from '../../declarations';
 
-export class Sensors extends Service {
+// A type interface for our Sensor (it does not validate any data)
+interface SensorData {
+  _id?: string;
+  name: string;
+  description?: string;
+}
+
+export class Sensors extends Service<SensorData> {
   //eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
     super(options);
@@ -13,4 +20,4 @@ export class Sensors extends Service {
       this.Model = db.collection('sensors');
     });
   }
-};
+}
