@@ -28,5 +28,5 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb:://mongodb:27017"
+  "mongodb": "mongodb://mongodb:27017"
 }
