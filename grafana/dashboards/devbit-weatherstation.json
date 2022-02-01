@@ -20,7 +20,7 @@
     "links": [],
     "panels": [
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -115,7 +115,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -210,7 +210,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -305,7 +305,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -400,7 +400,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -495,7 +495,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -590,7 +590,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -769,7 +769,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -864,7 +864,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -959,7 +959,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1054,7 +1054,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1149,7 +1149,7 @@
         "type": "stat"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1260,7 +1260,7 @@
         "type": "text"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1422,7 +1422,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1542,7 +1542,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "description": "",
         "fieldConfig": {
           "defaults": {
@@ -1719,7 +1719,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -1898,7 +1898,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -2016,7 +2016,7 @@
         "type": "timeseries"
       },
       {
-        "datasource": "WeatherStation",
+        "datasource": "InfluxDB",
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -2146,7 +2146,7 @@
             "text": "Oostkamp",
             "value": "Oostkamp"
           },
-          "datasource": "WeatherStation",
+          "datasource": "InfluxDB",
           "definition": "show tag values from \"weatherstation\" with key = \"stationId\"",
           "description": null,
           "error": null,
