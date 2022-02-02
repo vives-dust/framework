@@ -5,12 +5,20 @@ services:
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     restart: unless-stopped
+    volumes:
+      - redis-data:/data
   ingest:
     build:
       context: ./ingest
     depends_on: 
       - redis
-    env_file: ./.ingest.env
+    environment:
+      - MQTT_HOST=${MQTT_HOST}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_KEY=${REDIS_KEY}
     restart: unless-stopped
   process:
     build:
@@ -18,9 +26,13 @@ services:
     depends_on:
       - redis
       - influxdb
-    env_file: ./.process.env
-    volumes:
-      - redis-data:/data
+    environment:
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_KEY=${REDIS_KEY}
     restart: unless-stopped
   influxdb:
     image: 'influxdb:2.1'
