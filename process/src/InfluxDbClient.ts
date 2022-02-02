@@ -14,7 +14,7 @@ export default class InfluxDbClient {
 
   public constructor(options :Options = {}) {
     const { host = 'localhost', port = 8086, org = "default", bucket = "default", token = "" } = options
-    this.influxdb = new InfluxDB( { url: `http://${host}:${port}`, token}).getWriteApi(org, bucket)
+    this.influxdb = new InfluxDB( { url: `http://${host}:${port}`, token}).getWriteApi(org, bucket, 'ms')
   }
 
   public save( data: any) {
