@@ -4,8 +4,11 @@ import WeatherApi from './WeatherApi';
 const influxdb = new InfluxDB({
     host: process.env.INFLUXDB_HOST,
     port: process.env.INFLUXDB_PORT ? parseInt(<string>process.env.INFLUXDB_PORT) : undefined,
-    database: process.env.INFLUXDB_DB
+    bucket: process.env.INFLUXDB_BUCKET,
+    org: process.env.INFLUXDB_ORG,
+    token: process.env.INFLUXDB_TOKEN
 });
+
 
 if( !process.env.API_KEY ){
     console.error("No API_KEY is set")
@@ -23,7 +26,6 @@ console.log('Weatherapi ready...')
 const fetchData = async () => {
     const result = await weatherApi.getCurrentWeather()
     influxdb.save(result)
-    console.log(result)
 }
 
 fetchData()
