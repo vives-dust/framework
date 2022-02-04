@@ -11,6 +11,11 @@ interface SensorData {
   deviceId: string;
   description?: string;
   values?: MoistureSample[];
+  location?: {
+    latitude: number;
+    longitude: number;
+    height?: number;
+  }
 }
 
 export class Sensors extends Service<SensorData> {
