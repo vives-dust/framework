@@ -88,6 +88,15 @@ services:
     volumes:
       - ./backend/src:/app/src
       - ./backend/config:/app/config
+  mongoexpress:
+    image: 'mongo-express'
+    depends_on:
+      - mongodb
+    restart: unless-stopped
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+    ports:
+      - "8081:8081"
 
 volumes:
   influxdb-data:
