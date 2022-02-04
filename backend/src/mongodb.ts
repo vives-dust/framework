@@ -2,10 +2,10 @@ import { MongoClient } from 'mongodb';
 import { Application } from './declarations';
 
 export default function (app: Application): void {
-  const connection = app.get('mongodb');
-  const database = connection.substr(connection.lastIndexOf('/') + 1);
+  const config = app.get('mongodb');
+  const connection = `mongodb://${config.host}:${config.port}/${config.database}`;
   const mongoClient = MongoClient.connect(connection)
-    .then(client => client.db(database));
+    .then(client => client.db(config.database));
 
   app.set('mongoClient', mongoClient);
 }

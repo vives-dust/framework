@@ -77,10 +77,18 @@ services:
     depends_on:
       - influxdb
       - mongodb
+    environment:
+      - MONGODB_HOST=mongodb
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=dust-staging
+      - INFLUXDB_HOST=influxdb
+      - INFLUXDB_PORT=8086
+      - INFLUXDB_DATABASE=dust-staging
     restart: unless-stopped
     volumes:
       - ./backend/src:/app/src
       - ./backend/config:/app/config
+
 volumes:
   influxdb-data:
   redis-data:

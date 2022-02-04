@@ -28,10 +28,14 @@
       "passwordField": "password"
     }
   },
-  "mongodb": "mongodb://mongodb:27017/dust-staging",
+  "mongodb": {
+    "host": "MONGODB_HOST",
+    "port": "MONGODB_PORT",
+    "database": "MONGODB_DATABASE"
+  },
   "influxdb": {
-    "host": "influxdb",
-    "port": 8086,
-    "database": "dust-staging"
+    "host": "INFLUXDB_HOST",
+    "port": "INFLUXDB_PORT",
+    "database": "INFLUXDB_DATABASE"
   }
 }
