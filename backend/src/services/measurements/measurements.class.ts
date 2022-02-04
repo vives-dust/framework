@@ -1,6 +1,16 @@
 import { MethodNotAllowed } from '@feathersjs/errors';
 import { Id, NullableId, Paginated, Params, ServiceMethods } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
+import {
+  InfluxDB,
+  FluxTableMetaData,
+  flux,
+  fluxDuration,
+  fluxString,
+  fluxExpression,
+  ParameterizedQuery,
+} from '@influxdata/influxdb-client'
+import { QueryBuilder, Period } from '../../influxdb/query_builder';
 
 export interface MeasurementData {
   temperature?: number;
@@ -10,11 +20,11 @@ export interface MeasurementData {
   level_4?: number;
 }
 
-export interface MeasurementDataEnum extends Array<MeasurementData>{}
+export interface MeasurementDataArray extends Array<MeasurementData>{}
 
 interface ServiceOptions {}
 
-export class Measurements implements ServiceMethods<MeasurementDataEnum> {
+export class Measurements implements ServiceMethods<MeasurementDataArray> {
   app: Application;
   options: ServiceOptions;
 
@@ -24,61 +34,80 @@ export class Measurements implements ServiceMethods<MeasurementDataEnum> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async find (params?: Params): Promise<MeasurementDataEnum[] | Paginated<MeasurementDataEnum>> {
+  async find (params?: Params): Promise<MeasurementDataArray[] | Paginated<MeasurementDataArray>> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async get (id: Id, params?: Params): Promise<MeasurementDataEnum> {
+  async get (id: Id, params?: Params): Promise<MeasurementDataArray> {
     // id = deviceId here
 
-    const period = params?.query?.period as string || 'last';
-    console.log(period);
-    console.log(id);
+    const queryPeriod = params?.query?.period as string || 'last';
 
-    // TODO: Abstract db-queries
+    const bucket = this.app.get('influxdb').bucket;
+    const queryApi = this.app.get('influxQueryAPI');
 
-    const properties = [
-      // field, alias
-      ['internalTemperature', 'temperature'],
-      ['moistureLevel_1', 'level_1'],
-      ['moistureLevel_2', 'level_2'],
-      ['moistureLevel_3', 'level_3'],
-      ['moistureLevel_4', 'level_4'],
+    const measurement = 'dust-sensor';
+    const fields = [
+      { field: 'internalTemperature', alias: 'temperature' },
+      { field: 'moistureLevel_1', alias: 'level_1' },
+      { field: 'moistureLevel_2', alias: 'level_2' },
+      { field: 'moistureLevel_3', alias: 'level_3' },
+      { field: 'moistureLevel_4', alias: 'level_4' },
     ];
-      
-    const propertiesSingle = properties.map( prop => `${prop[0]} as ${prop[1]}`);
-    const propertiesMean = properties.map( prop => `mean(${prop[0]}) as ${prop[1]}`);
-    const periodQueryMap = {
-      'last': `SELECT ${propertiesSingle.join(', ')} FROM tph WHERE devId=$devId ORDER BY time DESC LIMIT 1`,
-      '1h': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId AND time > now() - 1h GROUP BY time(1m) fill(linear)`,
-      '24h': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId AND time > now() - 24h GROUP BY time(5m) fill(linear)`,
-      '7d': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId AND time > now() - 7d GROUP BY time(30m) fill(linear)`,
-      '31d': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId AND time > now() - 30d GROUP BY time(2h) fill(linear)`,
-      '1y': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId AND time > now() - 1Y GROUP BY time(24h) fill(linear)`,
-      'all': `SELECT ${propertiesMean.join(', ')} FROM tph WHERE devId=$devId GROUP BY time(24h) fill(linear)`,
-    };
 
-    return this.app.get('influxClient').query(periodQueryMap[period as keyof typeof periodQueryMap], { placeholders: { devId: id } });
+    let fluxQuery: ParameterizedQuery;
+    if (queryPeriod === 'last') {
+      // Only last value query
+      fluxQuery = QueryBuilder.last_measurement(bucket, measurement, `${id}`, fields);
+    } else {
+      let period = Period['24h'];
+      fluxQuery = QueryBuilder.measurements_aggregate_window(bucket, measurement, `${id}`, period, fields);
+    }
+
+    console.log(fluxQuery);
+
+    return new Promise((resolve, reject) => {
+      let result: MeasurementDataArray = [];
+      queryApi.queryRows(fluxQuery, {
+        next(row: string[], tableMeta: FluxTableMetaData) {
+          const influxObject = tableMeta.toObject(row)
+          result.push({
+            temperature: influxObject.temperature,
+            level_1: influxObject.level_1,
+            level_2: influxObject.level_2,
+            level_3: influxObject.level_3,
+            level_4: influxObject.level_4,
+          })
+        },
+        error(error: Error) {
+          console.error(error)
+          reject(error);
+        },
+        complete() {
+          resolve(result);
+        },
+      })
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async create (data: MeasurementDataEnum, params?: Params): Promise<MeasurementDataEnum> {
+  async create (data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async update (id: NullableId, data: MeasurementDataEnum, params?: Params): Promise<MeasurementDataEnum> {
+  async update (id: NullableId, data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async patch (id: NullableId, data: MeasurementDataEnum, params?: Params): Promise<MeasurementDataEnum> {
+  async patch (id: NullableId, data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async remove (id: NullableId, params?: Params): Promise<MeasurementDataEnum> {
+  async remove (id: NullableId, params?: Params): Promise<MeasurementDataArray> {
     throw new MethodNotAllowed();
   }
 }

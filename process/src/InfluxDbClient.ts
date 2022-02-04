@@ -1,45 +1,45 @@
-import { InfluxDB } from 'influx'
+import {InfluxDB, Point, WriteApi} from '@influxdata/influxdb-client'
 
 interface Options {
   host?: string
   port?: number
-  database?: string
+  bucket?: string
+  org?: string
+  token?: string
 }
 
 export default class InfluxDbClient {
 
-  influxdb: InfluxDB
+  influxdb: WriteApi
 
   public constructor(options :Options = {}) {
-    const { host, port, database = 'default' } = options
-    this.influxdb = new InfluxDB({ host, port, database })
-    console.log('******** create database: ', database)
-    this.influxdb.createDatabase(database)
+    const { host = 'localhost', port = 8086, org = "default", bucket = "default", token = "" } = options
+    this.influxdb = new InfluxDB( { url: `http://${host}:${port}`, token}).getWriteApi(org, bucket, 'ms')
   }
 
   public save( data: any) {
     console.log('data', data)
-    this.influxdb.writeMeasurement('tph', [{
-      tags: {
-        codingRate: data.codingRate,
-        devId: data.dev_id,
-        hardwareSerial: data.hardwareSerial
-      },
-      fields: { 
-        frequency: data.frequency,
-        moistureLevel_1: data.moistureLevel_1,
-        moistureLevel_2: data.moistureLevel_2,
-        moistureLevel_3: data.moistureLevel_3,
-        moistureLevel_4: data.moistureLevel_4,
-        battery: data.battery,
-        internalTemperature: data.internalTemperature,
-        time: data.time,
-        rssi: data.rssi,
-        snr: data.snr,
-        counter: data.counter,
-        gateways: data.gateways
-      }
-    }])
+
+    const point = new Point("dust-sensor")
+      .tag( "codingRate", data.codingRate )
+      .tag( "devId", data.dev_id )
+      .tag( "hardwareSerial", data.hardwareSerial )
+      .timestamp( Date.parse(data.time))
+      .intField( "frequency", data.frequency)
+      .intField( "moistureLevel_1", data.moistureLevel_1)
+      .intField( "moistureLevel_2", data.moistureLevel_2)
+      .intField( "moistureLevel_3", data.moistureLevel_3)
+      .intField( "moistureLevel_4", data.moistureLevel_4)
+      .floatField( "battery", data.battery)
+      .floatField( "internalTemperature", data.internalTemperature)
+      .floatField( "rssi", data.rssi)
+      .floatField( "snr", data.snr)
+      .intField( "counter", data.counter)
+      .intField( "gateways", data.gateways)
+    this.influxdb.writePoint(point)
+    console.log(point)
+
+    this.influxdb.flush().catch( (error) => console.log(error) )
   }
 
   public close() {

@@ -1,13 +1,11 @@
-import { InfluxDB } from 'influx';
+import { InfluxDB } from '@influxdata/influxdb-client';
 import { Application } from './declarations';
 
 export default function (app: Application): void {
   const connectionParams = app.get('influxdb');
-  const influxClient = new InfluxDB({
-    host: connectionParams.host,
-    port: connectionParams.port,
-    database: connectionParams.database,
-  });
 
-  app.set('influxClient', influxClient);
+  const url = `http://${connectionParams.host}:${connectionParams.port}`;
+  const queryApi = new InfluxDB( { url, token: connectionParams.token }).getQueryApi(connectionParams.org);
+
+  app.set('influxQueryAPI', queryApi);
 }

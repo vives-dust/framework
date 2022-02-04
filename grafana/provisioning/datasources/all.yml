@@ -1,3 +1,5 @@
+apiVersion: 1
+
 datasources:
   - name: 'Redis'
     type: 'redis-datasource'
@@ -12,7 +14,13 @@ datasources:
     access: 'proxy'
     org_id: 1
     url: 'http://influxdb:8086'
-    database: 'dust-staging'
     version: 1
     editable: true
     is_default: true
+    secureJsonData:
+      token: $INFLUX_TOKEN
+    jsonData:
+      version: Flux
+      organization: $INFLUX_ORG
+      defaultBucket: $INFLUX_BUCKET
+      tlsSkipVerify: true

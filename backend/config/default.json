@@ -36,6 +36,8 @@
   "influxdb": {
     "host": "INFLUXDB_HOST",
     "port": "INFLUXDB_PORT",
-    "database": "INFLUXDB_DATABASE"
+    "bucket": "INFLUXDB_BUCKET",
+    "org": "INFLUXDB_ORG",
+    "token": "INFLUXDB_TOKEN"
   }
 }

@@ -31,7 +31,9 @@ const redis = new Redis({
 const influxdb = new InfluxDB({
     host: process.env.INFLUXDB_HOST,
     port: process.env.INFLUXDB_PORT ? parseInt(<string>process.env.INFLUXDB_PORT) : undefined,
-    database: process.env.INFLUXDB_DB
+    bucket: process.env.INFLUXDB_BUCKET,
+    org: process.env.INFLUXDB_ORG,
+    token: process.env.INFLUXDB_TOKEN
 });
 
 // console.log('Processing ready...')
