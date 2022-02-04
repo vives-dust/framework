@@ -2,7 +2,7 @@ import { Db } from 'mongodb';
 import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
 import { Application } from '../../declarations';
 import { Params, Id } from '@feathersjs/feathers';
-import { MoistureSample } from '../moisture/moisture.class';
+import { MeasurementDataEnum } from '../measurements/measurements.class';
 
 // A type interface for our Sensor (it does not validate any data)
 interface SensorData {
@@ -10,7 +10,7 @@ interface SensorData {
   name: string;
   deviceId: string;
   description?: string;
-  values?: MoistureSample[];
+  values?: MeasurementDataEnum;
   location?: {
     latitude: number;
     longitude: number;
@@ -38,12 +38,7 @@ export class Sensors extends Service<SensorData> {
 
     // Call moisture service for the moisture data
     if (sensor) {
-      sensor.values = await this.app.service('moisture').find({
-        query: {
-          values: params?.query?.values,
-          deviceId: sensor.deviceId
-        }
-      });
+      sensor.values = await this.app.service('measurements').get(sensor.deviceId, params);
     }
 
     return sensor;

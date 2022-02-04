@@ -1,14 +1,15 @@
 import { HooksObject } from '@feathersjs/feathers';
+import { disallow } from 'feathers-hooks-common';
 
 export default {
   before: {
     all: [],
-    find: [],
+    find: [ disallow() ],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    create: [ disallow() ],
+    update: [ disallow() ],
+    patch: [ disallow() ],
+    remove: [ disallow() ]
   },
 
   after: {
