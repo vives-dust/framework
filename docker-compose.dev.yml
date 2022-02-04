@@ -1,0 +1,105 @@
+version: '3.0'
+services:
+  redis:
+    image: 'redis'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+  ingest:
+    build:
+      context: ./ingest
+    depends_on: 
+      - redis
+    environment:
+      - MQTT_HOST=${MQTT_HOST}
+      - MQTT_USERNAME=${MQTT_USERNAME}
+      - MQTT_PASSWORD=${MQTT_PASSWORD}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_KEY=${REDIS_KEY}
+    restart: unless-stopped
+  process:
+    build:
+      context: ./process
+    depends_on:
+      - redis
+      - influxdb
+    environment:
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_KEY=${REDIS_KEY}
+    restart: unless-stopped
+  influxdb:
+    image: 'influxdb:2.1'
+    ports:
+     - 8086:8086
+    volumes:
+      # - influxdb-data:/var/lib/influxdb
+      - influxdb2-data:/var/lib/influxdb2
+      - influxdb2-config:/etc/influxdb2
+    restart: unless-stopped
+    environment:
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_INIT_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_INIT_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_INIT_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      # - DOCKER_INFLUXDB_INIT_MODE=upgrade
+      - DOCKER_INFLUXDB_INIT_MODE=setup     # setup when starting anew
+  # grafana:
+  #   image: 'grafana/grafana'
+  #   depends_on: 
+  #     - influxdb
+  #   ports:
+  #     - 3000:3000
+  #   restart: unless-stopped
+  #   environment:
+  #     - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+  #     - GF_AUTH_ANONYMOUS_ENABLED=true
+  #     - GF_AUTH_BASIC_ENABLED=false
+  #     - GF_ENABLE_GZIP=true
+  #     - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/dust.json
+  #     - PLUGINS=redis-datasource
+  #     - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+  #     - INFLUX_ORG=${INFLUXDB_INIT_ORG}
+  #     - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+  #   volumes:
+  #     - ./grafana/provisioning:/etc/grafana/provisioning
+  #     - ./grafana/dashboards:/var/lib/grafana/dashboards
+  #     - ./grafana/config.ini:/etc/grafana/config.ini
+  #   networks:
+  #     - default
+  weatherapi:
+    build:
+      context: ./weatherapi
+    depends_on:
+      - influxdb
+    environment:
+      - API_KEY=${WEATHER_API_KEY}
+      - LOCATIONS=${WEATHER_API_LOCATIONS}
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUXDB_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_PORT=${INFLUXDB_PORT}
+    restart: unless-stopped
+  # weatherstation:
+  #   image: 'telegraf'
+  #   restart: unless-stopped
+  #   volumes:
+  #     - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+  #   environment:
+  #     - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+  #     - INFLUX_ORG=${INFLUXDB_INIT_ORG}
+  #     - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+
+volumes:
+  # influxdb-data:      # delete after migration
+  influxdb2-data:
+  influxdb2-config:
+  redis-data:
