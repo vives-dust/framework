@@ -2,14 +2,9 @@ import { MethodNotAllowed } from '@feathersjs/errors';
 import { Id, NullableId, Paginated, Params, ServiceMethods } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
 import {
-  InfluxDB,
   FluxTableMetaData,
-  flux,
-  fluxDuration,
-  fluxString,
-  fluxExpression,
   ParameterizedQuery,
-} from '@influxdata/influxdb-client'
+} from '@influxdata/influxdb-client';
 import { QueryBuilder, Period } from '../../influxdb/query_builder';
 
 export interface MeasurementData {
@@ -18,6 +13,7 @@ export interface MeasurementData {
   level_2?: number;
   level_3?: number;
   level_4?: number;
+  time: string;
 }
 
 export interface MeasurementDataArray extends Array<MeasurementData>{}
@@ -61,33 +57,34 @@ export class Measurements implements ServiceMethods<MeasurementDataArray> {
       // Only last value query
       fluxQuery = QueryBuilder.last_measurement(bucket, measurement, `${id}`, fields);
     } else {
-      let period = Period['24h'];
+      const period = <any>Period[queryPeriod as any];
       fluxQuery = QueryBuilder.measurements_aggregate_window(bucket, measurement, `${id}`, period, fields);
     }
 
     console.log(fluxQuery);
 
     return new Promise((resolve, reject) => {
-      let result: MeasurementDataArray = [];
+      const result: MeasurementDataArray = [];
       queryApi.queryRows(fluxQuery, {
         next(row: string[], tableMeta: FluxTableMetaData) {
-          const influxObject = tableMeta.toObject(row)
+          const influxObject = tableMeta.toObject(row);
           result.push({
             temperature: influxObject.temperature,
             level_1: influxObject.level_1,
             level_2: influxObject.level_2,
             level_3: influxObject.level_3,
             level_4: influxObject.level_4,
-          })
+            time: influxObject._time
+          });
         },
         error(error: Error) {
-          console.error(error)
+          console.error(error);
           reject(error);
         },
         complete() {
           resolve(result);
         },
-      })
+      });
     });
   }
 
