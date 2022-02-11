@@ -2,7 +2,7 @@ import { Db } from 'mongodb';
 import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
 import { Application } from '../../declarations';
 import { Params, Id } from '@feathersjs/feathers';
-import { MeasurementDataEnum } from '../measurements/measurements.class';
+import { MeasurementDataArray } from '../measurements/measurements.class';
 
 // A type interface for our Sensor (it does not validate any data)
 interface SensorData {
@@ -10,7 +10,7 @@ interface SensorData {
   name: string;
   deviceId: string;
   description?: string;
-  values?: MeasurementDataEnum;
+  values?: MeasurementDataArray;
   location?: {
     latitude: number;
     longitude: number;
