@@ -7,12 +7,17 @@ import {
 } from '@influxdata/influxdb-client';
 import { QueryBuilder, Period } from '../../influxdb/query_builder';
 
+export interface MoistureSample {
+  raw: number;
+  moisture?: number;
+}
+
 export interface MeasurementData {
   temperature?: number;
-  level_1?: number;
-  level_2?: number;
-  level_3?: number;
-  level_4?: number;
+  level_1: MoistureSample;
+  level_2: MoistureSample;
+  level_3: MoistureSample;
+  level_4: MoistureSample;
   time: string;
 }
 
@@ -70,10 +75,10 @@ export class Measurements implements ServiceMethods<MeasurementDataArray> {
           const influxObject = tableMeta.toObject(row);
           result.push({
             temperature: influxObject.temperature,
-            level_1: influxObject.level_1,
-            level_2: influxObject.level_2,
-            level_3: influxObject.level_3,
-            level_4: influxObject.level_4,
+            level_1: { raw: influxObject.level_1 },
+            level_2: { raw: influxObject.level_2 },
+            level_3: { raw: influxObject.level_3 },
+            level_4: { raw: influxObject.level_4 },
             time: influxObject._time
           });
         },

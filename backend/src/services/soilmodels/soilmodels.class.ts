@@ -2,15 +2,15 @@ import { Db } from 'mongodb';
 import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
 import { Application } from '../../declarations';
 
-interface SoilModelSample {
+export interface SoilModelMoistureSample {
   raw: number;
   moisture: number;
 }
 
-interface SoilModelData {
+export interface SoilModelData {
   _id?: string;
   name: string;
-  samples: Array<SoilModelSample>;
+  samples: Array<SoilModelMoistureSample>;
 }
 
 export class Soilmodels extends Service<SoilModelData> {

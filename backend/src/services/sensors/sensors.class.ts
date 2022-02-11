@@ -3,6 +3,7 @@ import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
 import { Application } from '../../declarations';
 import { Params, Id } from '@feathersjs/feathers';
 import { MeasurementDataArray } from '../measurements/measurements.class';
+import { ModelMapper } from '../soilmodels/model_mapper';
 
 // A type interface for our Sensor (it does not validate any data)
 interface SensorData {
@@ -16,6 +17,7 @@ interface SensorData {
     longitude: number;
     height?: number;
   }
+  soil_model_id?: string;   // Mandatory ?
 }
 
 export class Sensors extends Service<SensorData> {
@@ -36,9 +38,15 @@ export class Sensors extends Service<SensorData> {
   async get(id: Id, params?: Params): Promise<SensorData> {
     const sensor = await super.get(id);
 
-    // Call moisture service for the moisture data
     if (sensor) {
+      // Call moisture service for the moisture data
       sensor.values = await this.app.service('measurements').get(sensor.deviceId, params);
+
+      // Fetch soil model and map values
+      if (sensor.soil_model_id) {
+        const soilModel = await this.app.service('soilmodels').get(sensor.soil_model_id);
+        ModelMapper.map_raw_values_to_model(sensor.values, soilModel);
+      }
     }
 
     return sensor;
