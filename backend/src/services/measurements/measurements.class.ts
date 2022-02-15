@@ -7,25 +7,15 @@ import {
 } from '@influxdata/influxdb-client';
 import { QueryBuilder, Period } from '../../influxdb/query_builder';
 
-export interface MoistureSample {
-  raw: number;
-  moisture?: number;
-}
-
-export interface MeasurementData {
-  temperature?: number;
-  level_1: MoistureSample;
-  level_2: MoistureSample;
-  level_3: MoistureSample;
-  level_4: MoistureSample;
+export interface Measurement {
+  field: string;
+  value: number;
   time: string;
 }
 
-export interface MeasurementDataArray extends Array<MeasurementData>{}
-
 interface ServiceOptions {}
 
-export class Measurements implements ServiceMethods<MeasurementDataArray> {
+export class Measurements implements ServiceMethods<Array<Measurement>> {
   app: Application;
   options: ServiceOptions;
 
@@ -35,27 +25,20 @@ export class Measurements implements ServiceMethods<MeasurementDataArray> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async find (params?: Params): Promise<MeasurementDataArray[] | Paginated<MeasurementDataArray>> {
+  async find (params?: Params): Promise<Array<Measurement> | Paginated<Array<Measurement>>> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async get (id: Id, params?: Params): Promise<MeasurementDataArray> {
-    // id = deviceId here
+  async get (id: Id, params?: Params): Promise<Array<Measurement>> {
+    // id = deviceId here, which is the hardwareId
 
     const queryPeriod = params?.query?.period as string || 'last';
+    const fields = params?.query?.fields as Array<string> || ['counter'];
 
     const bucket = this.app.get('influxdb').bucket;
     const queryApi = this.app.get('influxQueryAPI');
-
     const measurement = 'dust-sensor';
-    const fields = [
-      { field: 'internalTemperature', alias: 'temperature' },
-      { field: 'moistureLevel_1', alias: 'level_1' },
-      { field: 'moistureLevel_2', alias: 'level_2' },
-      { field: 'moistureLevel_3', alias: 'level_3' },
-      { field: 'moistureLevel_4', alias: 'level_4' },
-    ];
 
     let fluxQuery: ParameterizedQuery;
     if (queryPeriod === 'last') {
@@ -69,17 +52,18 @@ export class Measurements implements ServiceMethods<MeasurementDataArray> {
     console.log(fluxQuery);
 
     return new Promise((resolve, reject) => {
-      const result: MeasurementDataArray = [];
+      const result: Array<Measurement> = [];
       queryApi.queryRows(fluxQuery, {
         next(row: string[], tableMeta: FluxTableMetaData) {
           const influxObject = tableMeta.toObject(row);
-          result.push({
-            temperature: influxObject.temperature,
-            level_1: { raw: influxObject.level_1 },
-            level_2: { raw: influxObject.level_2 },
-            level_3: { raw: influxObject.level_3 },
-            level_4: { raw: influxObject.level_4 },
-            time: influxObject._time
+          console.log(influxObject);
+
+          fields.forEach(f => {
+            result.push({
+              field: f,
+              value: influxObject[f],
+              time: influxObject._time
+            });
           });
         },
         error(error: Error) {
@@ -94,22 +78,22 @@ export class Measurements implements ServiceMethods<MeasurementDataArray> {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async create (data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
+  async create (data: Array<Measurement>, params?: Params): Promise<Array<Measurement>> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async update (id: NullableId, data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
+  async update (id: NullableId, data: Array<Measurement>, params?: Params): Promise<Array<Measurement>> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async patch (id: NullableId, data: MeasurementDataArray, params?: Params): Promise<MeasurementDataArray> {
+  async patch (id: NullableId, data: Array<Measurement>, params?: Params): Promise<Array<Measurement>> {
     throw new MethodNotAllowed();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async remove (id: NullableId, params?: Params): Promise<MeasurementDataArray> {
+  async remove (id: NullableId, params?: Params): Promise<Array<Measurement>> {
     throw new MethodNotAllowed();
   }
 }

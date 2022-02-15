@@ -19,36 +19,22 @@ const periods = {
   'all': { start: '0', every: '24h' },
 };
 
-export interface Field {
-  field: string;
-  alias: string;
-}
-
 const QueryHelper = {
-  field_names(fields: Array<Field>): Array<string> {
-    return fields.map(f => f.field);
-  },
 
-  field_filter_expression(fields: Array<Field>) : FluxParameterLike {
+  field_filter_expression(fields: Array<string>) : FluxParameterLike {
     return fluxExpression(
-      this.field_names(fields).map(f => `r["_field"] == "${f}"`).join(' or ')
+      fields.map(f => `r["_field"] == "${f}"`).join(' or ')
     );    // Don't sanitize ! (would escape double quotes)
   },
 
-  fields_aliases(fields: Array<Field>): FluxParameterLike {
-    return fluxExpression(JSON.stringify(
-      fields.reduce((result, f) => Object.assign(result, { [f.field]: f.alias }), {})
-    ));
-  },
 };
 
 export const QueryBuilder = {
-  measurements_aggregate_window: (bucket: string, measurement: string, deviceId: string, period: Period, fields: Array<Field>) : ParameterizedQuery => {
+  measurements_aggregate_window: (bucket: string, measurement: string, deviceId: string, period: Period, fields: Array<string>) : ParameterizedQuery => {
 
     const fieldFilter = QueryHelper.field_filter_expression(fields);
-    const columnsToKeep = QueryHelper.field_names(fields).concat('_time');
+    const columnsToKeep = fields.concat('_time');
     const timing = (periods as any)[Period[period]];     // Not cool. How to fix?
-    const columnAliases = QueryHelper.fields_aliases(fields);
 
     const start = timing.start !== '0' ? fluxDuration(timing.start) : fluxExpression(timing.start);
     const every = fluxExpression(timing.every);
@@ -61,15 +47,13 @@ export const QueryBuilder = {
       |> aggregateWindow(every: ${every}, fn: mean, createEmpty: false )
       |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
       |> keep(columns: ${columnsToKeep})
-      |> rename(columns: ${columnAliases})
     `;
   },
 
-  last_measurement: (bucket: string, measurement: string, deviceId: string, fields: Array<Field>) : ParameterizedQuery => {
+  last_measurement: (bucket: string, measurement: string, deviceId: string, fields: Array<string>) : ParameterizedQuery => {
 
     const fieldFilter = QueryHelper.field_filter_expression(fields);
-    const columnsToKeep = QueryHelper.field_names(fields).concat('_time');
-    const columnAliases = QueryHelper.fields_aliases(fields);
+    const columnsToKeep = fields.concat('_time');
 
     return flux`from(bucket:"${bucket}") 
       |> range(start: 0)
@@ -79,7 +63,6 @@ export const QueryBuilder = {
       |> last()
       |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
       |> keep(columns: ${columnsToKeep})
-      |> rename(columns: ${columnAliases})
     `;
   }
 

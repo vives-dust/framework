@@ -1,26 +1,26 @@
-// Initializes the `sensors` service on path `/sensors`
+// Initializes the `devices` service on path `/devices`
 import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
-import { Sensors } from './sensors.class';
-import hooks from './sensors.hooks';
+import { Devices } from './devices.class';
+import hooks from './devices.hooks';
 
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    'sensors': Sensors & ServiceAddons<any>;
+    'devices': Devices & ServiceAddons<any>;
   }
 }
 
 export default function (app: Application): void {
   const options = {
-    // paginate: app.get('paginate')
+    paginate: app.get('paginate')
   };
 
   // Initialize our service with any options it requires
-  app.use('/sensors', new Sensors(options, app));
+  app.use('/devices', new Devices(options, app));
 
   // Get our initialized service so that we can register hooks
-  const service = app.service('sensors');
+  const service = app.service('devices');
 
   service.hooks(hooks);
 }

@@ -1,9 +1,9 @@
 import { SoilModelMoistureSample, SoilModelData } from './soilmodels.class';
-import { MeasurementDataArray } from '../measurements/measurements.class';
+import { SensorData } from '../sensors/sensors.class';
 
 export const ModelMapper = {
 
-  map_single_value_to_model(rawValue: number, model: SoilModelData): number {
+  map_single_moisture_value_to_model(rawValue: number, model: SoilModelData): number {
     // Sorting the model based on the distance from the rawValue.
     // Much cleaner approach than having to search for lower and upper value take extremities into consideration
     // Can't see impact of sorting to be much greater then couple of loop structures. At least not if model samples are relatively low.
@@ -15,16 +15,14 @@ export const ModelMapper = {
     const second = model.samples[1];
 
     // Linear interpolation
-    return ((second.moisture - first.moisture) / (second.raw - first.raw)) * (rawValue - second.raw) + second.moisture;
+    const moisture = (((second.moisture - first.moisture) / (second.raw - first.raw)) * (rawValue - second.raw) + second.moisture);
+    return (Math.round((moisture + Number.EPSILON) * 100) / 100);
   },
 
-  map_raw_values_to_model(measurements: MeasurementDataArray, model: SoilModelData) {
-    return measurements.forEach(m => {
-      m.level_1.moisture = this.map_single_value_to_model(m.level_1.raw, model);
-      m.level_2.moisture = this.map_single_value_to_model(m.level_2.raw, model);
-      m.level_3.moisture = this.map_single_value_to_model(m.level_3.raw, model);
-      m.level_4.moisture = this.map_single_value_to_model(m.level_4.raw, model);
-    });
+  map_moisture_values_to_model(sensordata: SensorData[], model: SoilModelData) {
+    sensordata.filter(sd => sd.type === 'moisture').forEach(
+      m => m.value = this.map_single_moisture_value_to_model(m.value, model)
+    );
   }
 
 };
