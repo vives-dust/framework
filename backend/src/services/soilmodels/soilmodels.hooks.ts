@@ -13,7 +13,7 @@ export default {
     create: [ validate.form(SoilModelSchemas.create, joiOptions) ],
     update: [ validate.form(SoilModelSchemas.update, joiOptions) ],
     patch: [ disallow() ],
-    remove: []
+    remove: [ disallow() ]
   },
 
   after: {
