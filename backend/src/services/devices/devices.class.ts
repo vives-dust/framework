@@ -7,7 +7,7 @@ import { Measurement } from '../measurements/measurements.class';
 import { ModelMapper } from '../soilmodels/model_mapper';
 
 interface Device {
-  _id?: string;
+  _id: string;
   name: string;
   hardwareId: string;
   description: string;
@@ -22,7 +22,7 @@ interface Device {
 
 export class Devices extends Service<Device> {
   app: Application;
-  
+
   //eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
     super(options);
@@ -39,11 +39,11 @@ export class Devices extends Service<Device> {
     const device = await super.get(id);
 
     device.sensors = await this.app.service('sensors').find({ query: { deviceId: id } }) as Array<Sensor>;
-    const influxFields = device.sensors.map(d => d.field);
+    const influxFields = device.sensors.map((s: Sensor) => s.field);
 
     // Allow indexing of meta-data using influxField
     const sensorMetaData: any = {};
-    device.sensors.forEach(d => { sensorMetaData[d.field] = d; });
+    device.sensors.forEach((s: Sensor) => { sensorMetaData[s.field] = s; });
 
     // Setup params for querying measurements
     const measurementParams = params || {};
@@ -51,7 +51,9 @@ export class Devices extends Service<Device> {
     const measurements = await this.app.service('measurements').get(device.hardwareId, measurementParams);
 
     // Join the measurements for each sensor with its meta-data
-    const sensorData : SensorData[] = measurements.map((m : Measurement) => Object.assign(m, sensorMetaData[m.field])) as SensorData[];
+    const sensorData: SensorData[] = measurements.map(
+      (m: Measurement) => Object.assign(m, sensorMetaData[m.field])
+    ) as SensorData[];
 
     if (device.soilModelId) {
       const soilModel = await this.app.service('soilmodels').get(device.soilModelId);
@@ -62,4 +64,5 @@ export class Devices extends Service<Device> {
 
     return device;
   }
+
 }
