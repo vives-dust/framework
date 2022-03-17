@@ -65,4 +65,16 @@ export class Devices extends Service<Device> {
     return device;
   }
 
+  async create(data: any, params: Params): Promise<Device> {
+    const { sensors, ...deviceData } = data;
+    const deviceObject = await super.create(deviceData, params) as Device;
+
+    sensors.forEach((sensor: Sensor) => { sensor.deviceId = deviceObject._id.toString(); });
+    deviceObject.sensors = await this.app.service('sensors').create(sensors) as Sensor[];
+
+    return new Promise((resolve) => {
+      resolve(deviceObject);
+    });
+  }
+
 }
