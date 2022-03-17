@@ -9,7 +9,7 @@ const SoilModelMoistureSampleSchema = Joi.object().keys({
 // See interface SoilModelData soilmodels/soilmodels.class.ts
 const SoilModelDataSchema = Joi.object().keys({
   name: Joi.string().required(),
-  samples: Joi.array().items(SoilModelMoistureSampleSchema)
+  samples: Joi.array().min(2).items(SoilModelMoistureSampleSchema).required()
 });
 
 export const SoilModelSchemas = {
