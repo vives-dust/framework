@@ -10,7 +10,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ disallow('external') ],
+    create: [ disallow('external'), validate.form(SensorSchemas.create, joiOptions) ],
     update: [ disallow() ],
     patch: [ disallow() ],
     remove: [ disallow() ]
