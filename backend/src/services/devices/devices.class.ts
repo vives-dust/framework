@@ -14,7 +14,7 @@ interface Device {
   location: {
     latitude: number;
     longitude: number;
-    height: number;
+    height?: number;
   },
   sensors?: Array<Sensor>;
   soilModelId?: string

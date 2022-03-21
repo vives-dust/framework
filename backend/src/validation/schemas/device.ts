@@ -9,7 +9,7 @@ const DeviceSchema = Joi.object().keys({
   location: Joi.object().keys({
     latitude: Joi.number().required(),
     longitude: Joi.number().required(),
-    height: Joi.number().required()
+    height: Joi.number()
   }).required(),
   soilModelId: Joi.string(),
   sensors: Joi.array().min(1).items(SensorSchema).required()
