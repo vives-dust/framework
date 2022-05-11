@@ -29,7 +29,8 @@ export default function (app: Application): Model<any> {
         longitude:  { type: Number, required: true },
         height: { type: Number, required: false }
       },
-      required: true
+      required: true,
+      _id: false
     },
     sensors: [ sensorSchema ]
   }, {
