@@ -9,6 +9,7 @@ export default function (app: Application): Model<any> {
   const modelName = 'soilmodels';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+  
   const schema = new Schema({
     name: { type: String, required: true },
     samples: {
@@ -18,7 +19,8 @@ export default function (app: Application): Model<any> {
           moisture: { type: Number, required: true }
         }
       ],
-      required: true
+      required: true,
+      _id: false    // Don't generate _id fields for subdocument
     },
   }, {
     timestamps: true
