@@ -57,6 +57,7 @@ export class Devices extends Service {
           aliases: [
             [sensor.measurementField, 'value']
           ],
+          pruneTags: true,
         }
       }) as SensorData[];
 

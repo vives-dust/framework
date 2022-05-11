@@ -16,7 +16,8 @@ const MeasurementQuerySchema = Joi.object().keys({
   every: Joi.string(),
   aliases: Joi.array().items(
     Joi.array().items(Joi.string()).length(2)
-  ).min(1)
+  ).min(1),
+  pruneTags: Joi.boolean()
 });
 
 export const MeasurementSchemas = {

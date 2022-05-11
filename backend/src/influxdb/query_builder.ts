@@ -2,7 +2,6 @@ import {
   ParameterizedQuery,
   flux,
   fluxExpression,
-  fluxString,
 } from '@influxdata/influxdb-client';
 
 export enum Period {
@@ -67,7 +66,8 @@ export interface InfluxDBQueryParams {
   start?: string,
   stop?: string,
   every?: string,         // Takes precedence over period.every
-  aliases?: { [key: string]: string }
+  aliases?: { [key: string]: string },
+  pruneTags?: boolean
 }
 
 export const QueryBuilder = {
@@ -85,7 +85,7 @@ export const QueryBuilder = {
       ${params.fields ? QueryHelper.field_filter(params.fields) : fluxExpression('')}
       ${every ? QueryHelper.aggregate_expression(every) : QueryHelper.last_expression()}
       |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
-      ${params.fields ? QueryHelper.keep_columns(params.fields, params.tags) : fluxExpression('')}
+      ${params.fields ? QueryHelper.keep_columns(params.fields, (params.pruneTags ? {} : params.tags)) : fluxExpression('')}
       ${params.aliases ? QueryHelper.rename_columns(params.aliases) : fluxExpression('')}
     `;
   },

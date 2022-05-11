@@ -37,16 +37,22 @@ export class Measurements implements ServiceMethods<Measurement> {
       stop: params?.query?.stop,
       every: params?.query?.every,
       aliases: (params?.query?.aliases ? Object.fromEntries(params?.query?.aliases) : undefined),
+      pruneTags: params?.query?.pruneTags,
     }
 
     let fluxQuery: ParameterizedQuery = QueryBuilder.build_query(influxQueryParams);
     // console.log(fluxQuery);
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let results : Measurement[] = [];
       queryApi.queryRows(fluxQuery, {
         next(row: string[], tableMeta: FluxTableMetaData) {
-          const influxObject = tableMeta.toObject(row);
+          let influxObject = tableMeta.toObject(row);
+
+          // Delete some influxdb specific meta data
+          delete influxObject.table;
+          delete influxObject.result;
+
           results.push(influxObject);
         },
         error(error: Error) {
