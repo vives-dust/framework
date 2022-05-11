@@ -16,6 +16,7 @@ export default function (app: Application): Model<any> {
   }, {
     timestamps: false,
     discriminatorKey: '_type',
+    _id: false
   });
 
   // Schema for a Device that contains SubDocs of Sensors
@@ -43,11 +44,11 @@ export default function (app: Application): Model<any> {
   const soilMoistureSensorSchema = new Schema({
     depth: { type: Number, required: true },
     soilModelId: { type: String, required: false },     // TODO: FIX TO REF !
-  });
+  }, { _id: false });
   sensorArrayType.discriminator('moisture', soilMoistureSensorSchema);
 
   const temperatureSensorSchema = new Schema({
-  });
+  }, { _id: false });
   sensorArrayType.discriminator('temperature', temperatureSensorSchema);
 
   // This is necessary to avoid model compilation errors in watch mode
