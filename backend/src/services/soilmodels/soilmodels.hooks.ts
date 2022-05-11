@@ -1,7 +1,6 @@
 import { HooksObject } from '@feathersjs/feathers';
 import validate from 'feathers-validate-joi';
-import { SoilModelSchemas } from '../../validation/schemas/soilmodel';
-import { disallow } from 'feathers-hooks-common';
+import { SoilModelSchemas } from '../../validation/soilmodel';
 
 const joiOptions = { convert: true, abortEarly: false };
 
@@ -11,9 +10,9 @@ export default {
     find: [],
     get: [],
     create: [ validate.form(SoilModelSchemas.create, joiOptions) ],
-    update: [ validate.form(SoilModelSchemas.update, joiOptions) ],
-    patch: [ disallow() ],
-    remove: [ disallow() ]
+    update: [],
+    patch: [],
+    remove: []
   },
 
   after: {

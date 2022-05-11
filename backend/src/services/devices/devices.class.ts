@@ -1,12 +1,25 @@
-import { Db } from 'mongodb';
-import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
+import { Id, Params } from '@feathersjs/feathers';
+import { Service, MongooseServiceOptions } from 'feathers-mongoose';
 import { Application } from '../../declarations';
-import { Params, Id } from '@feathersjs/feathers';
-import { Sensor, SensorData } from '../sensors/sensors.class';
-import { Measurement } from '../measurements/measurements.class';
 import { ModelMapper } from '../soilmodels/model_mapper';
 
-interface Device {
+export interface SensorData {
+  _time: string;
+  value: number;
+}
+
+export interface Sensor {
+  _id?: string;
+  _type: string;
+  measurementField: string;            // We need coupling with influx
+  values: SensorData[];
+
+  // Moisture Sensor
+  depth?: number;
+  soilModelId?: string;
+}
+
+export interface Device {
   _id: string;
   name: string;
   hardwareId: string;
@@ -14,67 +27,48 @@ interface Device {
   location: {
     latitude: number;
     longitude: number;
-    height?: number;
-  },
-  sensors?: Array<Sensor>;
-  soilModelId?: string
+    height: number;
+  };
+  sensors: Sensor[];
 }
 
-export class Devices extends Service<Device> {
+export class Devices extends Service {
   app: Application;
 
   //eslint-disable-next-line @typescript-eslint/no-unused-vars
-  constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
+  constructor(options: Partial<MongooseServiceOptions>, app: Application) {
     super(options);
     this.app = app;
-
-    const client: Promise<Db> = app.get('mongoClient');
-
-    client.then(db => {
-      this.Model = db.collection('devices');
-    });
   }
 
   async get(id: Id, params?: Params): Promise<Device> {
     const device = await super.get(id);
 
-    device.sensors = await this.app.service('sensors').find({ query: { deviceId: id } }) as Array<Sensor>;
-    const influxFields = device.sensors.map((s: Sensor) => s.field);
+    // Get measurements for each sensor
+    const sensors = await Promise.all(device.sensors.map(async (sensor : Sensor) => {
+      sensor.values = await this.app.service('measurements').find({
+        query: {
+          deviceId: device.hardwareId,
+          fields: [ sensor.measurementField ],
+          period: params?.query?.period,
+          start: params?.query?.start,
+          stop: params?.query?.stop,
+          every: params?.query?.every,
+          aliases: [
+            [sensor.measurementField, 'value']
+          ],
+        }
+      }) as SensorData[];
 
-    // Allow indexing of meta-data using influxField
-    const sensorMetaData: any = {};
-    device.sensors.forEach((s: Sensor) => { sensorMetaData[s.field] = s; });
+      if (sensor.soilModelId) {
+        const soilModel = await this.app.service('soilmodels').get(sensor.soilModelId);
+        ModelMapper.map_moisture_values_to_model(sensor.values, soilModel);
+      }
 
-    // Setup params for querying measurements
-    const measurementParams = params || {};
-    measurementParams.query = Object.assign(params?.query || {}, { fields: influxFields });
-    const measurements = await this.app.service('measurements').get(device.hardwareId, measurementParams);
-
-    // Join the measurements for each sensor with its meta-data
-    const sensorData: SensorData[] = measurements.map(
-      (m: Measurement) => Object.assign(m, sensorMetaData[m.field])
-    ) as SensorData[];
-
-    if (device.soilModelId) {
-      const soilModel = await this.app.service('soilmodels').get(device.soilModelId);
-      ModelMapper.map_moisture_values_to_model(sensorData, soilModel);
-    }
-
-    device.sensors = sensorData;
+      return sensor;
+    }));
+    device.sensors = sensors;
 
     return device;
   }
-
-  async create(data: any, params: Params): Promise<Device> {
-    const { sensors, ...deviceData } = data;
-    const deviceObject = await super.create(deviceData, params) as Device;
-
-    sensors.forEach((sensor: Sensor) => { sensor.deviceId = deviceObject._id.toString(); });
-    deviceObject.sensors = await this.app.service('sensors').create(sensors) as Sensor[];
-
-    return new Promise((resolve) => {
-      resolve(deviceObject);
-    });
-  }
-
 }

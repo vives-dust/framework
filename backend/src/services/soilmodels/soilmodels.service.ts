@@ -2,6 +2,7 @@
 import { ServiceAddons } from '@feathersjs/feathers';
 import { Application } from '../../declarations';
 import { Soilmodels } from './soilmodels.class';
+import createModel from '../../models/soilmodels.model';
 import hooks from './soilmodels.hooks';
 
 // Add this service to the service type index
@@ -13,6 +14,7 @@ declare module '../../declarations' {
 
 export default function (app: Application): void {
   const options = {
+    Model: createModel(app),
     paginate: app.get('paginate')
   };
 

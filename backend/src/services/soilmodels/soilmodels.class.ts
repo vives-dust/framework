@@ -1,27 +1,20 @@
-import { Db } from 'mongodb';
-import { Service, MongoDBServiceOptions } from 'feathers-mongodb';
+import { Service, MongooseServiceOptions } from 'feathers-mongoose';
 import { Application } from '../../declarations';
 
-export interface SoilModelMoistureSample {
+export interface SoilModelSample {
   raw: number;
   moisture: number;
 }
 
-export interface SoilModelData {
+export interface SoilModel {
   _id?: string;
   name: string;
-  samples: Array<SoilModelMoistureSample>;
+  samples: SoilModelSample[];
 }
 
-export class Soilmodels extends Service<SoilModelData> {
+export class Soilmodels extends Service<SoilModel> {
   //eslint-disable-next-line @typescript-eslint/no-unused-vars
-  constructor(options: Partial<MongoDBServiceOptions>, app: Application) {
+  constructor(options: Partial<MongooseServiceOptions>, app: Application) {
     super(options);
-
-    const client: Promise<Db> = app.get('mongoClient');
-
-    client.then(db => {
-      this.Model = db.collection('soilmodels');
-    });
   }
 }

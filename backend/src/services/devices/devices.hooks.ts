@@ -1,7 +1,6 @@
 import { HooksObject } from '@feathersjs/feathers';
-import { disallow } from 'feathers-hooks-common';
 import validate from 'feathers-validate-joi';
-import { DeviceSchemas } from '../../validation/schemas/device';
+import { DeviceSchemas } from '../../validation/device';
 
 const joiOptions = { convert: true, abortEarly: false };
 
@@ -13,7 +12,7 @@ export default {
     create: [ validate.form(DeviceSchemas.create, joiOptions) ],
     update: [],
     patch: [],
-    remove: [ disallow() ]
+    remove: []
   },
 
   after: {
