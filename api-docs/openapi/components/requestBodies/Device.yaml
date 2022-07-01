@@ -1,0 +1,23 @@
+---
+name: Prototype 1
+hardwareId: eui-70b3d57ed0049f81
+description: Our first prototype sensor
+location:
+  latitude: 51.194154
+  longitude: 3.21767
+  height: 0
+sensors:
+- type: temperature
+  field: internalTemperature
+- type: moisture
+  field: moistureLevel_1
+  depth: -5
+- type: moisture
+  field: moistureLevel_2
+  depth: -12
+- type: moisture
+  field: moistureLevel_3
+  depth: -18
+- type: moisture
+  field: moistureLevel_4
+  depth: -22

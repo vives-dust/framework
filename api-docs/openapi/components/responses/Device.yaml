@@ -1,0 +1,44 @@
+_id: 62385db5f2aebbd3b79f98d0
+name: Prototype 1
+hardwareId: eui-70b3d57ed0049f81
+description: Our first prototype sensor
+location:
+  latitude: 51.194154
+  longitude: 3.21767
+  height: 0
+soilModelId: 62385d23f2aebbd3b79f98cf
+sensors:
+- field: internalTemperature
+  value: 22
+  time: '2022-03-21T12:33:55.5Z'
+  _id: 62385db5f2aebbd3b79f98d1
+  type: temperature
+  deviceId: 62385db5f2aebbd3b79f98d0
+- field: moistureLevel_1
+  value: 3.14
+  time: '2022-03-21T12:33:55.5Z'
+  _id: 62385db5f2aebbd3b79f98d2
+  type: moisture
+  depth: -5
+  deviceId: 62385db5f2aebbd3b79f98d0
+- field: moistureLevel_2
+  value: 2.84
+  time: '2022-03-21T12:33:55.5Z'
+  _id: 62385db5f2aebbd3b79f98d3
+  type: moisture
+  depth: -12
+  deviceId: 62385db5f2aebbd3b79f98d0
+- field: moistureLevel_3
+  value: 2.72
+  time: '2022-03-21T12:33:55.5Z'
+  _id: 62385db5f2aebbd3b79f98d4
+  type: moisture
+  depth: -18
+  deviceId: 62385db5f2aebbd3b79f98d0
+- field: moistureLevel_4
+  value: 2.64
+  time: '2022-03-21T12:33:55.5Z'
+  _id: 62385db5f2aebbd3b79f98d5
+  type: moisture
+  depth: -22
+  deviceId: 62385db5f2aebbd3b79f98d0

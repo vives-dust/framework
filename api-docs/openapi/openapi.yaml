@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  version: 0.1.0
+  title: dust.devbit.be
+  termsOfService: 'https://example.com/terms/'
+  contact:
+    # email: contact@example.com
+    url: 'http://example.com/contact'
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  x-logo:
+    url: 'https://redocly.github.io/openapi-template/logo.png'
+  description:
+    $ref: ./info-description.md
+tags:
+  - name: Devices
+    description: Manage devices.
+  - name: Sensors
+    description: Manage sensors.
+  - name: SoilModels
+    description: Manage soil models.
+servers:
+  - url: 'http://dust.devbit.be/api/v1'
+  - url: 'https://dust.devbit.be/api/v1'
+paths:
+  '/devices/{id}':
+    $ref: 'paths/devices@{id}.yaml'
+  '/sensors/{id}':
+    $ref: 'paths/sensors@{id}.yaml'
+  '/soilmodels/{id}':
+    $ref: 'paths/soilmodels@{id}.yaml'
+components:
+  securitySchemes:
+    main_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: 'http://example.com/api/oauth/dialog'
+          scopes:
+            'read:users': read users info
+            'write:users': modify or remove users
+    api_key:
+      type: apiKey
+      in: header
+      name: api_key
+    basic_auth:
+      type: http
+      scheme: basic

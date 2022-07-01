@@ -1,0 +1,10 @@
+name: Leemzand v1
+samples:
+- raw: 50756
+  moisture: 2.3
+- raw: 37054
+  moisture: 12.45
+- raw: 20278
+  moisture: 29.74
+- raw: 33109
+  moisture: 34.14

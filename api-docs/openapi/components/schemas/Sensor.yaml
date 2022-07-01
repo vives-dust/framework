@@ -1,0 +1,27 @@
+type: object
+description: A sensor entity at attached to the device
+properties:
+  _id:
+    description: A unique identifier for the sensor
+    readOnly: true
+    type: string
+    example: 62385db5f2aebbd3b79f98d1
+  type:
+    description: The type of sensor
+    type: string
+    enum:
+      - temperature
+      - moisture
+    example: temperature
+  field:
+    description: The influx db field used to store this sensors value
+    type: string
+    example: internalTemperature
+  depth:
+    description: The depth (in cm) of the sensor in case of a moisture sensor
+    type: string
+    example: -12
+required:
+  - _id
+  - type
+  - field

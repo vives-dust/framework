@@ -1,0 +1,36 @@
+type: object
+description: A soil model can translate raw measured values to moisture percentages
+properties:
+  _id:
+    description: A unique identifier for the soil model
+    readOnly: true
+    type: string
+    example: 620bb96be80c0c455275e664
+  name:
+    description: A descriptive name for the soil model
+    type: string
+  samples:
+    description: A list of mappings between a raw measured value and a percentage of soil moisture
+    type: array
+    minItems: 2
+    items:
+      type: object
+      description: A single soil moisture sample that maps a raw measured value to a percentage of soil moisture
+      properties:
+        raw:
+          description: A raw measured value
+          type: integer
+          minimum: 0
+          maximum: 65535
+        moisture:
+          description: The moisture percentage corresponding with the raw value
+          type: number
+          minimum: 0
+          maximum: 100
+      required:
+        - raw
+        - moisture
+required:
+  - _id
+  - name
+  - samples

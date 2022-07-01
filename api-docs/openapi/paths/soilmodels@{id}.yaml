@@ -1,0 +1,45 @@
+get:
+  tags:
+    - SoilModels
+  summary: Soil Model details
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the soil model
+      required: true
+      schema:
+        type: string
+      example: "62065384c94631d3f2c5d968"
+  responses:
+    '200':
+      description: A JSON object containing the details of a single soil model
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/SoilModel.yaml
+          example:
+            $ref: ../components/responses/SoilModel.yaml
+post:
+  tags:
+    - SoilModels
+  summary: Create a new soil model
+  requestBody:
+    description: A JSON object containing the details of the new soil model
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: ../components/schemas/SoilModel.yaml
+        example:
+          $ref: ../components/requestBodies/SoilModel.yaml
+  responses:
+    '201':
+      description: A JSON object containing the details of the new soil model
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/SoilModel.yaml
+          example:
+            $ref: ../components/responses/SoilModel.yaml

@@ -1,0 +1,45 @@
+get:
+  tags:
+    - Devices
+  summary: Device details
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the device
+      required: true
+      schema:
+        type: string
+      example: "62385db5f2aebbd3b79f98d0"
+  responses:
+    '200':
+      description: A JSON object containing the details of a single device
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/Device.yaml
+          example:
+            $ref: ../components/responses/Device.yaml
+post:
+  tags:
+    - Devices
+  summary: Create a new device
+  requestBody:
+    description: A JSON object containing the details of the new device
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: ../components/schemas/Device.yaml
+        example:
+          $ref: ../components/requestBodies/Device.yaml
+  responses:
+    '201':
+      description: A JSON object containing the details of the new device
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/Device.yaml
+          example:
+            $ref: ../components/responses/Device.yaml
