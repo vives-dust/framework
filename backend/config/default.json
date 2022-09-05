@@ -9,7 +9,7 @@
   "authentication": {
     "entity": "user",
     "service": "users",
-    "secret": "2xXEV9itL2gzD+nnDRVn0VcU+/c=",
+    "secret": "BACKEND_AUTH_SECRET",
     "authStrategies": [
       "jwt",
       "local"
@@ -18,7 +18,7 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://yourdomain.com",
+      "audience": "BACKEND_DOMAIN",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"
@@ -31,7 +31,9 @@
   "mongodb": {
     "host": "MONGODB_HOST",
     "port": "MONGODB_PORT",
-    "database": "MONGODB_DATABASE"
+    "database": "MONGODB_DATABASE",
+    "root_username": "MONGODB_ROOT_USERNAME",
+    "root_password": "MONGODB_ROOT_PASSWORD"
   },
   "influxdb": {
     "host": "INFLUXDB_HOST",

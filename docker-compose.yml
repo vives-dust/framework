@@ -1,5 +1,6 @@
 version: '3.0'
 services:
+  
   redis:
     image: 'redis'
     environment:
@@ -7,6 +8,7 @@ services:
     restart: unless-stopped
     volumes:
       - redis-data:/data
+  
   ingest:
     build:
       context: ./ingest
@@ -20,6 +22,7 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_KEY=${REDIS_KEY}
     restart: unless-stopped
+  
   process:
     build:
       context: ./process
@@ -34,6 +37,7 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_KEY=${REDIS_KEY}
     restart: unless-stopped
+  
   influxdb:
     image: 'influxdb:2.1'
     ports:
@@ -55,6 +59,7 @@ services:
       traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
       traefik.http.services.dust_grafana.loadbalancer.server.port: 8086
       traefik.docker.network: reverse_proxy
+  
   grafana:
     image: 'grafana/grafana'
     depends_on: 
@@ -84,6 +89,7 @@ services:
     networks:
       - default
       - reverse_proxy
+  
   weatherapi:
     build:
       context: ./weatherapi
@@ -98,6 +104,7 @@ services:
       - INFLUXDB_HOST=${INFLUXDB_HOST}
       - INFLUXDB_PORT=${INFLUXDB_PORT}
     restart: unless-stopped
+  
   weatherstation:
     image: 'telegraf'
     restart: unless-stopped
@@ -107,11 +114,46 @@ services:
       - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
       - INFLUX_ORG=${INFLUXDB_INIT_ORG}
       - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+  
+  mongodb:
+    image: mongo
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+    volumes:
+      - mongodb-data:/data/db
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "3030:3030"
+    depends_on:
+      - influxdb
+      - mongodb
+    environment:
+      - MONGODB_HOST=${MONGODB_HOST}
+      - MONGODB_PORT=${MONGODB_PORT}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
+      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_PORT=${INFLUXDB_PORT}
+      - INFLUXDB_BUCKET=${INFLUXDB_INIT_BUCKET}
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
+      - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+    restart: unless-stopped
+
 volumes:
   influxdb-data:      # delete after migration
   influxdb2-data:
   influxdb2-config:
   redis-data:
+  mongodb-data:
 
 networks:
   reverse_proxy:
