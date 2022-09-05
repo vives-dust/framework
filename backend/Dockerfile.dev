@@ -1,5 +1,5 @@
 # The base image to start from
-FROM node:16.13.0-buster
+FROM node:16.17.0-buster
 
 # Setup working directory for the app
 WORKDIR /app
