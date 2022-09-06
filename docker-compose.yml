@@ -55,7 +55,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
       - DOCKER_INFLUXDB_INIT_MODE=upgrade
     labels:
-      traefik.enable: true
+      traefik.enable: "true"
       traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
       traefik.http.services.dust_grafana.loadbalancer.server.port: 8086
       traefik.docker.network: reverse_proxy
@@ -82,7 +82,7 @@ services:
       - ./grafana/dashboards:/var/lib/grafana/dashboards
       - ./grafana/config.ini:/etc/grafana/config.ini
     labels:
-      traefik.enable: true
+      traefik.enable: "true"
       traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
       traefik.http.services.dust_grafana.loadbalancer.server.port: 3000
       traefik.docker.network: reverse_proxy
