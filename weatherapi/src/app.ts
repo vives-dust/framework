@@ -24,8 +24,13 @@ const weatherApi = new WeatherApi(locations, apiKey)
 console.log('Weatherapi ready...')
 
 const fetchData = async () => {
-    const result = await weatherApi.getCurrentWeather()
-    influxdb.save(result)
+    try {
+        const result = await weatherApi.getCurrentWeather()
+        influxdb.save(result)
+    }
+    catch(err) {
+        console.log("Failed to fetch weather")
+    }
 }
 
 fetchData()
