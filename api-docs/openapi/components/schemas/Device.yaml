@@ -20,23 +20,23 @@ properties:
     example: Prototype placed at the VIVES Campus in Bruges that contains temperature and moisture sensors.
   location:
     type: object
-      description: The GPS location of the device
-      properties:
-        latitude:
-          description: The latitude component of the location
-          type: double
-          example: 51.1940877
-        longitude:
-          description: The longitude component of the location
-          type: double
-          example: 3.2157789
-        height:
-          description: The approximate height component of the location in meters
-          type: integer
-          example: 2
-      required:
-        - latitude
-        - longitude
+    description: The GPS location of the device
+    properties:
+      latitude:
+        description: The latitude component of the location
+        type: number
+        example: 51.1940877
+      longitude:
+        description: The longitude component of the location
+        type: number
+        example: 3.2157789
+      height:
+        description: The approximate height component of the location in meters
+        type: integer
+        example: 2
+    required:
+      - latitude
+      - longitude
   soilModelId:
     description: The id of the soil model that should be used for moisture sensors of this device
     type: string
