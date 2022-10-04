@@ -165,9 +165,24 @@ services:
     networks:
       - default
       - reverse_proxy
+  api-docs:
+    build:
+      context: ./api-docs
+    ports:
+      - 80
+    restart: unless-stopped
+    networks:
+      - reverse_proxy
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dust_api_docs.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/docs/api`)
+      traefik.http.middlewares.dust_api_docs-stripprefix.stripprefix.prefixes: /docs/api
+      traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-stripprefix
+      traefik.http.services.dust_api_docs.loadbalancer.server.port: 80
+      traefik.docker.network: reverse_proxy
  
 volumes:
-  influxdb-data:      # delete after migration
+  # influxdb-data:      # delete after migration
   influxdb2-data:
   influxdb2-config:
   redis-data:
