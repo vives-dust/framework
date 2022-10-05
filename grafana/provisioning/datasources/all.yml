@@ -11,6 +11,7 @@ datasources:
     editable: true
   - name: 'InfluxDB'
     type: 'influxdb'
+    uid: beb9e6ceb6d8c052
     access: 'proxy'
     org_id: 1
     url: 'http://influxdb:8086'
