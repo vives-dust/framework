@@ -43,7 +43,6 @@ services:
     ports:
      - 8086:8086
     volumes:
-      - influxdb-data:/var/lib/influxdb
       - influxdb2-data:/var/lib/influxdb2
       - influxdb2-config:/etc/influxdb2
     restart: unless-stopped
@@ -53,7 +52,6 @@ services:
       - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_INIT_ORG}
       - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_INIT_BUCKET}
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
-      - DOCKER_INFLUXDB_INIT_MODE=upgrade
     labels:
       traefik.enable: "true"
       traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
@@ -149,7 +147,6 @@ services:
     restart: unless-stopped
 
 volumes:
-  influxdb-data:      # delete after migration
   influxdb2-data:
   influxdb2-config:
   redis-data:
