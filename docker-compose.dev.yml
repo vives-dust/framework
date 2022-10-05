@@ -108,7 +108,7 @@ services:
   #     - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
 
   mongodb:
-    image: mongo
+    image: mongo:6.0.2
     restart: unless-stopped
     environment:
       - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}

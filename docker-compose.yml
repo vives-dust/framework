@@ -39,9 +39,9 @@ services:
     restart: unless-stopped
   
   influxdb:
-    image: 'influxdb:2.1'
+    image: 'influxdb:2.4'
     ports:
-     - 8086:8086
+     - 8086
     volumes:
       - influxdb2-data:/var/lib/influxdb2
       - influxdb2-config:/etc/influxdb2
@@ -54,16 +54,21 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
     labels:
       traefik.enable: "true"
-      traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
-      traefik.http.services.dust_grafana.loadbalancer.server.port: 8086
+      traefik.http.routers.dust_influx.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/influx`)
+      traefik.http.routers.dust_influx.middlewares: dust_influx-stripprefix
+      traefik.http.middlewares.dust_influx-stripprefix.stripprefix.prefixes: /influx
+      traefik.http.services.dust_influx.loadbalancer.server.port: 8086
       traefik.docker.network: reverse_proxy
-  
+    networks:
+      - default
+      - reverse_proxy
+ 
   grafana:
     image: 'grafana/grafana'
     depends_on: 
       - influxdb
     ports:
-      - 3000:3000
+      - 3000
     restart: unless-stopped
     environment:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
@@ -71,6 +76,7 @@ services:
       - GF_AUTH_BASIC_ENABLED=false
       - GF_ENABLE_GZIP=true
       - GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH=/var/lib/grafana/dashboards/dust.json
+      - GF_SERVER_ROOT_URL=https://${APPLICATION_DOMAIN_NAME}/grafana
       - PLUGINS=redis-datasource
       - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
       - INFLUX_ORG=${INFLUXDB_INIT_ORG}
@@ -81,7 +87,9 @@ services:
       - ./grafana/config.ini:/etc/grafana/config.ini
     labels:
       traefik.enable: "true"
-      traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
+      traefik.http.routers.dust_grafana.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/grafana`)
+      traefik.http.routers.dust_grafana.middlewares: dust_grafana-stripprefix
+      traefik.http.middlewares.dust_grafana-stripprefix.stripprefix.prefixes: /grafana
       traefik.http.services.dust_grafana.loadbalancer.server.port: 3000
       traefik.docker.network: reverse_proxy
     networks:
@@ -114,7 +122,7 @@ services:
       - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
   
   mongodb:
-    image: mongo
+    image: mongo:6.0.2
     restart: unless-stopped
     environment:
       - MONGO_INITDB_DATABASE=${MONGODB_DATABASE}
@@ -144,8 +152,33 @@ services:
       - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
       - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dust_backend.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/api`)
+      traefik.http.middlewares.dust_backend-stripprefix.stripprefix.prefixes: /api
+      traefik.http.routers.dust_backend.middlewares: dust_backend-stripprefix
+      traefik.http.services.dust_backend.loadbalancer.server.port: 3030
+      traefik.docker.network: reverse_proxy
     restart: unless-stopped
-
+    networks:
+      - default
+      - reverse_proxy
+  api-docs:
+    build:
+      context: ./api-docs
+    ports:
+      - 80
+    restart: unless-stopped
+    networks:
+      - reverse_proxy
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dust_api_docs.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/docs/api`)
+      traefik.http.middlewares.dust_api_docs-stripprefix.stripprefix.prefixes: /docs/api
+      traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-stripprefix
+      traefik.http.services.dust_api_docs.loadbalancer.server.port: 80
+      traefik.docker.network: reverse_proxy
+ 
 volumes:
   influxdb2-data:
   influxdb2-config:
