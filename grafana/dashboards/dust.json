@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -22,15 +25,14 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1640342591664,
+  "iteration": 1664985685756,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -42,10 +44,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -62,7 +60,7 @@
       "id": 16,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -74,9 +72,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -94,6 +96,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -125,7 +128,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -137,10 +140,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -157,7 +156,7 @@
       "id": 15,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -169,9 +168,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -189,6 +192,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_2\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -220,7 +224,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -232,10 +236,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -252,7 +252,7 @@
       "id": 14,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -264,9 +264,13 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -284,6 +288,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -315,7 +320,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -327,10 +332,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -347,21 +348,25 @@
       "id": 7,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -379,6 +384,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -410,7 +416,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -422,10 +428,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -442,21 +444,25 @@
       "id": 17,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -474,6 +480,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"internalTemperature\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -505,7 +512,7 @@
     {
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
@@ -541,21 +548,25 @@
       "id": 10,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -573,6 +584,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -602,6 +614,10 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -620,8 +636,11 @@
               "viz": false
             },
             "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
-            "pointSize": 3,
+            "pointSize": 1,
             "scaleDistribution": {
               "type": "linear"
             },
@@ -635,6 +654,7 @@
               "mode": "area"
             }
           },
+          "displayName": "${__field.name}",
           "links": [],
           "mappings": [],
           "thresholds": {
@@ -656,7 +676,56 @@
           },
           "unit": "none"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_1"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-10cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_2"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-20cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_3"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-45cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_4"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-60cm"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 10,
@@ -669,10 +738,12 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "8.3.3",
@@ -681,7 +752,7 @@
           "alias": "-60cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -700,6 +771,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\" or r[\"_field\"] == \"moistureLevel_2\" or r[\"_field\"] == \"moistureLevel_3\" or r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -728,7 +800,7 @@
           "alias": "-45cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -775,7 +847,7 @@
           "alias": "-20cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -822,7 +894,7 @@
           "alias": "-10cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -870,8 +942,13 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
+          "displayName": "${__field.name}",
           "links": [],
           "mappings": [],
           "thresholds": {
@@ -888,7 +965,56 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_1"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-10cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_2"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-20cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_3"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-45cm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "moistureLevel_4"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "-60cm"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -899,6 +1025,8 @@
       "id": 18,
       "options": {
         "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
         "orientation": "horizontal",
         "reduceOptions": {
           "calcs": [
@@ -909,13 +1037,13 @@
         },
         "showUnfilled": true
       },
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "targets": [
         {
           "alias": "-10cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -934,6 +1062,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\" or r[\"_field\"] == \"moistureLevel_2\" or r[\"_field\"] == \"moistureLevel_3\" or r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "D",
           "resultFormat": "time_series",
           "select": [
@@ -962,7 +1091,7 @@
           "alias": "-20cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -1009,7 +1138,7 @@
           "alias": "-45cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -1056,7 +1185,7 @@
           "alias": "-60cm",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
           "groupBy": [
             {
@@ -1110,11 +1239,13 @@
       "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "displayName": "Frequency",
+          "links": [],
+          "unit": "rothz"
         },
         "overrides": []
       },
@@ -1129,27 +1260,33 @@
       "hiddenSeries": false,
       "id": 12,
       "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
+        "alignAsTable": false,
+        "avg": true,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": false,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
       "linewidth": 1,
+      "maxDataPoints": 100,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "pointradius": 0.5,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:128",
           "alias": "SNR",
           "yaxis": 2
         }
@@ -1160,6 +1297,10 @@
       "targets": [
         {
           "alias": "RSSI",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -1177,6 +1318,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"frequency\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1203,6 +1345,10 @@
         },
         {
           "alias": "SNR",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -1261,12 +1407,14 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:54",
           "decimals": 2,
-          "format": "dBm",
+          "format": "rothz",
           "logBase": 1,
           "show": true
         },
         {
+          "$$hashKey": "object:55",
           "decimals": 1,
           "format": "dB",
           "label": "",
@@ -1285,11 +1433,13 @@
       "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "displayName": "Battery Voltage",
+          "links": [],
+          "unit": "volt"
         },
         "overrides": []
       },
@@ -1314,14 +1464,15 @@
       },
       "lines": true,
       "linewidth": 1,
+      "maxDataPoints": 300,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "pointradius": 0.5,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
@@ -1329,6 +1480,10 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -1346,6 +1501,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1409,11 +1565,13 @@
       "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "displayName": "Internal Temperature",
+          "links": [],
+          "unit": "celsius"
         },
         "overrides": []
       },
@@ -1438,12 +1596,13 @@
       },
       "lines": true,
       "linewidth": 1,
+      "maxDataPoints": 250,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1454,6 +1613,10 @@
       "targets": [
         {
           "alias": "Frequency",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -1471,6 +1634,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"internalTemperature\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
           "refId": "D",
           "resultFormat": "time_series",
           "select": [
@@ -1512,7 +1676,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "celsius",
           "logBase": 1,
           "show": true
         },
@@ -1533,10 +1697,11 @@
       "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "P951FEA4DE68E13C5"
+        "uid": "beb9e6ceb6d8c052"
       },
       "fieldConfig": {
         "defaults": {
+          "displayName": "Number of Gateways",
           "links": []
         },
         "overrides": []
@@ -1562,17 +1727,19 @@
       },
       "lines": true,
       "linewidth": 1,
+      "maxDataPoints": 250,
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.3.3",
+      "pluginVersion": "9.0.2",
       "pointradius": 0.5,
-      "points": true,
+      "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:268",
           "alias": "SNR",
           "yaxis": 2
         }
@@ -1583,6 +1750,10 @@
       "targets": [
         {
           "alias": "Number of gateways",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
           "groupBy": [
             {
               "params": [
@@ -1600,6 +1771,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"gateways\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1658,29 +1830,29 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 34,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "eui-70b3d57ed0049f81",
-          "value": "eui-70b3d57ed0049f81"
+          "selected": true,
+          "text": "eui-70b3d57ed0052b40",
+          "value": "eui-70b3d57ed0052b40"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "P951FEA4DE68E13C5"
+          "uid": "beb9e6ceb6d8c052"
         },
-        "definition": "",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
         "hide": 0,
         "includeAll": false,
         "label": "Device ID",
         "multi": false,
         "name": "DeviceId",
         "options": [],
-        "query": "show tag values from \"tph\" with key = \"devId\"",
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1713,6 +1885,6 @@
   "timezone": "",
   "title": "Dust Prototype",
   "uid": "gw1r1lKGz",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
