@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Redoc</title>
+    <meta charset="utf-8">
+    <title>API Reference | ReDoc</title>
     <!-- needed for adaptive design -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700|Roboto:300,400,700"
-      rel="stylesheet"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="favicon.png">
 
     <!--
-    Redoc doesn't change outer page styles
+    ReDoc uses font options from the parent element
+    So override default browser styles
     -->
     <style>
       body {
@@ -19,15 +17,9 @@
         padding: 0;
       }
     </style>
+    {{{redocHead}}}
   </head>
   <body>
-    <!--
-    Redoc element with link to your OpenAPI definition
-    -->
-    <redoc spec-url="./dust.yaml"></redoc>
-    <!--
-    Link to Redoc JavaScript on CDN for rendering standalone element
-    -->
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
+    {{{redocHTML}}}
   </body>
 </html>

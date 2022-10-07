@@ -5,7 +5,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-COPY ./docs /app/dist
+COPY ./docs-docker /app/dist
 
 FROM nginx:alpine
 COPY --from=build-stage /app/dist /usr/share/nginx/html
