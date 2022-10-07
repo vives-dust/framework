@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,12 +24,15 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1643837896311,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -59,7 +65,7 @@
       "id": 11,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -72,60 +78,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "temperature_c"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Temperature",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -158,7 +129,7 @@
       "id": 13,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -171,60 +142,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rain_mm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Rain",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -257,7 +193,7 @@
       "id": 15,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -270,60 +206,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windspeed_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "windspeed_kmh"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windspeed_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Wind Speed",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -336,10 +237,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -356,7 +253,7 @@
       "id": 17,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -369,60 +266,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"winddirection_degrees\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "winddirection_degrees"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"winddirection_degrees\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Wind Direction",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -435,10 +297,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -455,7 +313,7 @@
       "id": 18,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -468,60 +326,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"solarradiation_wm2\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "solarradiation_wm2"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"solarradiation_wm2\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Solar Radiation",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -534,10 +357,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -554,7 +373,7 @@
       "id": 22,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -567,66 +386,33 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity_percent\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "humidity_percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity_percent\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Humidity",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -661,10 +447,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -674,31 +456,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "windgust_kmh {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
-            },
-            "properties": [
-              {
-                "id": "custom.showPoints",
-                "value": "always"
-              },
-              {
-                "id": "custom.lineWidth",
-                "value": 0
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "displayName",
-                "value": "Wind Gust"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "windspeed_kmh {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
+              "options": "windspeed_kmh {stationId=\"garni_nico\", topic=\"weatherstation/garni_nico\"}"
             },
             "properties": [
               {
@@ -720,115 +478,32 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Wind Speed",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windspeed_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "windspeed_kmh"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
-        },
-        {
-          "alias": "Wind Gust",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windgust_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "windgust_kmh"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windspeed_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Wind",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -861,7 +536,7 @@
       "id": 12,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -874,60 +549,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dewpoint_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "dewpoint_c"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dewpoint_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Dew Point",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -960,7 +600,7 @@
       "id": 14,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -973,60 +613,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dailyrain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "dailyrain_mm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dailyrain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Daily Rain Accumulation",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1059,7 +664,7 @@
       "id": 16,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1072,60 +677,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windgust_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "windgust_kmh"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"windgust_kmh\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Wind Gust",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1138,10 +708,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -1158,7 +724,7 @@
       "id": 21,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1171,60 +737,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"barometer_hpa\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "barometer_hpa"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"barometer_hpa\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Pressure",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1257,7 +788,7 @@
       "id": 19,
       "options": {
         "colorMode": "value",
-        "graphMode": "area",
+        "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -1270,60 +801,25 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
       "targets": [
         {
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"uv_index\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "uv_index"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"uv_index\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "UV Index",
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
         "h": 4,
         "w": 2,
@@ -1332,19 +828,34 @@
       },
       "id": 24,
       "options": {
-        "content": "# ${stationid}",
+        "content": "# ${stationId}",
         "mode": "markdown"
       },
-      "pluginVersion": "8.3.4",
+      "pluginVersion": "9.1.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
       "type": "text"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1392,24 +903,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "temperature_c {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
+              "options": "temperature_c {stationId=\"garni_nico\", topic=\"weatherstation/garni_nico\"}"
             },
             "properties": [
               {
                 "id": "displayName",
                 "value": "Temperature"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "dewpoint_c {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Dewpoint"
               }
             ]
           }
@@ -1426,121 +925,40 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Temperature",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "temperature_c"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
-        },
-        {
-          "alias": "Dew point",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dewpoint_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "dewpoint_c"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_c\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Temperature",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "axisSoftMax": 360,
@@ -1577,10 +995,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -1590,7 +1004,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "winddirection_degrees {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
+              "options": "winddirection_degrees {stationId=\"garni_nico\", topic=\"weatherstation/garni_nico\"}"
             },
             "properties": [
               {
@@ -1612,66 +1026,32 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Wind Direction",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"winddirection_degrees\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "winddirection_degrees"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"winddirection_degrees\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Wind direction",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -1679,6 +1059,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1726,22 +1108,6 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "dailyrain_mm {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
-            },
-            "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              },
-              {
-                "id": "displayName",
-                "value": "Daily Rain"
-              }
-            ]
-          },
-          {
-            "matcher": {
               "id": "byFrameRefID",
               "options": "A"
             },
@@ -1765,121 +1131,40 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Precipitation Rate",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rain_mm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
-        },
-        {
-          "alias": "Precipitation Daily Accumulation",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dailyrain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "dailyrain_mm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"dailyrain_mm\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Precipitation",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -1926,33 +1211,13 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "uv_index {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
+              "id": "byFrameRefID",
+              "options": "A"
             },
             "properties": [
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              },
-              {
-                "id": "unit",
-                "value": "none"
-              },
               {
                 "id": "displayName",
                 "value": "UV Index"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "solarradiation_wm2 {host=\"7725950fda79\", stationId=\"LANNOOSTATION666\", topic=\"weatherstation/LANNOOSTATION666\"}"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Solar Radiation"
               }
             ]
           }
@@ -1969,121 +1234,40 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Solar Radiation",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"solarradiation_wm2\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "solarradiation_wm2"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
-        },
-        {
-          "alias": "UV Index",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"uv_index\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "uv_index"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"solarradiation_wm2\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Solar Radiation",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2116,12 +1300,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
+                "color": "green"
               }
             ]
           },
@@ -2153,72 +1332,40 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Pressure",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"barometer_hpa\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "barometer_hpa"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"barometer_hpa\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Pressure",
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -2251,24 +1398,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
+                "color": "green"
               }
             ]
           },
           "unit": "percent"
         },
         "overrides": [
-          {
-            "matcher": {
-              "id": "byName"
-            },
-            "properties": []
-          },
           {
             "matcher": {
               "id": "byFrameRefID",
@@ -2294,89 +1430,51 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "targets": [
         {
-          "alias": "Humidity",
           "datasource": {
             "type": "influxdb",
-            "uid": "P951FEA4DE68E13C5"
+            "uid": "beb9e6ceb6d8c052"
           },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "linear"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "weatherstation",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity_percent\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationid}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\r\n  |> yield(name: \"mean\")",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "humidity_percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "stationId",
-              "operator": "=~",
-              "value": "/^$stationid$/"
-            }
-          ]
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherstation\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"humidity_percent\")\r\n  |> filter(fn: (r) => r[\"stationId\"] == \"${stationId}\")\r\n  |> drop(columns: [\"host\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
         }
       ],
       "title": "Humidity",
       "type": "timeseries"
     }
   ],
-  "schemaVersion": 34,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "LANNOOSTATION666",
           "value": "LANNOOSTATION666"
         },
         "datasource": {
           "type": "influxdb",
-          "uid": "P951FEA4DE68E13C5"
+          "uid": "beb9e6ceb6d8c052"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"dust\",\r\n  tag: \"stationId\",\r\n  predicate: (r) => true,\r\n  start: -30d\r\n)\r\n",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"stationId\")",
         "hide": 0,
         "includeAll": false,
         "label": "Station ID",
         "multi": false,
-        "name": "stationid",
+        "name": "stationId",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(\r\n  bucket: \"dust\",\r\n  tag: \"stationId\",\r\n  predicate: (r) => true,\r\n  start: -30d\r\n)\r\n",
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"stationId\")",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2386,13 +1484,13 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Weatherstation",
-  "uid": "_XyAqjb7k",
+  "uid": "MPq9qUV4z",
   "version": 1,
   "weekStart": ""
 }
