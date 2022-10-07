@@ -40,7 +40,6 @@ docs engine.  Open it to find examples and
 [read the docs](https://redoc.ly/docs/cli/configuration/)
 for more information.
 
-
 ### Schemas
 
 #### Adding Schemas
@@ -51,14 +50,18 @@ for more information.
 4. Refer to the schema using the `$ref` (see example below).
 
 ##### Example Schema
+
 This is a very simple schema example:
+
 ```yaml
 type: string
 description: The resource ID. Defaults to UUID v4
 maxLength: 50
 example: 4f6cf35x-2c4y-483z-a0a9-158621f77a21
 ```
+
 This is a more complex schema example:
+
 ```yaml
 type: object
 properties:
@@ -161,6 +164,7 @@ You will use `$ref`s to reference schema from your path definitions.
 3. Add the path and a ref to it inside of your `openapi.yaml` file inside of the `openapi` folder.
 
 Example addition to the `openapi.yaml` file:
+
 ```yaml
 '/customers/{id}':
   $ref: './paths/customers@{id}.yaml'
