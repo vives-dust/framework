@@ -37,6 +37,11 @@ const QueryHelper = {
     return flux`|> keep(columns: ${columnsToKeep})`;
   },
 
+  drop_columns(columns: string[]) : ParameterizedQuery {
+    const columnsToDrop = columns.concat();
+    return flux`|> drop(columns: ${columnsToDrop})`
+  },
+
   range_expression(start: string, stop?: string) : ParameterizedQuery {
     const startExpr = fluxExpression(start);
     const stopExpr = fluxExpression(stop || 'now()');
@@ -62,6 +67,7 @@ export interface InfluxDBQueryParams {
   measurement: string,
   tags?: { [key: string]: string },
   fields?: string[],      // If fields is set, only those are returned + _time + tags - Want more tags to be included ? Add it as field
+  drop?: string[],        // Explicitly drop certain columns
   period?: Period,        // Takes precedence over start/stop - last is default if start/stop is not specified either
   start?: string,
   stop?: string,
@@ -83,6 +89,7 @@ export const QueryBuilder = {
       |> filter(fn: (r) => r._measurement == ${params.measurement})
       ${params.tags ? QueryHelper.tag_filter(params.tags) : fluxExpression('')}
       ${params.fields ? QueryHelper.field_filter(params.fields) : fluxExpression('')}
+      ${params.drop ? QueryHelper.drop_columns(params.drop) : fluxExpression('')}
       ${every ? QueryHelper.aggregate_expression(every) : QueryHelper.last_expression()}
       |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
       ${params.fields ? QueryHelper.keep_columns(params.fields, (params.pruneTags ? {} : params.tags)) : fluxExpression('')}

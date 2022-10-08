@@ -10,6 +10,9 @@ const MeasurementQuerySchema = Joi.object().keys({
   fields: Joi.array().items(
     Joi.string().required()
   ).min(1),
+  drop: Joi.array().items(
+    Joi.string().required()
+  ).min(1),
   period: Joi.string().valid(...valid_periods),
   start: Joi.string(),
   stop: Joi.string(),
