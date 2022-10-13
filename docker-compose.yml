@@ -176,7 +176,7 @@ services:
       traefik.http.routers.dust_api_docs.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/docs/api`)
       traefik.http.middlewares.dust_api_docs-stripprefix.stripprefix.prefixes: /docs/api
       # Adding the trailing slash to the url
-      traefik.http.middlewares.dust_api_docs-addslash.redirectregex.regex: ^(https?:\/\/[^/]+\/[a-z0-9_]+\/[a-z0-9_]+)
+      traefik.http.middlewares.dust_api_docs-addslash.redirectregex.regex: ^([a-z0-9_]+:\/\/[^/]+\/docs+\/api+)
       traefik.http.middlewares.dust_api_docs-addslash.redirectregex.replacement: $${1}/
       traefik.http.middlewares.dust_api_docs-addslash.redirectregex.permanent: "true"
       # Middlewares
