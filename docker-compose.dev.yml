@@ -133,6 +133,7 @@ services:
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile.dev
     ports:
       - "3030:3030"
     depends_on:
@@ -152,9 +153,33 @@ services:
       - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
     restart: unless-stopped
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/config:/app/config
+
+  api-docs:
+    build:
+      context: ./api-docs
+    ports:
+      - 80
+    restart: unless-stopped
+    networks:
+      - reverse_proxy
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dust_api_docs.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/docs/api`)
+      traefik.http.middlewares.dust_api_docs-stripprefix.stripprefix.prefixes: /docs/api
+      traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-stripprefix
+      traefik.http.services.dust_api_docs.loadbalancer.server.port: 80
+      traefik.docker.network: reverse_proxy
 
 volumes:
   influxdb2-data:
   influxdb2-config:
   redis-data:
   mongodb-data:
+
+networks:
+  reverse_proxy:
+    external:
+      name: reverse_proxy

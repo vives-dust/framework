@@ -1,4 +1,4 @@
-FROM node:alpine AS build-stage
+FROM node:18.10-alpine3.15 AS build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -7,6 +7,5 @@ RUN npm run build
 
 COPY ./docs-docker /app/dist
 
-FROM nginx:alpine
+FROM nginx:1.23.1-alpine
 COPY --from=build-stage /app/dist /usr/share/nginx/html
-

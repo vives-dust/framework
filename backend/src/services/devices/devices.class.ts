@@ -50,6 +50,7 @@ export class Devices extends Service {
         query: {
           deviceId: device.hardwareId,
           fields: [ sensor.measurementField ],
+          drop: ['codingRate'],
           period: params?.query?.period,
           start: params?.query?.start,
           stop: params?.query?.stop,
