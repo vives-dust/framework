@@ -21,6 +21,7 @@ export interface Sensor {
 
 export interface Device {
   _id: string;
+  id: string;
   name: string;
   hardwareId: string;
   description: string;

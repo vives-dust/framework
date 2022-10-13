@@ -21,6 +21,7 @@ export default function (app: Application): Model<any> {
 
   // Schema for a Device that contains SubDocs of Sensors
   const deviceSchema = new Schema({
+    id: {type: String, required: true},
     name: { type: String, required: true },
     hardwareId: { type: String, required: true },
     description: { type: String, required: false },

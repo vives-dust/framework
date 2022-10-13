@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const DeviceSchema = Joi.object().keys({
+  id: Joi.string().required(),
   name: Joi.string().required(),
   hardwareId: Joi.string().required(),
   description: Joi.string(),
