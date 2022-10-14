@@ -11,6 +11,8 @@ info:
   description:
     $ref: ./info-description.md
 tags:
+  - name: Trees
+    description: Manage trees.
   - name: Devices
     description: Manage devices.
   - name: Sensors
@@ -21,6 +23,8 @@ servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
 paths:
+  '/trees/{id}':
+    $ref: 'paths/trees@{id}.yaml'
   '/devices/{id}':
     $ref: 'paths/devices@{id}.yaml'
   '/sensors/{id}':
