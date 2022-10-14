@@ -5,23 +5,47 @@ properties:
     description: A unique identifier for the sensor
     readOnly: true
     type: string
-    example: 62385db5f2aebbd3b79f98d1
+    example: lM3dbKeqP-vyvprK7PrNf
   type:
     description: The type of sensor
     type: string
     enum:
       - temperature
       - moisture
-    example: temperature
-  field:
-    description: The influx db field used to store this sensors value
+      - battery
+      - rain
+      - humidity
+    example: moisture
+  name:
+    description: A descriptive name for the sensor
     type: string
-    example: internalTemperature
-  depth:
-    description: The depth (in cm) of the sensor in case of a moisture sensor
+    example: moisture level 1
+  values:
+    description: A list of the last given non-zero value by this sensor.
+    type: array
+    minItems: 1
+    items:
+      type: object
+      description: A single sensor sample.
+      properties:
+        _time:
+          description: A timestamp of the sensor sample.
+          type: datetime
+        value:
+          description: The value of the sensor sample.
+          type: number
+      required:
+        - _time
+        - value
+  unit:
+    description: The unit of the sensor sample value.
     type: string
-    example: -12
+    example: °C
+  device:
+    description: The unique identifier for the device the sensor applies to.
+    type: string
+    example: Ylh5uVdxP-BctTmkaow3k
+  
 required:
   - _id
   - type
-  - field
