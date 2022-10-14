@@ -1,0 +1,81 @@
+---
+id: SWxleYvqhkdieKCR-_WZa
+name: Tree 46 in the Skywalkerlane
+description: Old tree with almost no leaves and very thick stem.
+location:
+  latitude: 51.194154
+  longitude: 3.21767
+  height: 0
+image_url: https://live.staticflickr.com/4292/35874014205_d25101a9d1_b.jpg
+
+devices:
+- type: dust-soil-device
+  id: Ylh5uVdxP-BctTmkaow3k
+- type: weather-station
+  id: QJCOQsHuKh9jY0iKesQ3i
+
+sensors:
+# WeatherStation
+- type: temperature
+  name: temperature
+  values:
+    - value: 12.1
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: °C
+  id: qGTWcIHOHZizQAlQSwhWa
+  device: QJCOQsHuKh9jY0iKesQ3i
+
+# DUST Soil Device
+- type: temperature
+  name: internal temperature
+  values:
+    - value: 23.2
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: °C
+  id: cWh_GJpwey46z0rUhRT98
+  device: Ylh5uVdxP-BctTmkaow3k
+- type: temperature
+  name: soil temperature
+  values:
+    - value: 12.3
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: °C
+  id: 6bFbSjNb9c5xs9lIoZmia
+  device: Ylh5uVdxP-BctTmkaow3k
+- type: moisture
+  values:
+    - value: 79.6
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: %
+  id: lM3dbKeqP-vyvprK7PrNf
+  device: Ylh5uVdxP-BctTmkaow3k
+  depth: -10
+- type: moisture
+  values:
+    - value: 56.6
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: %
+  id: S_pUr_jaPJblbOsNd9M46
+  device: Ylh5uVdxP-BctTmkaow3k
+  depth: -20
+- type: moisture
+  values:
+    - value: 36.4
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: %
+  id: Yua9yUsp7nPYDN19TuwZx
+  device: Ylh5uVdxP-BctTmkaow3k
+  depth: -45
+  - type: moisture
+  values:
+    - value: 19.7
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: %
+  id: 6wP6xGAWrdqMEmPsdMtrP
+  device: Ylh5uVdxP-BctTmkaow3k
+  depth: -60
+- type: battery
+  values:
+    - value: 3200
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: mV
