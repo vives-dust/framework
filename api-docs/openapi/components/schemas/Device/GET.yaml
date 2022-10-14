@@ -1,0 +1,32 @@
+type: object
+description: A device is a logical entity that bundles a number of sensors and is placed in the vicinity of a tree.
+properties:
+  id:
+    description: A unique identifier for the device
+    readOnly: true
+    type: string
+    example: jUb4ksvHtkNV2mXuaP0zV
+  tree:
+    description: A unique identifier for the tree the device belongs to
+    type: string
+    example: 0OCAejffhQtAjqBMTIjdp
+  type:
+    description: The device type defines what sensors the devices contains
+    type: string
+    enum:
+      - dust-soil-device
+      - weather-station
+    example: dust-soil-device
+  name:
+    description: A descriptive name for the device that is coupled to the type of the device
+    type: string
+    example: DUST Soil Device v2.0 
+  image_url:
+    description: A photograph of the device
+    type: string
+    example: https://via.placeholder.com/150
+  sensors:
+    description: A listing of all the sensors of this device with their values
+    type: array
+    items:
+      $ref: ./Sensor/GET.yaml

@@ -1,0 +1,22 @@
+type: object
+description: A device is a logical entity that bundles a number of sensors and is placed in the vicinity of a tree.
+properties:
+  tree:
+    description: A unique identifier for the tree the device belongs to
+    type: string
+    example: 0OCAejffhQtAjqBMTIjdp
+  type:
+    description: The device type defines what sensors the devices contains
+    type: string
+    enum:
+      - dust-soil-device
+      - weather-station
+    example: dust-soil-device
+  hardware_id:
+    description: The hardware id of the device that is coupled to this logical device
+    type: string
+    example: eui-70b3d57ed0052364
+required:
+  - tree
+  - type
+  - hardware_id
