@@ -17,9 +17,9 @@ get:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/SoilModel.yaml
+            $ref: ../components/schemas/SoilModel/GET.yaml
           example:
-            $ref: ../components/responses/SoilModel.yaml
+            $ref: ../components/responses/SoilModel/GET.yaml
 post:
   tags:
     - SoilModels
@@ -30,9 +30,9 @@ post:
       application/json:
         schema:
           type: object
-          $ref: ../components/schemas/SoilModel.yaml
+          $ref: ../components/schemas/SoilModel/GET.yaml
         example:
-          $ref: ../components/requestBodies/SoilModel.yaml
+          $ref: ../components/requestBodies/SoilModel/GET.yaml
   responses:
     '201':
       description: A JSON object containing the details of the new soil model
@@ -40,6 +40,6 @@ post:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/SoilModel.yaml
+            $ref: ../components/schemas/SoilModel/GET.yaml
           example:
-            $ref: ../components/responses/SoilModel.yaml
+            $ref: ../components/responses/SoilModel/GET.yaml
