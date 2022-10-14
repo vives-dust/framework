@@ -24,6 +24,22 @@ sensors:
   unit: °C
   id: qGTWcIHOHZizQAlQSwhWa
   device: QJCOQsHuKh9jY0iKesQ3i
+- type: rain
+  name: rain
+  values:
+    - value: 2.3
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: mm
+  id: Qlusu7YNGM-KMIrXNUiW7
+  device: QJCOQsHuKh9jY0iKesQ3i
+- type: humidity
+  name: humidity
+  values:
+    - value: 75.3
+      timestamp: 2019-10-12T07:20:50.52Z
+  unit: %
+  id: gZpXuyLTLFNXILml0XflR
+  device: QJCOQsHuKh9jY0iKesQ3i
 
 # DUST Soil Device
 - type: temperature
@@ -43,6 +59,7 @@ sensors:
   id: 6bFbSjNb9c5xs9lIoZmia
   device: Ylh5uVdxP-BctTmkaow3k
 - type: moisture
+  name: moisture level 1
   values:
     - value: 79.6
       timestamp: 2019-10-12T07:20:50.52Z
@@ -51,6 +68,7 @@ sensors:
   device: Ylh5uVdxP-BctTmkaow3k
   depth: -10
 - type: moisture
+  name: moisture level 2
   values:
     - value: 56.6
       timestamp: 2019-10-12T07:20:50.52Z
@@ -59,6 +77,7 @@ sensors:
   device: Ylh5uVdxP-BctTmkaow3k
   depth: -20
 - type: moisture
+  name: moisture level 3
   values:
     - value: 36.4
       timestamp: 2019-10-12T07:20:50.52Z
@@ -67,6 +86,7 @@ sensors:
   device: Ylh5uVdxP-BctTmkaow3k
   depth: -45
   - type: moisture
+  name: moisture level 4
   values:
     - value: 19.7
       timestamp: 2019-10-12T07:20:50.52Z
@@ -75,7 +95,9 @@ sensors:
   device: Ylh5uVdxP-BctTmkaow3k
   depth: -60
 - type: battery
+  name: 3V3 battery level
   values:
     - value: 3200
       timestamp: 2019-10-12T07:20:50.52Z
   unit: mV
+  nominal_voltage: 3300

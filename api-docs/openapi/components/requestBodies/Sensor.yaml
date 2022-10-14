@@ -1,6 +1,7 @@
 ---
 id: lM3dbKeqP-vyvprK7PrNf
 type: moisture
+name: moisture level 1
 values:
   - value: 79.6
     timestamp: 2019-10-12T07:20:50.52Z
