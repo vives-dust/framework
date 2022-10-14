@@ -1,3 +1,3 @@
 import { nanoid } from 'nanoid'; 
 
-export const injectNanoId = nanoid();
+export const nanoId = nanoid();

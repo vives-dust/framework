@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@feathersjs/feathers": "^4.5.15"
+  }
+}

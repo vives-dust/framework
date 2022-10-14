@@ -74,4 +74,8 @@ export class Devices extends Service {
 
     return device;
   }
+
+  async create(data: Partial<any> | Partial<any>[], params?: Params | undefined): Promise<any> {
+    
+  }
 }
