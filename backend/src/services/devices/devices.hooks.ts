@@ -10,8 +10,8 @@ export default {
     find: [],
     get: [],
     create: [ validate.form(DeviceSchemas.create, joiOptions) ],
-    update: [],
-    patch: [],
+    update: [ validate.form(DeviceSchemas.update, joiOptions) ],
+    patch: [ validate.form(DeviceSchemas.patch, joiOptions) ],
     remove: []
   },
 
