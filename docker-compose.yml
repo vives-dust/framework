@@ -188,7 +188,7 @@ services:
   public-frontend:
     image: ghcr.io/vives-dust/frontend/dust-public-frontend:latest
     ports:
-      - "80:80"
+      - "8000:80"
     depends_on:
       - backend
     labels:
