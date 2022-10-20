@@ -10,6 +10,37 @@ get:
       schema:
         type: string
       example: "lM3dbKeqP-vyvprK7PrNf"
+    - in: query
+      name: period
+      description: The period of time to take samples into account, with a default every timespan. This takes precedence over start/stop
+      schema:
+        type: string
+        enum:
+          - 1h
+          - 24h
+          - 7d
+          - 31d
+          - 1y
+          - all
+          - last
+    - in: query
+      name: start
+      description: The start date of the time range
+      schema:
+        type: datetime
+        example: 2019-10-12T07:20:50.52Z
+    - in: query
+      name: stop
+      description: The stop date of the time range
+      schema:
+        type: datetime
+        example: 2019-10-12T07:20:50.52Z
+    - in: query
+      name: every
+      description: Timespan between samples. This takes precedence over default period timespan.
+      schema:
+        type: datetime
+        example: 2019-10-12T07:20:50.52Z
   responses:
     '200':
       description: A JSON object containing the details of a single sensor
