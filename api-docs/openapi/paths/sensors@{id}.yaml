@@ -1,15 +1,16 @@
+parameters: 
+  - in: path
+    name: id
+    description: The unique id of the sensor
+    required: true
+    schema:
+      type: string
+    example: "lM3dbKeqP-vyvprK7PrNf"
 get:
   tags:
     - Sensors
-  summary: Sensor details
+  summary: Get the Sensor details.
   parameters: 
-    - in: path
-      name: id
-      description: The unique id of the sensor
-      required: true
-      schema:
-        type: string
-      example: "lM3dbKeqP-vyvprK7PrNf"
     - in: query
       name: period
       description: The period of time to take samples into account, with a default every timespan. This takes precedence over start/stop
@@ -41,13 +42,21 @@ get:
       schema:
         type: datetime
         example: 2019-10-12T07:20:50.52Z
-  responses:
-    '200':
-      description: A JSON object containing the details of a single sensor
-      content:
-        application/json:
-          schema:
-            type: object
-            $ref: ../components/schemas/Sensor.yaml
-          example:
-            $ref: ../components/responses/Sensor.yaml
+    responses:
+      '200':
+        description: A JSON object containing the details of a single sensor
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: ../components/schemas/Sensor/GET.yaml
+            example:
+              $ref: ../components/responses/Sensor/Sensor-default.yaml
+              $ref: ../components/responses/Sensor/Sensor-period.yaml
+              $ref: ../components/responses/Sensor/Sensor-startstop.yaml
+      '404':
+        description: Sensor not found
+        
+    # ToDo ADD security / authorization
+    # security:
+    
