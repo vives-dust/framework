@@ -1,0 +1,46 @@
+get:
+  tags:
+    - Trees
+  summary: Get the Tree details
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the tree
+      required: true
+      schema:
+        type: string
+      example: "LTFeni8ygg7gaMUSCL8yY"
+  responses:
+    '200':
+      description: A JSON object containing the details of a single tree
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/
+          example:
+            $ref: ../components/responses/
+
+post:
+  tags:
+    - Trees
+  summary: Create a new Tree
+  requestBody:
+    description: A JSON object containing the details of the new Tree
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: ../components/schemas/
+        example:
+          $ref: ../components/requestBodies/
+  responses:
+    '201':
+      description: A JSON object containing the details of the new Tree
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/
+          example:
+            $ref: ../components/responses/
