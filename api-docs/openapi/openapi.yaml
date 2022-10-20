@@ -2,7 +2,10 @@ openapi: 3.1.0
 info:
   version: 0.1.0
   title: dust.devbit.be
-  termsOfService: # fill in TOS here
+  termsOfService: "ToDo TOS"
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
   contact:
     # email: contact@example.com
     url: 'https://dust.devbitapp.be/api'
@@ -37,7 +40,7 @@ components:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: # Fill in authorization here
+          authorizationUrl: "ToDoauth.com"
           scopes:
             'read:users': read users info
             'write:users': modify or remove users

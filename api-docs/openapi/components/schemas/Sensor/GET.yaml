@@ -30,7 +30,7 @@ properties:
       properties:
         _time:
           description: A timestamp of the sensor sample.
-          type: datetime
+          type: string
         value:
           description: The value of the sensor sample.
           type: number
@@ -44,7 +44,6 @@ properties:
   meta:
     type: object
     description: Object containing metadata of the sensor (depth, conversionModelId)
-  
 required:
   - id
   - device_id

@@ -29,4 +29,4 @@ properties:
     description: A listing of all the sensors of this device with their values
     type: array
     items:
-      $ref: ./Sensor/GET.yaml
+      $ref: ../Sensor/GET.yaml

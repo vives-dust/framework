@@ -2,6 +2,8 @@ get:
   tags:
     - Sensors
   summary: Get the Sensor details.
+  operationId: GetSensor
+  security: []
   parameters:
     - in: path
       name: id
@@ -27,35 +29,34 @@ get:
       name: start
       description: The start date of the time range
       schema:
-        type: datetime
+        type: string
         example: 2019-10-12T07:20:50.52Z
     - in: query
       name: stop
       description: The stop date of the time range
       schema:
-        type: datetime
+        type: string
         example: 2019-10-12T07:20:50.52Z
     - in: query
       name: every
       description: Timespan between samples. This takes precedence over default period timespan.
       schema:
-        type: datetime
+        type: string
         example: 2019-10-12T07:20:50.52Z
-    responses:
-      '200':
-        description: A JSON object containing the details of a single sensor
-        content:
-          application/json:
-            schema:
-              type: object
-              $ref: ../components/schemas/Sensor/GET.yaml
-            example:
+  responses:
+    '200':
+      description: A JSON object containing the details of a single sensor
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/Sensor/GET.yaml
+          examples:
+            default:
               $ref: ../components/responses/Sensor/GET-default.yaml
+            period:
               $ref: ../components/responses/Sensor/GET-period-1h.yaml
+            startstop:
               $ref: ../components/responses/Sensor/GET-startstop-7d.yaml
-      '404':
-        description: Sensor not found
-
-    # ToDo ADD security / authorization
-    # security:
-    
+    '404':
+      description: Sensor not found
