@@ -1,27 +1,27 @@
 type: object
-description: A sensor entity at attached to the device
+description: A sensor entity attached to the device
 properties:
-  _id:
+  id:
     description: A unique identifier for the sensor
     readOnly: true
     type: string
     example: lM3dbKeqP-vyvprK7PrNf
+  device_id:
+    description: The unique identifier for the device the sensor belongs to.
+    type: string
+    example: Ylh5uVdxP-BctTmkaow3k
   type:
     description: The type of sensor
     type: string
     enum:
       - temperature
-      - moisture
+      - soil-moisture
       - battery
       - rain
       - humidity
-    example: moisture
-  name:
-    description: A descriptive name for the sensor
-    type: string
-    example: moisture level 1
+    example: soil-moisture
   values:
-    description: A list of the last given non-zero value by this sensor.
+    description: A list of measured sensor values
     type: array
     minItems: 1
     items:
@@ -38,21 +38,17 @@ properties:
         - _time
         - value
   unit:
-    description: The unit of the sensor sample value.
+    description: The unit of the sensor sample values.
     type: string
     example: °C
-  device:
-    description: The unique identifier for the device the sensor applies to.
-    type: string
-    example: Ylh5uVdxP-BctTmkaow3k
   meta:
     type: object
-    description: Object containing metadata of the sensor (depth, soilModelID)
+    description: Object containing metadata of the sensor (depth, conversionModelId)
   
 required:
-  - _id
+  - id
+  - device_id
   - type
-  - name
   - values
   - unit
-  - device
+  - meta
