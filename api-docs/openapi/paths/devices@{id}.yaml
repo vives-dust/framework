@@ -1,7 +1,7 @@
 get:
   tags:
     - Devices
-  summary: Device details
+  summary: Get the Device details
   parameters: 
     - in: path
       name: id
@@ -19,7 +19,7 @@ get:
             type: object
             $ref: ../components/schemas/Device/GET.yaml
           example:
-            $ref: ../components/responses/Device.yaml
+            $ref: ../components/responses/Device/GET.yaml
 post:
   tags:
     - Devices
