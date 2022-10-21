@@ -3,58 +3,29 @@
 // See http://mongoosejs.com/docs/models.html
 // for more of what you can do here.
 import { Application } from '../declarations';
-import mongoose, { Model, Mongoose } from 'mongoose';
+import { Model, Mongoose } from 'mongoose';
 
 export default function (app: Application): Model<any> {
   const modelName = 'devices';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+  const schema = new Schema({
 
-  // Parent SensorSchema that defines common props for sensors
-  const sensorSchema = new Schema({
-    measurementField: { type: String, required: true }
-  }, {
-    timestamps: false,
-    discriminatorKey: '_type',
-    _id: false
-  });
-
-  // Schema for a Device that contains SubDocs of Sensors
-  const deviceSchema = new Schema({
+    text: { type: String, required: true },
+    tree_id: { type: Schema.Types.ObjectId, ref: 'trees', required: true },
+    type_id: { type: Schema.Types.ObjectId, ref: 'device_types', required: true },
+    hardware_id: { type: String, required: true },
     name: { type: String, required: true },
-    hardwareId: { type: String, required: true },
-    description: { type: String, required: false },
-    location: {
-      type: {
-        latitude: { type: Number, required: true },
-        longitude:  { type: Number, required: true },
-        height: { type: Number, required: false }
-      },
-      required: true,
-      _id: false
-    },
-    sensors: [ sensorSchema ]
+    description: { type: String, required: true },
+
   }, {
     timestamps: true
   });
-
-  const sensorArrayType = deviceSchema.path('sensors') as mongoose.Schema.Types.DocumentArray;
-
-  // Now we need to define the schema's for the different types of sensors
-  const soilMoistureSensorSchema = new Schema({
-    depth: { type: Number, required: true },
-    soilModelId: { type: String, required: false },     // TODO: FIX TO REF !
-  }, { _id: false });
-  sensorArrayType.discriminator('moisture', soilMoistureSensorSchema);
-
-  const temperatureSensorSchema = new Schema({
-  }, { _id: false });
-  sensorArrayType.discriminator('temperature', temperatureSensorSchema);
 
   // This is necessary to avoid model compilation errors in watch mode
   // see https://mongoosejs.com/docs/api/connection.html#connection_Connection-deleteModel
   if (mongooseClient.modelNames().includes(modelName)) {
     (mongooseClient as any).deleteModel(modelName);
   }
-  return mongooseClient.model<any>(modelName, deviceSchema);
+  return mongooseClient.model<any>(modelName, schema);
 }
