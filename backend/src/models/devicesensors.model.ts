@@ -9,17 +9,20 @@ export default function (app: Application): Model<any> {
   const modelName = 'devicesensors';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+
   const schema = new Schema({
 
     devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
     sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
 
     data_source: { type: {
-      source: { type: String, required: true },
-      bucket: { type: String },
-      field: { type: String },
+        source: { type: String, required: true },
+        bucket: { type: String },
+        field: { type: String },
+      },
+      required: true,
       _id: false
-    }, required: true },
+    },
     depth: { type: Number },
     conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
 

@@ -11,7 +11,8 @@ export default function (app: Application): Model<any> {
   const { Schema } = mongooseClient;
 
   const conversionSchema = new Schema({
-    id: { type: String, required: true },
+
+    id: { type: String, required: true },   // TODO: nanoid ID
     name: { type: String, required: true },
     description: { type: String, required: true },
     input_unit: { type: String, required: true },

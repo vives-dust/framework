@@ -10,9 +10,9 @@ export default function (app: Application): Model<any> {
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
 
-
   const treeSchema = new Schema({
-    id: { type: String, required: true },
+
+    id: { type: String, required: true },   // TODO: nanoid ID
     name: { type: String, required: true },
     description: { type: String, required: true },
     location: {
