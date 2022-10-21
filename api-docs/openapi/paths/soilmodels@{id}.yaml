@@ -2,6 +2,8 @@ get:
   tags:
     - SoilModels
   summary: Soil Model details
+  operationId: GetSoilModel
+  security: []
   parameters: 
     - in: path
       name: id
@@ -17,20 +19,32 @@ get:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/SoilModel.yaml
+            $ref: ../components/schemas/SoilModel/GET.yaml
           example:
             $ref: ../components/responses/SoilModel.yaml
+    '404':
+      description: Soil Model not found.
 post:
   tags:
     - SoilModels
   summary: Create a new soil model
+  operationId: CreateSoilModel
+  security: []
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the soil model
+      required: true
+      schema:
+        type: string
+      example: "62065384c94631d3f2c5d968"
   requestBody:
     description: A JSON object containing the details of the new soil model
     content:
       application/json:
         schema:
           type: object
-          $ref: ../components/schemas/SoilModel.yaml
+          $ref: ../components/schemas/SoilModel/GET.yaml
         example:
           $ref: ../components/requestBodies/SoilModel.yaml
   responses:
@@ -40,6 +54,8 @@ post:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/SoilModel.yaml
+            $ref: ../components/schemas/SoilModel/GET.yaml
           example:
             $ref: ../components/responses/SoilModel.yaml
+    '400':
+      description: Bad request, please check your input.

@@ -2,7 +2,10 @@ openapi: 3.1.0
 info:
   version: 0.1.0
   title: dust.devbit.be
-  termsOfService: # fill in TOS here
+  termsOfService: "ToDo TOS"
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
   contact:
     # email: contact@example.com
     url: 'https://dust.devbitapp.be/api'
@@ -11,29 +14,27 @@ info:
   description:
     $ref: ./info-description.md
 tags:
-  - name: Devices
-    description: Manage devices.
+  - name: Trees
+    description: Public tree data
   - name: Sensors
-    description: Manage sensors.
-  - name: SoilModels
-    description: Manage soil models.
+    description: Public sensor data
 servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
 paths:
-  '/devices/{id}':
-    $ref: 'paths/devices@{id}.yaml'
+  '/trees':
+    $ref: 'paths/trees.yaml'
+  '/trees/{id}':
+    $ref: 'paths/trees@{id}.yaml'
   '/sensors/{id}':
     $ref: 'paths/sensors@{id}.yaml'
-  '/soilmodels/{id}':
-    $ref: 'paths/soilmodels@{id}.yaml'
 components:
   securitySchemes:
     main_auth:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: # Fill in authorization here
+          authorizationUrl: "ToDoauth.com"
           scopes:
             'read:users': read users info
             'write:users': modify or remove users
