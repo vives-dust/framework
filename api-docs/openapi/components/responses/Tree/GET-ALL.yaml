@@ -1,0 +1,19 @@
+- id: SWxleYvqhkdieKCR-_WZa
+  name: Tree 46 in the Skywalkerlane
+  description: Old tree with almost no leaves and very thick stem.
+  location:
+    latitude: 51.194154
+    longitude: 3.21767
+    height: 0
+  image_url: https://live.staticflickr.com/4292/35874014205_d25101a9d1_b.jpg
+  tree_url: https://dust.devbitapp.be/api/trees/:SWxleYvqhkdieKCR-_WZa
+
+- id: 7Eq1MC-WjcLA-rRvjVNcS
+  name: Tree 12 in the Jantjesstraat
+  description: Oak tree near the bench with very thick stem.
+  location:
+    latitude: 17.489653
+    longitude: 68.853247
+    height: 12
+  image_url: https://via.placeholder.com/150
+  tree_url: https://dust.devbitapp.be/api/trees/:7Eq1MC-WjcLA-rRvjVNcS

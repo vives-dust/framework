@@ -1,0 +1,44 @@
+type: array
+description: A listing in array format of all the trees
+items:
+  type: object
+  description: A tree is a physical entity that relates to the location where devices are placed at
+  properties:
+    id:
+      description: A unique identifier for the tree
+      readOnly: true
+      type: string
+      example: 7Eq1MC-WjcLA-rRvjVNcS
+    name:
+      description: A descriptive name for the tree that is situated at a physical location
+      type: string
+      example: Tree 46 in the Skywalkerlane
+    description:
+      description: A descriptive excerpt of text to give more information about the look & feel of the tree
+      type: string
+      example: Old tree with almost no leaves and very thick stem.
+    location:
+      description: A longitude - latitude - height based  way of describing the exact location of the tree
+      type: object
+      properties:
+        longitude:
+          description: The longitude of the tree
+          type: integer
+          minimum: -90
+          maximum: 90
+        latitude:
+          description: The latitude of the tree
+          type: integer
+          minimum: -180
+          maximum: 180
+        height:
+          description: The height from sea level
+          type: integer
+    image_url:
+      description: A photograph of the tree
+      type: string
+      example: https://via.placeholder.com/150
+    tree_url:
+      description: A link to the tree in the API
+      type: string
+      example: https://dust.devbitapp.be/api/trees/:7Eq1MC-WjcLA-rRvjVNcS

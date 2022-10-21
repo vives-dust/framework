@@ -1,0 +1,108 @@
+id: SWxleYvqhkdieKCR-_WZa
+name: Tree 46 in the Skywalkerlane
+description: Old tree with almost no leaves and very thick stem.
+location:
+  latitude: 51.194154
+  longitude: 3.21767
+  height: 0
+image_url: https://live.staticflickr.com/4292/35874014205_d25101a9d1_b.jpg
+
+devices:
+- id: Ylh5uVdxP-BctTmkaow3k
+  name: The first DUST Soil Device
+- id: QJCOQsHuKh9jY0iKesQ3i
+  name: Weather Station Oostkamp
+
+sensors:
+# WeatherStation
+- id: qGTWcIHOHZizQAlQSwhWa 
+  type: temperature
+  name: Air Temperature
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 12.1
+  unit: °C
+  device_id: QJCOQsHuKh9jY0iKesQ3i
+  sensor_url: https://dust.devbitapp.be/api/sensors/:qGTWcIHOHZizQAlQSwhWa
+- id: Qlusu7YNGM-KMIrXNUiW7
+  type: rain
+  name: Rain Sensor
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 2.3
+  unit: mm
+  device_id: QJCOQsHuKh9jY0iKesQ3i
+  sensor_url: https://dust.devbitapp.be/api/sensors/:Qlusu7YNGM-KMIrXNUiW7
+- id: gZpXuyLTLFNXILml0XflR
+  type: humidity
+  name: Humidity Sensor
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 75.3
+  unit: '%'
+  device_id: QJCOQsHuKh9jY0iKesQ3i
+  sensor_url: https://dust.devbitapp.be/api/sensors/:gZpXuyLTLFNXILml0XflR
+
+# DUST Soil Device
+- id: cWh_GJpwey46z0rUhRT98
+  type: temperature
+  name: Internal Temperature
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 23.2
+  unit: °C
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:cWh_GJpwey46z0rUhRT98
+- id: 6bFbSjNb9c5xs9lIoZmia
+  type: temperature
+  name: Soil Temperature
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 11.3
+  unit: °C
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:6bFbSjNb9c5xs9lIoZmia
+- id: lM3dbKeqP-vyvprK7PrNf
+  type: moisture
+  name: Moisture Level 1 (-10)
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 79.6
+  unit: '%'
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:lM3dbKeqP-vyvprK7PrNf
+- id: S_pUr_jaPJblbOsNd9M46
+  type: moisture
+  name: Moisture level 2 (-20)
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 56.6
+  unit: '%'
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:S_pUr_jaPJblbOsNd9M46
+- id: Yua9yUsp7nPYDN19TuwZx
+  type: moisture
+  name: Moisture level 3 (-45)
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 36.4
+  unit: '%'
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:Yua9yUsp7nPYDN19TuwZx
+- id: 6wP6xGAWrdqMEmPsdMtrP 
+  type: moisture
+  name: Moisture level 4 (-60)
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 19.7
+  unit: '%'
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  sensor_url: https://dust.devbitapp.be/api/sensors/:6wP6xGAWrdqMEmPsdMtrP
+- id: PZfXbav2mYhp54xCN30K7
+  type: battery
+  name: 3V3 Battery level
+  last_value:
+    time: 2019-10-12T07:20:50.52Z 
+    value: 3200
+  unit: mV
+  device_id: Ylh5uVdxP-BctTmkaow3k
