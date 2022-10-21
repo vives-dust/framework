@@ -40,28 +40,40 @@ get:
         example: 5m
     - in: query
       name: start
-      description: The start date of the time range. This can be a datetime or it can be a relative negative enum label
+      description: The start time for samples to be taken into account
       schema:
-        type: string
-        enum:
-          - -1h
-          - -24h
-          - -7d
-          - -31d
-          - -1y
-        example: 2019-10-12T07:20:50.52Z
+        oneOf:
+          - title: Relative start time
+            type: string
+            description: A relative negative duration
+            enum:
+              - -1h
+              - -24h
+              - -7d
+              - -31d
+              - -1y
+          - title: Absolute datetime
+            type: string
+            description: An absolute datetime from which to take samples into account
+        example: 2019-10-10T07:20:50.52Z
     - in: query
       name: stop
-      description: The stop date of the time range. This can be a datetime or it can be a relative negative enum label
+      description: The stop time for samples to be taken into account
       schema:
-        type: string
-        enum:
-          - -1h
-          - -24h
-          - -7d
-          - -31d
-          - -1y
-        example: 2019-10-12T07:20:50.52Z
+        oneOf:
+          - title: Relative stop time
+            type: string
+            description: A relative negative duration
+            enum:
+              - -1h
+              - -24h
+              - -7d
+              - -31d
+              - -1y
+          - title: Absolute datetime
+            type: string
+            description: An absolute datetime to which to take samples into account
+        example: 2019-10-10T07:20:50.52Z
   responses:
     '200':
       description: A JSON object containing the details of a single sensor
@@ -76,11 +88,11 @@ get:
               description: The last value of a sensor is returned by default
               $ref: ../components/responses/Sensor/GET-default.yaml
             period:
-              summary: Selecting a period
+              summary: Selecting a period (period=1h)
               description: This is the response when adding the period parameter (1h)
               $ref: ../components/responses/Sensor/GET-period-1h.yaml
             start-stop:
-              summary: Start-Stop Example
+              summary: Start-Stop Example (start=-7d)
               description: This is the response when adding a start and stop parameter (-7d).
               $ref: ../components/responses/Sensor/GET-startstop-7d.yaml
     '404':
