@@ -5,7 +5,6 @@ properties:
     description: A unique identifier for the soil model
     readOnly: true
     type: string
-    example: 620bb96be80c0c455275e664
   name:
     description: A descriptive name for the soil model
     type: string

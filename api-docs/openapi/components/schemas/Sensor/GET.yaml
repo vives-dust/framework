@@ -5,19 +5,15 @@ properties:
     description: A unique identifier for the sensor
     readOnly: true
     type: string
-    example: lM3dbKeqP-vyvprK7PrNf
   name:
     description: A user friendly name for this sensor
     type: string
-    example: Soil Moisture Sensor @ -10cm
   tree_id:
     description: The unique identifier for the tree the sensor belongs to.
     type: string
-    example: 7Eq1MC-WjcLA-rRvjVNcS
   tree_url:
     description: A url that matches the route to the specific tree resource
     type: string
-    example: https://dust.devbitapp.be/api/trees/7Eq1MC-WjcLA-rRvjVNcS
   type:
     description: The type of sensor
     type: string
@@ -27,17 +23,12 @@ properties:
       - battery
       - rain
       - humidity
-    example: soil-moisture
   description:
     description: A technical description of the sensor
     type: string
-    example: A capacitive soil moisture sensor developed by VIVES
   last_value:
     type: object
     description: The last measured sensor value
-    example:
-      time: 2019-10-12T07:20:50.52Z 
-      value: 79.6
     properties:
       time:
         description: A timestamp of the sensor sample.
@@ -68,7 +59,6 @@ properties:
   unit:
     description: The unit of the sensor sample values.
     type: string
-    example: °C
   meta:
     type: object
     description: Object containing metadata of the sensor (depth, conversion_model_name)
