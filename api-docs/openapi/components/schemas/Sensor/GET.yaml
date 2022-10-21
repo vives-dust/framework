@@ -6,10 +6,18 @@ properties:
     readOnly: true
     type: string
     example: lM3dbKeqP-vyvprK7PrNf
-  device_id:
-    description: The unique identifier for the device the sensor belongs to.
+  name:
+    description: A user friendly name for this sensor
     type: string
-    example: Ylh5uVdxP-BctTmkaow3k
+    example: Soil Moisture Sensor @ -10cm
+  tree_id:
+    description: The unique identifier for the tree the sensor belongs to.
+    type: string
+    example: 7Eq1MC-WjcLA-rRvjVNcS
+  tree_url:
+    description: A url that matches the route to the specific tree resource
+    type: string
+    example: https://dust.devbitapp.be/api/trees/7Eq1MC-WjcLA-rRvjVNcS
   type:
     description: The type of sensor
     type: string
@@ -20,6 +28,26 @@ properties:
       - rain
       - humidity
     example: soil-moisture
+  description:
+    description: A technical description of the sensor
+    type: string
+    example: A capacitive soil moisture sensor developed by VIVES
+  last_value:
+    type: object
+    description: The last measured sensor value
+    example:
+      time: 2019-10-12T07:20:50.52Z 
+      value: 79.6
+    properties:
+      time:
+        description: A timestamp of the sensor sample.
+        type: string
+      value:
+        description: The value of the sensor sample.
+        type: number
+    required:
+      - time
+      - value
   values:
     description: A list of measured sensor values
     type: array
@@ -28,14 +56,14 @@ properties:
       type: object
       description: A single sensor sample.
       properties:
-        _time:
+        time:
           description: A timestamp of the sensor sample.
           type: string
         value:
           description: The value of the sensor sample.
           type: number
       required:
-        - _time
+        - time
         - value
   unit:
     description: The unit of the sensor sample values.
@@ -43,11 +71,14 @@ properties:
     example: °C
   meta:
     type: object
-    description: Object containing metadata of the sensor (depth, conversionModelId)
+    description: Object containing metadata of the sensor (depth, conversion_model_name)
 required:
   - id
-  - device_id
+  - name
+  - tree_id
+  - tree_url
   - type
-  - values
+  - description
+  - last_value
   - unit
   - meta
