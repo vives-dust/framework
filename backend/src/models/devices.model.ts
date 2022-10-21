@@ -13,7 +13,7 @@ export default function (app: Application): Model<any> {
 
     text: { type: String, required: true },
     tree_id: { type: Schema.Types.ObjectId, ref: 'trees', required: true },
-    type_id: { type: Schema.Types.ObjectId, ref: 'device_types', required: true },
+    devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
     hardware_id: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },

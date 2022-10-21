@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
   const schema = new Schema({
 
     name: { type: String, required: true },
-    type_id: { type: Schema.Types.ObjectId, ref: 'sensor_types', required: true },
+    sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
     meta: { type: Object, required: true }
 
   }, {

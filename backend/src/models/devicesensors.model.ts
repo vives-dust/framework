@@ -11,16 +11,17 @@ export default function (app: Application): Model<any> {
   const { Schema } = mongooseClient;
   const schema = new Schema({
 
-    device_id: { type: Schema.Types.ObjectId, ref: 'devices', required: true },
-    sensor_id: { type: Schema.Types.ObjectId, ref: 'sensors', required: true },
+    devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
+    sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
 
     data_source: { type: {
       source: { type: String, required: true },
       bucket: { type: String },
       field: { type: String },
+      _id: false
     }, required: true },
     depth: { type: Number },
-    conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models', required: true },
+    conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
 
   }, {
     timestamps: true
