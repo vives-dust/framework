@@ -53,10 +53,16 @@ get:
             $ref: ../components/schemas/Sensor/GET.yaml
           examples:
             default:
+              summary: Default Example
+              description: This is the default response.
               $ref: ../components/responses/Sensor/GET-default.yaml
             period:
+              summary: Period Example
+              description: This is the response when adding the period parameter (-1h).
               $ref: ../components/responses/Sensor/GET-period-1h.yaml
-            startstop:
+            start-stop:
+              summary: Start-Stop Example
+              description: This is the response when adding a start and stop parameter (-7d).
               $ref: ../components/responses/Sensor/GET-startstop-7d.yaml
     '404':
       description: Sensor not found

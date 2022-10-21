@@ -1,10 +1,12 @@
-id: lM3dbKeqP-vyvprK7PrNf
-device_id: Ylh5uVdxP-BctTmkaow3k
-type: soil-moisture
-values:
-  - _time: 2019-10-12T07:20:50.52Z 
-    value: 79.6
-unit: %
-meta:
-  - depth: -10
-  - conversionModelId: hECdgUqqX0koJR0MZ30EA
+# Get-Default
+value:
+  id: lM3dbKeqP-vyvprK7PrNf
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  type: soil-moisture
+  values:
+    - _time: 2019-10-12T07:20:50.52Z 
+      value: 79.6
+  unit: '%'
+  meta:
+    - depth: -10
+      conversionModelId: hECdgUqqX0koJR0MZ30EA

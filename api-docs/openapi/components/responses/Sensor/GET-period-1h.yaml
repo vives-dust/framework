@@ -1,20 +1,21 @@
-id: lM3dbKeqP-vyvprK7PrNf
-device_id: Ylh5uVdxP-BctTmkaow3k
-type: soil-moisture
-values:
-  - _time: 2019-10-12T07:00:00Z 
-    value: 79.6
-  - _time: 2019-10-12T07:01:00Z
-    value: 79.6
-  - _time: 2019-10-12T07:02:00Z
-    value: 75.2
-  - _time: 2019-10-12T07:03:00Z 
-    value: 73.9
-  - _time: 2019-10-12T07:04:00Z
-    value: 71.8
-  - _time: 2019-10-12T07:05:00Z
-    value: 77.4
-unit: %
-meta: 
-  - depth: -10
-  - conversionModelId: hECdgUqqX0koJR0MZ30EA
+value:
+  id: lM3dbKeqP-vyvprK7PrNf
+  device_id: Ylh5uVdxP-BctTmkaow3k
+  type: soil-moisture
+  values:
+    - _time: 2019-10-12T07:00:00Z 
+      value: 79.6
+    - _time: 2019-10-12T07:01:00Z
+      value: 79.6
+    - _time: 2019-10-12T07:02:00Z
+      value: 75.2
+    - _time: 2019-10-12T07:03:00Z 
+      value: 73.9
+    - _time: 2019-10-12T07:04:00Z
+      value: 71.8
+    - _time: 2019-10-12T07:05:00Z
+      value: 77.4
+  unit: '%'
+  meta: 
+    - depth: -10
+      conversionModelId: hECdgUqqX0koJR0MZ30EA
