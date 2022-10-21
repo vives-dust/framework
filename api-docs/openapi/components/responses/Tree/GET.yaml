@@ -23,7 +23,7 @@ sensors:
     value: 12.1
   unit: °C
   device_id: QJCOQsHuKh9jY0iKesQ3i
-  sensor_url: https://dust.devbitapp.be/api/sensors/:qGTWcIHOHZizQAlQSwhWa
+  sensor_url: https://dust.devbitapp.be/api/sensors/qGTWcIHOHZizQAlQSwhWa
 - id: Qlusu7YNGM-KMIrXNUiW7
   type: rain
   name: Rain Sensor
@@ -32,7 +32,7 @@ sensors:
     value: 2.3
   unit: mm
   device_id: QJCOQsHuKh9jY0iKesQ3i
-  sensor_url: https://dust.devbitapp.be/api/sensors/:Qlusu7YNGM-KMIrXNUiW7
+  sensor_url: https://dust.devbitapp.be/api/sensors/Qlusu7YNGM-KMIrXNUiW7
 - id: gZpXuyLTLFNXILml0XflR
   type: humidity
   name: Humidity Sensor
@@ -41,7 +41,7 @@ sensors:
     value: 75.3
   unit: '%'
   device_id: QJCOQsHuKh9jY0iKesQ3i
-  sensor_url: https://dust.devbitapp.be/api/sensors/:gZpXuyLTLFNXILml0XflR
+  sensor_url: https://dust.devbitapp.be/api/sensors/gZpXuyLTLFNXILml0XflR
 
 # DUST Soil Device
 - id: cWh_GJpwey46z0rUhRT98
@@ -52,7 +52,7 @@ sensors:
     value: 23.2
   unit: °C
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:cWh_GJpwey46z0rUhRT98
+  sensor_url: https://dust.devbitapp.be/api/sensors/cWh_GJpwey46z0rUhRT98
 - id: 6bFbSjNb9c5xs9lIoZmia
   type: temperature
   name: Soil Temperature
@@ -61,7 +61,7 @@ sensors:
     value: 11.3
   unit: °C
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:6bFbSjNb9c5xs9lIoZmia
+  sensor_url: https://dust.devbitapp.be/api/sensors/6bFbSjNb9c5xs9lIoZmia
 - id: lM3dbKeqP-vyvprK7PrNf
   type: moisture
   name: Moisture Level 1 (-10)
@@ -70,7 +70,7 @@ sensors:
     value: 79.6
   unit: '%'
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:lM3dbKeqP-vyvprK7PrNf
+  sensor_url: https://dust.devbitapp.be/api/sensors/lM3dbKeqP-vyvprK7PrNf
 - id: S_pUr_jaPJblbOsNd9M46
   type: moisture
   name: Moisture level 2 (-20)
@@ -79,7 +79,7 @@ sensors:
     value: 56.6
   unit: '%'
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:S_pUr_jaPJblbOsNd9M46
+  sensor_url: https://dust.devbitapp.be/api/sensors/S_pUr_jaPJblbOsNd9M46
 - id: Yua9yUsp7nPYDN19TuwZx
   type: moisture
   name: Moisture level 3 (-45)
@@ -88,7 +88,7 @@ sensors:
     value: 36.4
   unit: '%'
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:Yua9yUsp7nPYDN19TuwZx
+  sensor_url: https://dust.devbitapp.be/api/sensors/Yua9yUsp7nPYDN19TuwZx
 - id: 6wP6xGAWrdqMEmPsdMtrP 
   type: moisture
   name: Moisture level 4 (-60)
@@ -97,7 +97,7 @@ sensors:
     value: 19.7
   unit: '%'
   device_id: Ylh5uVdxP-BctTmkaow3k
-  sensor_url: https://dust.devbitapp.be/api/sensors/:6wP6xGAWrdqMEmPsdMtrP
+  sensor_url: https://dust.devbitapp.be/api/sensors/6wP6xGAWrdqMEmPsdMtrP
 - id: PZfXbav2mYhp54xCN30K7
   type: battery
   name: 3V3 Battery level
