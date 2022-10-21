@@ -15,13 +15,9 @@ info:
     $ref: ./info-description.md
 tags:
   - name: Trees
-    description: Manage trees.
-  - name: Devices
-    description: Manage devices.
+    description: Public tree data
   - name: Sensors
-    description: Manage sensors.
-  - name: SoilModels
-    description: Manage soil models.
+    description: Public sensor data
 servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
@@ -30,12 +26,8 @@ paths:
     $ref: 'paths/trees.yaml'
   '/trees/{id}':
     $ref: 'paths/trees@{id}.yaml'
-  '/devices/{id}':
-    $ref: 'paths/devices@{id}.yaml'
   '/sensors/{id}':
     $ref: 'paths/sensors@{id}.yaml'
-  '/soilmodels/{id}':
-    $ref: 'paths/soilmodels@{id}.yaml'
 components:
   securitySchemes:
     main_auth:

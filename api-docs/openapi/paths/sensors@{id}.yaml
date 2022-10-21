@@ -11,10 +11,10 @@ get:
       required: true
       schema:
         type: string
-      example: "lM3dbKeqP-vyvprK7PrNf"
+      example: lM3dbKeqP-vyvprK7PrNf
     - in: query
       name: period
-      description: The period of time to take samples into account, with a default every timespan. This takes precedence over start/stop
+      description: The period of time to take samples into account. Each period has a predefined start time and every duration.
       schema:
         type: string
         enum:
@@ -25,23 +25,42 @@ get:
           - 1y
           - all
           - last
+        example: 1h
     - in: query
-      name: start
-      description: The start date of the time range
+      name: every
+      description: Duration between samples. This takes precedence over default period duration.
       schema:
         type: string
+        enum:
+          - 1m
+          - 5m
+          - 30m
+          - 2h
+          - 24h
+        example: 5m
+    - in: query
+      name: start
+      description: The start date of the time range. This can be a datetime or it can be a relative negative enum label
+      schema:
+        type: string
+        enum:
+          - -1h
+          - -24h
+          - -7d
+          - -31d
+          - -1y
         example: 2019-10-12T07:20:50.52Z
     - in: query
       name: stop
-      description: The stop date of the time range
+      description: The stop date of the time range. This can be a datetime or it can be a relative negative enum label
       schema:
         type: string
-        example: 2019-10-12T07:20:50.52Z
-    - in: query
-      name: every
-      description: Timespan between samples. This takes precedence over default period timespan.
-      schema:
-        type: string
+        enum:
+          - -1h
+          - -24h
+          - -7d
+          - -31d
+          - -1y
         example: 2019-10-12T07:20:50.52Z
   responses:
     '200':
@@ -53,12 +72,12 @@ get:
             $ref: ../components/schemas/Sensor/GET.yaml
           examples:
             default:
-              summary: Default Example
-              description: This is the default response.
+              summary: Last Value - Default
+              description: The last value of a sensor is returned by default
               $ref: ../components/responses/Sensor/GET-default.yaml
             period:
-              summary: Period Example
-              description: This is the response when adding the period parameter (-1h).
+              summary: Selecting a period
+              description: This is the response when adding the period parameter (1h)
               $ref: ../components/responses/Sensor/GET-period-1h.yaml
             start-stop:
               summary: Start-Stop Example
