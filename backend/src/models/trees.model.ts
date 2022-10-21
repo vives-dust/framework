@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
 
   const treeSchema = new Schema({
 
-    id: { type: String, required: true },   // TODO: nanoid ID
+    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     name: { type: String, required: true },
     description: { type: String, required: true },
     location: {

@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
 
   const schema = new Schema({
 
-    id: { type: String, required: true },   // TODO: nanoid ID
+    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     name: { type: String, required: true },
     sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
     meta: { type: Object, required: true }
