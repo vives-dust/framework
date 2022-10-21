@@ -1,0 +1,74 @@
+type: object
+description: A sensor entity attached to the device
+properties:
+  id:
+    description: A unique identifier for the sensor
+    readOnly: true
+    type: string
+  name:
+    description: A user friendly name for this sensor
+    type: string
+  tree_id:
+    description: The unique identifier for the tree the sensor belongs to.
+    type: string
+  tree_url:
+    description: A url that matches the route to the specific tree resource
+    type: string
+  type:
+    description: The type of sensor
+    type: string
+    enum:
+      - temperature
+      - soil-moisture
+      - battery
+      - rain
+      - humidity
+  description:
+    description: A technical description of the sensor
+    type: string
+  last_value:
+    type: object
+    description: The last measured sensor value
+    properties:
+      time:
+        description: A timestamp of the sensor sample.
+        type: string
+      value:
+        description: The value of the sensor sample.
+        type: number
+    required:
+      - time
+      - value
+  values:
+    description: A list of measured sensor values
+    type: array
+    minItems: 1
+    items:
+      type: object
+      description: A single sensor sample.
+      properties:
+        time:
+          description: A timestamp of the sensor sample.
+          type: string
+        value:
+          description: The value of the sensor sample.
+          type: number
+      required:
+        - time
+        - value
+  unit:
+    description: The unit of the sensor sample values.
+    type: string
+  meta:
+    type: object
+    description: Object containing metadata of the sensor (depth, conversion_model_name)
+required:
+  - id
+  - name
+  - tree_id
+  - tree_url
+  - type
+  - description
+  - last_value
+  - unit
+  - meta

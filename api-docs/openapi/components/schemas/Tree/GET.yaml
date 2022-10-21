@@ -1,0 +1,87 @@
+type: object
+description: A tree is a physical entity that relates to the location where devices are placed at
+properties:
+  id:
+    description: A unique identifier for the tree
+    readOnly: true
+    type: string
+    example: 7Eq1MC-WjcLA-rRvjVNcS
+  name:
+    description: A descriptive name for the tree that is situated at a physical location
+    type: string
+    example: Tree 46 in the Skywalkerlane
+  description:
+    description: A descriptive excerpt of text to give more information about the look & feel of the tree
+    type: string
+    example: Old tree with almost no leaves and very thick stem.
+  location:
+    description: A longitude - latitude - height based  way of describing the exact location of the tree
+    type: object
+    properties:
+      longitude:
+        description: The longitude of the tree
+        type: integer
+        minimum: -90
+        maximum: 90
+      latitude:
+        description: The latitude of the tree
+        type: integer
+        minimum: -180
+        maximum: 180
+      height:
+        description: The height from sea level
+        type: integer
+  image_url:
+    description: A photograph of the tree
+    type: string
+    example: https://via.placeholder.com/150
+  
+  devices:
+    description: A listing in array format of all the devices connected to the tree
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          description: The unique identifier of the device
+          type: string
+          example: jUb4ksvHtkNV2mXuaP0zV
+        name:
+          description: A descriptive name for the device chosen by the admin
+          type: string 
+          example: DUST Soil Device v2.0
+  
+  sensors:
+    description: A listing in array format of all the sensors connected to the tree
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          description: The unique identifier of the sensor
+          type: string
+        name:
+          description: A descriptive name for the sensor chosen by the admin
+          type: string 
+        type:
+          description: The type of sensor
+          type: string 
+        unit:
+          description: The unit which applies to the given values of the sensor
+          type: string 
+        device_id:
+          description: The unique identifier of the device
+          type: string 
+        last_value:
+          description: The last non-zero value provided by the sensor
+          type: object
+          properties:
+            time:
+              description: The timestamp of the given value
+              type: string
+            value:
+              description: The value of the sensor
+              type: integer
+        sensor_url:
+          description: The url that leads to the sensor inside the API
+          type: string

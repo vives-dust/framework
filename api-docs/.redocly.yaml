@@ -1,12 +1,13 @@
 # See https://redoc.ly/docs/cli/configuration/ for more information.
-apiDefinitions:
-  main: openapi/openapi.yaml
-lint:
+apis:
+  main: 
+    root: openapi/openapi.yaml
+styleguide:
   extends:
     - recommended
   rules:
-    no-unused-components: warning
-referenceDocs:
+    no-unused-components: warn
+features.openapi:
   htmlTemplate: ./docs/index.html
   theme:
     colors:

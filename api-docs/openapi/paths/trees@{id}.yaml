@@ -1,0 +1,62 @@
+get:
+  tags:
+    - Trees
+  summary: Get the details of a single tree
+  operationId: GetTree
+  security: []
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the tree
+      required: true
+      schema:
+        type: string
+      example: "LTFeni8ygg7gaMUSCL8yY"
+  responses:
+    '200':
+      description: A JSON object containing the details of a single tree
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/Tree/GET.yaml
+          example:
+            $ref: ../components/responses/Tree/GET.yaml
+    '404':
+      description: Tree not found.
+
+# post:
+#   tags:
+#     - Trees
+#   summary: Create a new Tree
+#   operationId: CreateTree
+#   security: []
+#   parameters: 
+#     - in: path
+#       name: id
+#       description: The unique id of the tree
+#       required: true
+#       schema:
+#         type: string
+#       example: "LTFeni8ygg7gaMUSCL8yY"
+#   requestBody:
+#     description: A JSON object containing the details of the new Tree
+#     content:
+#       application/json:
+#         schema:
+#           type: object
+#           $ref: ../components/schemas/Tree/POST.yaml
+#         example:
+#           $ref: ../components/requestBodies/Tree.yaml
+#   responses:
+#     '201':
+#       description: A JSON object containing the details of the new Tree
+#       content:
+#         application/json:
+#           schema:
+#             type: object
+#             $ref: ../components/schemas/Tree/GET.yaml
+#           # example:
+#           #   $ref: ../components/responses/Tree.yaml
+#     '400':
+#       description: Bad request, check input.

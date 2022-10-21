@@ -1,0 +1,31 @@
+value:
+  id: lM3dbKeqP-vyvprK7PrNf
+  name: Soil Moisture Sensor @ -10cm
+  tree_id: 7Eq1MC-WjcLA-rRvjVNcS
+  tree_url: https://dust.devbitapp.be/api/trees/7Eq1MC-WjcLA-rRvjVNcS
+  type: soil-moisture
+  description: A capacitive soil moisture sensor developed by VIVES
+  last_value:
+    time: 2019-10-19T07:20:00Z 
+    value: 81.4
+  values:
+    - time: 2019-10-12T07:20:00Z 
+      value: 79.6
+    - time: 2019-10-13T07:20:00Z 
+      value: 75.1
+    - time: 2019-10-14T07:20:00Z 
+      value: 70.9
+    - time: 2019-10-15T07:20:00Z 
+      value: 65.2
+    - time: 2019-10-16T07:20:00Z 
+      value: 69.1
+    - time: 2019-10-17T07:20:00Z 
+      value: 67.5
+    - time: 2019-10-18T07:20:00Z 
+      value: 78.9
+    - time: 2019-10-19T07:20:00Z 
+      value: 81.4
+  unit: '%'
+  meta:
+    depth: -10
+    conversion_model_name: leemgrond
