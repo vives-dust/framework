@@ -26,6 +26,8 @@ servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
 paths:
+  '/trees':
+    $ref: 'paths/trees.yaml'
   '/trees/{id}':
     $ref: 'paths/trees@{id}.yaml'
   '/devices/{id}':
