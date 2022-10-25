@@ -28,9 +28,9 @@ properties:
         type: integer
         minimum: -180
         maximum: 180
-      height:
-        description: The height from sea level
-        type: integer
+    required:
+      - longitude
+      - latitude
   image_url:
     description: A photograph of the tree
     type: string
@@ -50,6 +50,9 @@ properties:
           description: A descriptive name for the device chosen by the admin
           type: string 
           example: DUST Soil Device v2.0
+      required:
+        - id
+        - name
   
   sensors:
     description: A listing in array format of all the sensors connected to the tree
@@ -82,6 +85,25 @@ properties:
             value:
               description: The value of the sensor
               type: integer
+          required:
+            - time
+            - value
         sensor_url:
           description: The url that leads to the sensor inside the API
           type: string
+      required:
+        - id
+        - name
+        - type
+        - unit
+        - device_id
+        - last_value
+        - sensor_url
+required:
+  - id
+  - name
+  - description
+  - location
+  - image_url
+  - devices
+  - sensors

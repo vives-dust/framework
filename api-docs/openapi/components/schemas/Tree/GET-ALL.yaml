@@ -28,9 +28,9 @@ items:
           type: integer
           minimum: -180
           maximum: 180
-        height:
-          description: The height from sea level
-          type: integer
+      required:
+        - longitude
+        - latitude
     image_url:
       description: A photograph of the tree
       type: string
