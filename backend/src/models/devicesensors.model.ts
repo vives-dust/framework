@@ -15,7 +15,8 @@ export default function (app: Application): Model<any> {
     devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
     sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
 
-    data_source: { type: {
+    data_source: {
+      type: {
         source: { type: String, required: true },
         bucket: { type: String },
         field: { type: String },
@@ -23,8 +24,14 @@ export default function (app: Application): Model<any> {
       required: true,
       _id: false
     },
-    depth: { type: Number },
-    conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
+    meta: {
+      type: {
+        depth: { type: Number },
+        conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
+      },
+      required: true,
+      _id: false
+    }
 
   }, {
     timestamps: true
