@@ -13,7 +13,6 @@ export default function (app: Application): Model<any> {
   const schema = new Schema({
 
     id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
-    text: { type: String, required: true },
     tree_id: { type: Schema.Types.ObjectId, ref: 'trees', required: true },
     devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
     hardware_id: { type: String, required: true },
