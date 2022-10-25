@@ -18,8 +18,7 @@ export default function (app: Application): Model<any> {
     location: {
       type: {
         latitude: { type: Number, required: true },
-        longitude:  { type: Number, required: true },
-        height: { type: Number, required: true }
+        longitude:  { type: Number, required: true }
       },
       required: true,
       _id: false
