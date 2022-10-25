@@ -16,7 +16,16 @@ export default function (app: Application): Model<any> {
     name: { type: String, required: true },
     device_id: { type: Schema.Types.ObjectId, ref: 'devices', required: true },
     sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
-    meta: { type: Object, required: true }
+    meta: { type: Object, required: true },
+    data_source: {
+      type: {
+        source: { type: String, required: true },
+        bucket: { type: String },
+        field: { type: String },
+      },
+      required: true,
+      _id: false
+    },
 
   }, {
     timestamps: true
