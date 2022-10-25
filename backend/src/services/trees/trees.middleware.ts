@@ -14,7 +14,7 @@ export async function populate_sensors(context : HookContext) {
   return context;
 }
 
-export function sanitize(context : HookContext) {
+export function sanitize_single_tree(context : HookContext) {
   // context.dispatch is a writeable, optional property and contains a "safe" version of the data that
   // should be sent to any client. If context.dispatch has not been set context.result will
   //be sent to the client instead.
@@ -48,6 +48,28 @@ export function sanitize(context : HookContext) {
     }),
 
     // original: context.result
+  }
+
+  return context;
+}
+
+export function sanitize_tree_listing(context : HookContext) {
+
+  context.dispatch = {
+    total: context.result.total,
+    limit: context.result.limit,
+    skip: context.result.skip,
+
+    data: context.result.data.map((tree : any) => {
+      return {
+        id: tree.id,
+        name: tree.name,
+        description: tree.description,
+        location: tree.location,
+        image_url: tree.image_url,
+        tree_url: `https://dust.devbitapp.be/api/trees/${tree._id}`,      // TODO: Replace with ENV var
+      }
+    })
   }
 
   return context;

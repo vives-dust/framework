@@ -22,11 +22,13 @@ export default {
 
   after: {
     all: [],
-    find: [],
+    find: [
+      TreeMiddleware.sanitize_tree_listing
+    ],
     get: [
       TreeMiddleware.populate_devices,
       TreeMiddleware.populate_sensors,
-      TreeMiddleware.sanitize,
+      TreeMiddleware.sanitize_single_tree,
       // Only run output validation if setting is set to true
       iff(
         (context: HookContext) => context.app.get('validate_output'),
