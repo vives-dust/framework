@@ -15,16 +15,16 @@ items:
       description: A descriptive excerpt of text to give more information about the look & feel of the tree
       type: string
     location:
-      description: A longitude - latitude - height based  way of describing the exact location of the tree
+      description: A latitude - longitude based way of describing the exact location of the tree
       type: object
       properties:
-        longitude:
-          description: The longitude of the tree
+        latitude:
+          description: The latitude of the location of the tree
           type: integer
           minimum: -90
           maximum: 90
-        latitude:
-          description: The latitude of the tree
+        longitude:
+          description: The longitude of the location of the tree
           type: integer
           minimum: -180
           maximum: 180
