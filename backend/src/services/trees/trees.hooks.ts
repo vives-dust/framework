@@ -4,7 +4,16 @@ import { TreeSchemas } from '../../validation/tree';
 import { iff } from 'feathers-hooks-common';
 import * as TreeMiddleware from './trees.middleware'
 
-const joiOptions = { convert: true, abortEarly: false };
+const joiOutputDispatchOptions = {
+  convert: true,
+  abortEarly: false,
+  getContext(context : HookContext) {
+    return context.dispatch;
+  },
+  setContext(context : HookContext, newValues : any) {
+    Object.assign(context.dispatch, newValues);
+  },
+};
 
 export default {
   before: {
@@ -23,7 +32,12 @@ export default {
   after: {
     all: [],
     find: [
-      TreeMiddleware.sanitize_tree_listing
+      TreeMiddleware.sanitize_tree_listing,
+      // Only run output validation if setting is set to true
+      iff(
+        (context: HookContext) => context.app.get('validate_output'),
+        validate.form(TreeSchemas._find, joiOutputDispatchOptions)
+      )
     ],
     get: [
       TreeMiddleware.populate_devices,
@@ -32,7 +46,7 @@ export default {
       // Only run output validation if setting is set to true
       iff(
         (context: HookContext) => context.app.get('validate_output'),
-        validate.form(TreeSchemas._get, joiOptions)
+        validate.form(TreeSchemas._get, joiOutputDispatchOptions)
       )
     ],
     create: [],

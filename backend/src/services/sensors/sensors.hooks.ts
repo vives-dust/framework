@@ -4,7 +4,16 @@ import { Hook } from 'mocha';
 import { SensorSchemas } from '../../validation/sensor';
 import { iff } from 'feathers-hooks-common';
 
-const joiOptions = { convert: true, abortEarly: false };
+const joiOutputDispatchOptions = {
+  convert: true,
+  abortEarly: false,
+  getContext(context : HookContext) {
+    return context.dispatch;
+  },
+  setContext(context : HookContext, newValues : any) {
+    Object.assign(context.dispatch, newValues);
+  },
+};
 
 export default {
   before: {
@@ -27,7 +36,7 @@ export default {
       // Only run output validation if setting is set to true
       iff(
         (context: HookContext) => context.app.get('validate_output'),
-        validate.form(SensorSchemas._get, joiOptions)
+        validate.form(SensorSchemas._get, joiOutputDispatchOptions)
       )
     ],
     create: [],
