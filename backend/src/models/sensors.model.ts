@@ -21,6 +21,11 @@ export default function (app: Application): Model<any> {
       type: {
         source: { type: String, required: true },
         bucket: { type: String },
+        measurement: { type: String },
+        // Tags will be unique identifier used for filtering
+        // For dust device it is devId, but other devices may have other
+        // identifier
+        tags: { type: Object },
         field: { type: String },
       },
       required: true,

@@ -3,6 +3,7 @@ import validate from 'feathers-validate-joi';
 import { Hook } from 'mocha';
 import { SensorSchemas } from '../../validation/sensor';
 import { iff } from 'feathers-hooks-common';
+import * as SensorMiddleware from './sensors.middleware'
 
 const joiOutputDispatchOptions = {
   convert: true,
@@ -19,7 +20,9 @@ export default {
   before: {
     all: [],
     find: [],
-    get: [],
+    get: [
+      SensorMiddleware.pre_populate_relations
+    ],
     create: [async (context: HookContext) => {
       context.data.id = 'nanoid-id-goes-here';
       return context;
@@ -33,6 +36,9 @@ export default {
     all: [],
     find: [],
     get: [
+      SensorMiddleware.populate_last_value,
+      // TODO: populate values ?
+      SensorMiddleware.sanitize_single_sensor,
       // Only run output validation if setting is set to true
       iff(
         (context: HookContext) => context.app.get('validate_output'),
