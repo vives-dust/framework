@@ -2,7 +2,8 @@ import { default as feathers, HookContext } from '@feathersjs/feathers';
 import validate from 'feathers-validate-joi';
 import { TreeSchemas } from '../../validation/tree';
 import { iff } from 'feathers-hooks-common';
-import * as TreeMiddleware from './trees.middleware'
+import * as TreeMiddleware from './trees.middleware';
+import { generate_nanoid } from '../../hooks/nanoid';
 
 const joiOutputDispatchOptions = {
   convert: true,
@@ -20,10 +21,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [async (context: HookContext) => {
-      context.data.id = 'nanoid-id-goes-here';
-      return context;
-    }],
+    create: [generate_nanoid],
     update: [],
     patch: [],
     remove: []
