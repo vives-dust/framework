@@ -8,10 +8,11 @@ export function set_resource_url(context : HookContext) {
 
   if (Array.isArray(data)) {
     data.forEach((element) => element[`${resource}_url`] = generate_resource_url(context, element.id));
+    context.result.data = data;
   } else {
     data[`${resource}_url`] = generate_resource_url(context, data.id);
+    context.result = data;
   }
-
-  context.result = data;
+  
   return context;
 }
