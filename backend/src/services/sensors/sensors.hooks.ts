@@ -4,6 +4,7 @@ import { Hook } from 'mocha';
 import { SensorSchemas } from '../../validation/sensor';
 import { iff } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware'
+import { generate_nanoid } from '../../hooks/nanoid';
 
 const joiOutputDispatchOptions = {
   convert: true,
@@ -23,10 +24,7 @@ export default {
     get: [
       SensorMiddleware.pre_populate_relations
     ],
-    create: [async (context: HookContext) => {
-      context.data.id = 'nanoid-id-goes-here';
-      return context;
-    }],
+    create: [generate_nanoid],
     update: [],
     patch: [],
     remove: []
