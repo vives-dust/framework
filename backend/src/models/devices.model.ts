@@ -9,11 +9,12 @@ export default function (app: Application): Model<any> {
   const modelName = 'devices';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+
   const schema = new Schema({
 
-    text: { type: String, required: true },
+    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     tree_id: { type: Schema.Types.ObjectId, ref: 'trees', required: true },
-    type_id: { type: Schema.Types.ObjectId, ref: 'device_types', required: true },
+    devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
     hardware_id: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },

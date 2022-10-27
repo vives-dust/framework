@@ -10,16 +10,15 @@ export default function (app: Application): Model<any> {
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
 
-
   const treeSchema = new Schema({
-    id: { type: String, required: true },
+
+    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     name: { type: String, required: true },
     description: { type: String, required: true },
     location: {
       type: {
         latitude: { type: Number, required: true },
-        longitude:  { type: Number, required: true },
-        height: { type: Number, required: true }
+        longitude:  { type: Number, required: true }
       },
       required: true,
       _id: false

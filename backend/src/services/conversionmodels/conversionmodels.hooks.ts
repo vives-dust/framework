@@ -1,11 +1,14 @@
-import { HooksObject } from '@feathersjs/feathers';
+import { default as feathers, HookContext } from '@feathersjs/feathers';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [async (context: HookContext) => {
+      context.data.id = 'nanoid-id-goes-here';
+      return context;
+    }],
     update: [],
     patch: [],
     remove: []

@@ -9,11 +9,28 @@ export default function (app: Application): Model<any> {
   const modelName = 'sensors';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+
   const schema = new Schema({
 
+    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     name: { type: String, required: true },
-    type_id: { type: Schema.Types.ObjectId, ref: 'sensor_types', required: true },
-    meta: { type: Object, required: true }
+    device_id: { type: Schema.Types.ObjectId, ref: 'devices', required: true },
+    sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
+    meta: { type: Object, required: true },
+    data_source: {
+      type: {
+        source: { type: String, required: true },
+        bucket: { type: String },
+        measurement: { type: String },
+        // Tags will be unique identifier used for filtering
+        // For dust device it is devId, but other devices may have other
+        // identifier
+        tags: { type: Object },
+        field: { type: String },
+      },
+      required: true,
+      _id: false
+    },
 
   }, {
     timestamps: true

@@ -9,6 +9,7 @@ export default function (app: Application): Model<any> {
   const modelName = 'devicetypes';
   const mongooseClient: Mongoose = app.get('mongooseClient');
   const { Schema } = mongooseClient;
+
   const schema = new Schema({
 
     type: { type: String, required: true },

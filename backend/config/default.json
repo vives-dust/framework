@@ -41,5 +41,6 @@
     "bucket": "INFLUXDB_BUCKET",
     "org": "INFLUXDB_ORG",
     "token": "INFLUXDB_TOKEN"
-  }
+  },
+  "validate_output": false
 }

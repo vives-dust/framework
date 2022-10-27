@@ -5,7 +5,7 @@ properties:
     description: A unique identifier for the device
     readOnly: true
     type: string
-  tree:
+  tree_id:
     description: A unique identifier for the tree the device belongs to
     type: string
   type:
