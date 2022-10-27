@@ -19,6 +19,8 @@ export default function (app: Application): Model<any> {
       type: {
         source: { type: String, required: true },
         bucket: { type: String },
+        measurement: { type: String },
+        tags: { type: Object },
         field: { type: String },
       },
       required: true,
