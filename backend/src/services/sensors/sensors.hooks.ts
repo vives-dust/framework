@@ -1,9 +1,10 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { SensorSchemas } from '../../validation/sensor';
-import { iffElse, isProvider } from 'feathers-hooks-common';
+import { debug, fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
+import { set_resource_url } from '../../hooks/resource_url';
 
 // const dispatch = (message: string) => {
 //   return (context : HookContext) => { return debug(message)(context); };
@@ -14,7 +15,6 @@ export default {
     all: [],
     find: [],
     get: [
-      // SensorMiddleware.pre_populate_relations
       // dispatch('Very nice')
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */ ],
@@ -33,16 +33,16 @@ export default {
     all: [],
     find: [],
     get: [
-      // SensorMiddleware.populate_last_value,
-      // // TODO: populate values ?
-      // SensorMiddleware.sanitize_single_sensor,
-      // // Only run output validation if setting is set to true
-
+      set_resource_url,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
+          fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
+          SensorMiddleware.populate_last_value,
+          // TODO: populate values when query is made ?
+          SensorMiddleware.sanitize_get_sensor,
           Validation.dispatch(SensorSchemas._get)
         ],
-        [ /* hooks for internal requests */],
+        [ /* hooks for internal requests */ ],
       ),
     ],
     create: [],

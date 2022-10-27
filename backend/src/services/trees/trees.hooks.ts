@@ -4,6 +4,7 @@ import * as TreeMiddleware from './trees.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import { iffElse, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
+import { set_resource_url } from '../../hooks/resource_url';
 
 export default {
   before: {
@@ -21,7 +22,7 @@ export default {
   after: {
     all: [],
     find: [
-      TreeMiddleware.sanitize_tree_listing,
+      // TreeMiddleware.sanitize_tree_listing,
 
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
@@ -31,15 +32,16 @@ export default {
       ),
     ],
     get: [
-      TreeMiddleware.populate_devices,
-      TreeMiddleware.populate_sensors,
-      TreeMiddleware.sanitize_single_tree,
+      set_resource_url,
+      // TreeMiddleware.populate_devices,
+      // TreeMiddleware.populate_sensors,
+      // TreeMiddleware.sanitize_single_tree,
       
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           Validation.dispatch(TreeSchemas._get)
         ],
-        [ /* hooks for internal requests */],
+        [ /* hooks for internal requests */ ],
       ),
     ],
     create: [],

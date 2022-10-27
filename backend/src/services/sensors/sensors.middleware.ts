@@ -1,12 +1,20 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
-import { resource_url } from '../../helpers/domain_url';
 
-export function pre_populate_relations(context: HookContext) {
-  const query = Object.assign(context.params.query || {}, { $populate: ['device_id', 'sensortype_id'] });
-  context.params.query = query;
-
-  return context;
-}
+// Resolvers are used by fastJoin to populate child object relations
+export const sensor_resolvers = {
+  joins: {
+    device: () => async (sensor : any, context: HookContext) => sensor.device = (await context.app.service('devices').get(sensor.device_id)),
+    device_and_tree: {
+      resolver: () => async (sensor : any, context: HookContext) => sensor.device = (await context.app.service('devices').get(sensor.device_id)),
+      joins: {
+        joins: {
+          tree: () => async (device : any, context: HookContext) => device.tree = (await context.app.service('trees').get(device.tree_id)),
+        }
+      }
+    },
+    sensor_type: () => async (sensor : any, context: HookContext) => sensor.sensor_type = (await context.app.service('sensortypes').get(sensor.sensortype_id)),
+  }
+};
 
 export async function populate_last_value(context : HookContext) {
   context.result.last_value = (await context.app.service('measurements').find({
@@ -22,25 +30,28 @@ export async function populate_last_value(context : HookContext) {
       },
       pruneTags: true,
     }
-  }))[0];
+  }))[0] || {};
 
   return context;
 }
 
-export function sanitize_single_sensor(context : HookContext) {
+function sanitize_sensor(sensor : any) {
+  return {
+    id: sensor.id,
+    name: sensor.name,
+    tree_id: sensor.device.tree.id,
+    tree_url: sensor.device.tree.tree_url,
+    type: sensor.sensor_type.type,
+    description: sensor.sensor_type.description,
+    last_value: sensor.last_value,
+    // values: context.result.values,
+    unit: sensor.sensor_type.unit,
+    meta: sensor.meta || {},    // TODO: Why can meta be undefined if required in model?
+  };
+}
 
-  context.dispatch = {
-    id: context.result.id,
-    name: context.result.name,
-    tree_id: context.result.device_id.tree_id,
-    tree_url: `${resource_url(context.app, "trees")}/${context.result.device_id.tree_id}`,
-    type: context.result.sensortype_id.type,
-    description: context.result.sensortype_id.description,
-    last_value: context.result.last_value || {},
-    values: context.result.values,
-    unit: context.result.sensortype_id.unit,
-    meta: context.result.meta,
-  }
-
+export function sanitize_get_sensor(context : HookContext) {
+  context.dispatch = sanitize_sensor(context.result);
+  // context.dispatch.original = context.result;    // For testing/debugging
   return context;
 }

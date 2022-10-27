@@ -11,22 +11,18 @@ export class Devices extends Service {
   async get(id: Id, params: Params) {
     // Internal request uses mongodb _id
     if (!params.provider) {   
-      return super.get(id, params)
+      return super.get(id, params);
     }
 
     // External request (REST / SocketIO) uses nanoid id
     // Need to return single object from find() here
-    params = params || {}
-    params.query = params.query || {}
-    params.query.$limit = 1
-    params.query.id = id    // Use the nanoid id
+    params = params || {};
+    params.query = params.query || {};
+    params.query.$limit = 1;
+    params.query.id = id;    // Use the nanoid id
     return super.find(params).then(function (result : any) {
-      let data = result.data || result
-      return Array.isArray(data) ? data[0] : data
-    })
-  }
-
-  find_by_tree_id(id : Id) {
-    return this.find({ query: { tree_id: id }});
+      const data = result.data || result;
+      return Array.isArray(data) ? data[0] : data;
+    });
   }
 }
