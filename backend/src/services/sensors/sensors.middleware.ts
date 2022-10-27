@@ -35,23 +35,19 @@ export async function populate_last_value(context : HookContext) {
   return context;
 }
 
-function sanitize_sensor(sensor : any) {
-  return {
-    id: sensor.id,
-    name: sensor.name,
-    tree_id: sensor.device.tree.id,
-    tree_url: sensor.device.tree.tree_url,
-    type: sensor.sensor_type.type,
-    description: sensor.sensor_type.description,
-    last_value: sensor.last_value,
-    // values: context.result.values,
-    unit: sensor.sensor_type.unit,
-    meta: sensor.meta || {},    // TODO: Why can meta be undefined if required in model?
-  };
-}
-
 export function sanitize_get_sensor(context : HookContext) {
-  context.dispatch = sanitize_sensor(context.result);
+  context.dispatch = {
+    id: context.result.id,
+    name: context.result.name,
+    tree_id: context.result.device.tree.id,
+    tree_url: context.result.device.tree.tree_url,
+    type: context.result.sensor_type.type,
+    description: context.result.sensor_type.description,
+    last_value: context.result.last_value,
+    // values: context.result.values,
+    unit: context.result.sensor_type.unit,
+    meta: context.result.meta || {},    // TODO: Why can meta be undefined if required in model?
+  };
   // context.dispatch.original = context.result;    // For testing/debugging
   return context;
 }

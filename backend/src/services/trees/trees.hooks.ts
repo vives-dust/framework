@@ -22,13 +22,13 @@ export default {
   after: {
     all: [],
     find: [
-      // TreeMiddleware.sanitize_tree_listing,
-
+      set_resource_url,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
+          TreeMiddleware.sanitize_find_trees,
           Validation.dispatch(TreeSchemas._find)
         ],
-        [ /* hooks for internal requests */],
+        [ /* hooks for internal requests */ ],
       ),
     ],
     get: [

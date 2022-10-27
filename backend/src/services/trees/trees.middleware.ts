@@ -1,5 +1,4 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
-import { resource_url } from '../../helpers/domain_url';
 
 export async function populate_devices(context : HookContext) {
   context.result.devices = (await context.app.service('devices').find_by_tree_id(context.id)).data
@@ -14,6 +13,8 @@ export async function populate_sensors(context : HookContext) {
 
   return context;
 }
+
+
 
 export function sanitize_single_tree(context : HookContext) {
   // context.dispatch is a writeable, optional property and contains a "safe" version of the data that
@@ -39,7 +40,7 @@ export function sanitize_single_tree(context : HookContext) {
         name: sensor.sensortype_id.name,
         unit: sensor.sensortype_id.unit,
         device_id: sensor.device_id.id,
-        sensor_url: `${resource_url(context.app, "sensors")}/${context.result.sensor.id}`,
+        // sensor_url: `${resource_url(context.app, "sensors")}/${context.result.sensor.id}`,
         // TODO: Sanitize last value
         // "last_value": {
         //   "time": "2019-10-12T07:20:50.52Z",
@@ -54,8 +55,7 @@ export function sanitize_single_tree(context : HookContext) {
   return context;
 }
 
-export function sanitize_tree_listing(context : HookContext) {
-
+export function sanitize_find_trees(context : HookContext) {
   context.dispatch = {
     total: context.result.total,
     limit: context.result.limit,
@@ -68,10 +68,10 @@ export function sanitize_tree_listing(context : HookContext) {
         description: tree.description,
         location: tree.location,
         image_url: tree.image_url,
-        tree_url: `${resource_url(context.app, "trees")}/${context.result.device_id.tree_id}`,
-      }
+        tree_url:  tree.tree_url
+      };
     })
-  }
-
+  };
+  // context.dispatch.original = context.result;    // For testing/debugging
   return context;
 }
