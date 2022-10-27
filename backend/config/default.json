@@ -42,5 +42,8 @@
     "org": "INFLUXDB_ORG",
     "token": "INFLUXDB_TOKEN"
   },
+  "application": {
+    "domain": "BACKEND_API_URL"
+  },
   "validate_output": false
 }
