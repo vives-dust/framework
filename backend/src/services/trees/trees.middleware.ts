@@ -33,12 +33,12 @@ export function sanitize_single_tree(context : HookContext) {
     }),
     sensors: context.result.sensors.map((sensor : any) => {
       return {
-        id: sensor._id,
+        id: sensor.id,
         type: sensor.sensortype_id.type,
         name: sensor.sensortype_id.name,
         unit: sensor.sensortype_id.unit,
-        device_id: sensor.device_id._id,
-        sensor_url: `https://dust.devbitapp.be/api/sensors/${sensor._id}`,      // TODO: Replace with ENV var
+        device_id: sensor.device_id.id,
+        sensor_url: `https://dust.devbitapp.be/api/sensors/${sensor.id}`,      // TODO: Replace with ENV var
         // TODO: Sanitize last value
         // "last_value": {
         //   "time": "2019-10-12T07:20:50.52Z",
@@ -67,7 +67,7 @@ export function sanitize_tree_listing(context : HookContext) {
         description: tree.description,
         location: tree.location,
         image_url: tree.image_url,
-        tree_url: `https://dust.devbitapp.be/api/trees/${tree._id}`,      // TODO: Replace with ENV var
+        tree_url: `https://dust.devbitapp.be/api/trees/${tree.id}`,      // TODO: Replace with ENV var
       }
     })
   }
