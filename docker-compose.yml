@@ -152,6 +152,7 @@ services:
       - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
       - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+      - BACKEND_API_URL=${BACKEND_API_URL}
     labels:
       traefik.enable: "true"
       traefik.http.routers.dust_backend.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/api`)
