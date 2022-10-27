@@ -2,7 +2,7 @@ import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { TreeSchemas } from '../../validation/tree';
 import * as TreeMiddleware from './trees.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-import { iffElse, isProvider } from 'feathers-hooks-common';
+import { debug, fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
 
@@ -33,12 +33,13 @@ export default {
     ],
     get: [
       set_resource_url,
-      // TreeMiddleware.populate_devices,
-      // TreeMiddleware.populate_sensors,
-      // TreeMiddleware.sanitize_single_tree,
-      
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
+          // 2x fastJoin because sensors depends on id's of devices and
+          // we do not want nested objects (which we would get with single fastJoin)
+          fastJoin(TreeMiddleware.tree_resolvers, { devices: true }),
+          fastJoin(TreeMiddleware.tree_resolvers, { sensors_and_their_types: { types: true, device: true } }),
+          TreeMiddleware.sanitize_get_tree,
           Validation.dispatch(TreeSchemas._get)
         ],
         [ /* hooks for internal requests */ ],

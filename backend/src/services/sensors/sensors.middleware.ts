@@ -16,22 +16,35 @@ export const sensor_resolvers = {
   }
 };
 
-export async function populate_last_value(context : HookContext) {
-  context.result.last_value = (await context.app.service('measurements').find({
-    query: {
-      bucket: context.result.data_source.bucket,
-      measurement: context.result.data_source.measurement,
-      tags: context.result.data_source.tags,
-      drop: ['codingRate'],   // FIX: For duplicate series
-      fields: [ context.result.data_source.field ],
-      aliases: {
-        [context.result.data_source.field]: 'value',
-        '_time': 'time',
-      },
-      pruneTags: true,
-    }
-  }))[0] || {};
+// TODO: Refactor to utility / helper
+const fetch_last_value = (context: HookContext, data_source : any) => context.app.service('measurements').find({
+  query: {
+    bucket: data_source.bucket,
+    measurement: data_source.measurement,
+    tags: data_source.tags,
+    drop: ['codingRate'],   // FIX: For duplicate series
+    fields: [ data_source.field ],
+    aliases: {
+      [data_source.field]: 'value',
+      '_time': 'time',
+    },
+    pruneTags: true,
+  }
+});
 
+export async function populate_last_value(context : HookContext) {
+  const data = context.result.data || context.result;
+
+  if (Array.isArray(data)) {
+    await Promise.all(data.map(async (sensor : any) => {
+      sensor.last_value = (await fetch_last_value(context, sensor.data_source))[0] || {};
+    }));
+    context.result.data = data;
+  } else {
+    data.last_value = (await fetch_last_value(context, data.data_source))[0] || {};
+    context.result = data;
+  }
+  
   return context;
 }
 

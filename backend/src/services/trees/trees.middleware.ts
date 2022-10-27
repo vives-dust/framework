@@ -1,29 +1,33 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 
-export async function populate_devices(context : HookContext) {
-  context.result.devices = (await context.app.service('devices').find_by_tree_id(context.id)).data
+// Resolvers are used by fastJoin to populate child object relations
+export const tree_resolvers = {
+  joins: {
+    devices: () => async (tree : any, context: HookContext) => tree.devices = await context.app.service('devices').find({
+      query: { tree_id: tree._id },
+      paginate: false
+    }),
 
-  return context;
-}
+    sensors_and_their_types: {
+      resolver: () => async (tree : any, context: HookContext) => {
+        const device_ids = tree.devices.map((device : any) => device._id);
+        return tree.sensors = await context.app.service('sensors').find({
+          query: { device_id: { $in: device_ids } },
+          paginate: false
+        });
+      },
+      joins: {
+        joins: {
+          types: () => async (sensor : any, context: HookContext) => sensor.sensor_type = (await context.app.service('sensortypes').get(sensor.sensortype_id)),
+          device: () => async (sensor : any, context: HookContext) => sensor.device = (await context.app.service('devices').get(sensor.device_id)),
+        }
+      }
+    },
 
-export async function populate_sensors(context : HookContext) {
-  context.result.sensors = (await Promise.all(context.result.devices.map(async (device : any) => {
-    return (await context.app.service('sensors').find_by_device_id(device._id)).data
-  }))).flat();
+  }
+};
 
-  return context;
-}
-
-
-
-export function sanitize_single_tree(context : HookContext) {
-  // context.dispatch is a writeable, optional property and contains a "safe" version of the data that
-  // should be sent to any client. If context.dispatch has not been set context.result will
-  //be sent to the client instead.
-
-  // Note: context.dispatch only affects the data sent through a Feathers Transport like REST or Socket.io.
-  // An internal method call will still get the data set in context.result.
-
+export function sanitize_get_tree(context : HookContext) {
   context.dispatch = {
     id: context.result.id,
     name: context.result.name,
@@ -31,27 +35,21 @@ export function sanitize_single_tree(context : HookContext) {
     location: context.result.location,
     image_url: context.result.image_url,
     devices: context.result.devices.map((device : any) => {
-      return { id: device._id, name: device.name }
+      return { id: device.id, name: device.name };
     }),
     sensors: context.result.sensors.map((sensor : any) => {
       return {
         id: sensor.id,
-        type: sensor.sensortype_id.type,
-        name: sensor.sensortype_id.name,
-        unit: sensor.sensortype_id.unit,
-        device_id: sensor.device_id.id,
-        // sensor_url: `${resource_url(context.app, "sensors")}/${context.result.sensor.id}`,
-        // TODO: Sanitize last value
-        // "last_value": {
-        //   "time": "2019-10-12T07:20:50.52Z",
-        //   "value": 12.1
-        // },
-      }
+        type: sensor.sensor_type.type,
+        name: sensor.sensor_type.name,
+        unit: sensor.sensor_type.unit,
+        device_id: sensor.device.id,
+        sensor_url: sensor.sensor_url,
+        last_value: sensor.last_value,
+      };
     }),
-
-    // original: context.result
-  }
-
+  };
+  // context.dispatch.original = context.result;    // For testing/debugging
   return context;
 }
 

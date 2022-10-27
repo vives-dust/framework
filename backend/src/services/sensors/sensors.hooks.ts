@@ -31,13 +31,16 @@ export default {
 
   after: {
     all: [],
-    find: [],
+    find: [
+      set_resource_url,
+      SensorMiddleware.populate_last_value,
+    ],
     get: [
       set_resource_url,
+      SensorMiddleware.populate_last_value,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
-          SensorMiddleware.populate_last_value,
           // TODO: populate values when query is made ?
           SensorMiddleware.sanitize_get_sensor,
           Validation.dispatch(SensorSchemas._get)
