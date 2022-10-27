@@ -6,7 +6,9 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [generate_nanoid],
+    create: [
+      generate_nanoid
+    ],
     update: [],
     patch: [],
     remove: []

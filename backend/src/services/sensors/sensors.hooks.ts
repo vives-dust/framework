@@ -24,7 +24,9 @@ export default {
     get: [
       SensorMiddleware.pre_populate_relations
     ],
-    create: [generate_nanoid],
+    create: [
+      generate_nanoid
+    ],
     update: [],
     patch: [],
     remove: []
