@@ -1,20 +1,9 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
-import validate from 'feathers-validate-joi';
 import { TreeSchemas } from '../../validation/tree';
-import { iff } from 'feathers-hooks-common';
 import * as TreeMiddleware from './trees.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-
-const joiOutputDispatchOptions = {
-  convert: true,
-  abortEarly: false,
-  getContext(context : HookContext) {
-    return context.dispatch;
-  },
-  setContext(context : HookContext, newValues : any) {
-    Object.assign(context.dispatch, newValues);
-  },
-};
+import { iffElse, isProvider } from 'feathers-hooks-common';
+import * as Validation from '../../hooks/validation';
 
 export default {
   before: {
@@ -33,21 +22,25 @@ export default {
     all: [],
     find: [
       TreeMiddleware.sanitize_tree_listing,
-      // Only run output validation if setting is set to true
-      iff(
-        (context: HookContext) => context.app.get('validate_output'),
-        validate.form(TreeSchemas._find, joiOutputDispatchOptions)
-      )
+
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          Validation.dispatch(TreeSchemas._find)
+        ],
+        [ /* hooks for internal requests */],
+      ),
     ],
     get: [
       TreeMiddleware.populate_devices,
       TreeMiddleware.populate_sensors,
       TreeMiddleware.sanitize_single_tree,
-      // Only run output validation if setting is set to true
-      iff(
-        (context: HookContext) => context.app.get('validate_output'),
-        validate.form(TreeSchemas._get, joiOutputDispatchOptions)
-      )
+      
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          Validation.dispatch(TreeSchemas._get)
+        ],
+        [ /* hooks for internal requests */],
+      ),
     ],
     create: [],
     update: [],

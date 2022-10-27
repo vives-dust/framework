@@ -1,28 +1,25 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
-import validate from 'feathers-validate-joi';
-import { Hook } from 'mocha';
 import { SensorSchemas } from '../../validation/sensor';
-import { iff } from 'feathers-hooks-common';
-import * as SensorMiddleware from './sensors.middleware'
+import { iffElse, isProvider } from 'feathers-hooks-common';
+import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
+import * as Validation from '../../hooks/validation';
 
-const joiOutputDispatchOptions = {
-  convert: true,
-  abortEarly: false,
-  getContext(context : HookContext) {
-    return context.dispatch;
-  },
-  setContext(context : HookContext, newValues : any) {
-    Object.assign(context.dispatch, newValues);
-  },
-};
+// const dispatch = (message: string) => {
+//   return (context : HookContext) => { return debug(message)(context); };
+// };
 
 export default {
   before: {
     all: [],
     find: [],
     get: [
-      SensorMiddleware.pre_populate_relations
+      // SensorMiddleware.pre_populate_relations
+      // dispatch('Very nice')
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */ ],
+        [ /* hooks for internal requests */ ],
+      ),
     ],
     create: [
       generate_nanoid
@@ -36,14 +33,17 @@ export default {
     all: [],
     find: [],
     get: [
-      SensorMiddleware.populate_last_value,
-      // TODO: populate values ?
-      SensorMiddleware.sanitize_single_sensor,
-      // Only run output validation if setting is set to true
-      iff(
-        (context: HookContext) => context.app.get('validate_output'),
-        validate.form(SensorSchemas._get, joiOutputDispatchOptions)
-      )
+      // SensorMiddleware.populate_last_value,
+      // // TODO: populate values ?
+      // SensorMiddleware.sanitize_single_sensor,
+      // // Only run output validation if setting is set to true
+
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          Validation.dispatch(SensorSchemas._get)
+        ],
+        [ /* hooks for internal requests */],
+      ),
     ],
     create: [],
     update: [],
