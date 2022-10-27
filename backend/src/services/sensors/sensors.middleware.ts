@@ -32,6 +32,7 @@ export function sanitize_single_sensor(context : HookContext) {
     id: context.result.id,
     name: context.result.name,
     tree_id: context.result.device_id.tree_id,
+    tree_url: `https://dust.devbitapp.be/api/trees/${context.result.device_id.tree_id}`,      // TODO: Replace with ENV var
     type: context.result.sensortype_id.type,
     description: context.result.sensortype_id.description,
     last_value: context.result.last_value || {},
