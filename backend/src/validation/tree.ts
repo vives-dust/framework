@@ -20,6 +20,7 @@ const TreeDetailsSchema = TreeBaseSchema.keys({
   })).required(),
   sensors: Joi.array().items(SensorSchemas._base.keys({
     sensor_url: Joi.string().uri().required(),
+    device_id: NanoidSchema.required(),
   })).required(),
 })
 

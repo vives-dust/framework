@@ -16,7 +16,7 @@ const SensorDetailsSchema = SensorBaseSchema.keys({
   tree_id: NanoidSchema.required(),
   tree_url: Joi.string().uri().required(),
   description: Joi.string().required(),
-  values: Joi.array().min(1).items(
+  values: Joi.array().items(
     SampleSchema
   ),
   meta: Joi.object().keys({
