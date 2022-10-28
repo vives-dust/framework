@@ -16,7 +16,6 @@ const joiOutputDispatchOptions = {
 
 export const dispatch = (schema : Joi.ObjectSchema<any>): Hook => {
   return (context : HookContext) => {
-    console.log('Validating the output data');
     return iff(
       // Only run output validation if setting is set to true
       (context: HookContext) => context.app.get('validate_output'),

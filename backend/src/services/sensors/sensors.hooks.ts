@@ -1,6 +1,6 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { SensorSchemas } from '../../validation/sensor';
-import { debug, fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
+import { debug, fastJoin, iff, iffElse, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
@@ -41,7 +41,7 @@ export default {
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
-          // TODO: populate values when query is made ?
+          SensorMiddleware.populate_values,
           SensorMiddleware.sanitize_get_sensor,
           Validation.dispatch(SensorSchemas._get)
         ],
