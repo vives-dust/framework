@@ -15,7 +15,7 @@ const periods = {
   '31d': { start: '-31d', every: '2h' },
   '1y': { start: '-1y', every: '24h' },
   'all': { start: '0', every: '24h' },
-  'last': { start: '0', every: undefined }
+  'last': { start: '0', every: undefined as any }
 };
 
 const QueryHelper = {
