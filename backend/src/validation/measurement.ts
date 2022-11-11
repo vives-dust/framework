@@ -5,8 +5,9 @@ const key_values = Object.values(Period);   // First half = labels, second half 
 const valid_periods = key_values.slice(0, key_values.length/2);
 
 const MeasurementQuerySchema = Joi.object().keys({
+  bucket: Joi.string(),
   measurement: Joi.string(),
-  deviceId: Joi.string().required(),
+  tags: Joi.object(),
   fields: Joi.array().items(
     Joi.string().required()
   ).min(1),
@@ -17,9 +18,7 @@ const MeasurementQuerySchema = Joi.object().keys({
   start: Joi.string(),
   stop: Joi.string(),
   every: Joi.string(),
-  aliases: Joi.array().items(
-    Joi.array().items(Joi.string()).length(2)
-  ).min(1),
+  aliases: Joi.object(),
   pruneTags: Joi.boolean()
 });
 

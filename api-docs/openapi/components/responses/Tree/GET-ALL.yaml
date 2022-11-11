@@ -4,7 +4,6 @@
   location:
     latitude: 51.194154
     longitude: 3.21767
-    height: 0
   image_url: https://live.staticflickr.com/4292/35874014205_d25101a9d1_b.jpg
   tree_url: https://dust.devbitapp.be/api/trees/SWxleYvqhkdieKCR-_WZa
 
@@ -14,6 +13,5 @@
   location:
     latitude: 17.489653
     longitude: 68.853247
-    height: 12
   image_url: https://via.placeholder.com/150
   tree_url: https://dust.devbitapp.be/api/trees/7Eq1MC-WjcLA-rRvjVNcS
