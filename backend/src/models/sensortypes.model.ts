@@ -15,7 +15,7 @@ export default function (app: Application): Model<any> {
     type: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
-    unit: { type: String, required: true },
+    unit: { type: String, default: '' },
 
   }, {
     timestamps: true

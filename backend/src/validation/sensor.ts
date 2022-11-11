@@ -7,7 +7,7 @@ const SensorBaseSchema = Joi.object().keys({
   id: NanoidSchema.required(),
   name: Joi.string().required(),
   type: Joi.string().required(),
-  unit: Joi.string().required(),
+  unit: Joi.string().allow('').required(),
   last_value: SampleSchema.required(),
 });
 
@@ -23,7 +23,7 @@ const SensorDetailsSchema = SensorBaseSchema.keys({
     depth: Joi.number(),
     conversion_model_name: Joi.string(),
   }).required(),
-})
+});
 
 export const SensorSchemas = {
 
