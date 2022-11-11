@@ -12,11 +12,20 @@ export default function (app: Application): Model<any> {
 
   const schema = new Schema({
 
-    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
+    id: { type: String, required: true, immutable: true },
     name: { type: String, required: true },
     device_id: { type: Schema.Types.ObjectId, ref: 'devices', required: true },
     sensortype_id: { type: Schema.Types.ObjectId, ref: 'sensortypes', required: true },
-    meta: { type: Object, required: true },
+    meta: {
+      type: {
+        depth: { type: Number },
+        // Conversion model set here acts as a specific conversion model for this sensor.
+        // This overrules the initial conversion model from sensor_type
+        conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
+      },
+      required: true,
+      _id: false
+    },
     data_source: {
       type: {
         source: { type: String, required: true },
@@ -33,7 +42,8 @@ export default function (app: Application): Model<any> {
     },
 
   }, {
-    timestamps: true
+    timestamps: true,
+    minimize: false,
   });
 
   // This is necessary to avoid model compilation errors in watch mode

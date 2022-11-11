@@ -29,6 +29,7 @@ export default function (app: Application): Model<any> {
     meta: {
       type: {
         depth: { type: Number },
+        // Conversion model set here acts as a default. The sensor instance can overrule this by setting another
         conversion_model_id: { type: Schema.Types.ObjectId, ref: 'conversion_models' },
       },
       required: true,
@@ -36,7 +37,8 @@ export default function (app: Application): Model<any> {
     }
 
   }, {
-    timestamps: true
+    timestamps: true,
+    minimize: false,        // Don't allow mongoose to minimize models by deleting empty objects (meta for example)
   });
 
   // This is necessary to avoid model compilation errors in watch mode
