@@ -41,7 +41,7 @@ export function sanitize_get_tree(context : HookContext) {
       return {
         id: sensor.id,
         type: sensor.sensor_type.type,
-        name: sensor.sensor_type.name,
+        name: sensor.name,
         unit: sensor.sensor_type.unit,
         device_id: sensor.device.id,
         sensor_url: sensor.sensor_url,
