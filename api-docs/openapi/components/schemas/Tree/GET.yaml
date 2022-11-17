@@ -35,7 +35,6 @@ properties:
     description: A photograph of the tree
     type: string
     example: https://via.placeholder.com/150
-  
   devices:
     description: A listing in array format of all the devices connected to the tree
     type: array
@@ -53,7 +52,6 @@ properties:
       required:
         - id
         - name
-  
   sensors:
     description: A listing in array format of all the sensors connected to the tree
     type: array
@@ -105,5 +103,3 @@ required:
   - description
   - location
   - image_url
-  - devices
-  - sensors
