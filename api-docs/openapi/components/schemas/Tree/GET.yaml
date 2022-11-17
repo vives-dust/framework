@@ -103,3 +103,5 @@ required:
   - description
   - location
   - image_url
+  - devices
+  - sensors
