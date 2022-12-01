@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-12-01T11:49:23.005Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="YQHA4g2cP34IlQqm0Ror" version="20.6.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-12-01T13:51:28.794Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="kFBi9iiba-zi0HQPWTUN" version="20.6.0" type="github">
   <diagram name="Databasemodel" id="e56a1550-8fbb-45ad-956c-1786394a9013">
-    <mxGraphModel dx="981" dy="523" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+    <mxGraphModel dx="3944" dy="1516" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -131,8 +131,8 @@
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-63" value="field" style="shape=partialRectangle;top=0;left=0;right=0;bottom=0;html=1;align=left;verticalAlign=top;fillColor=none;spacingLeft=60;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dropTarget=0;" vertex="1" parent="2e49270ec7c68f3f-64">
           <mxGeometry y="130" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="Vyco7VZmiszpP_C7B0tZ-2" value="&lt;font style=&quot;font-size: 22px;&quot;&gt;&lt;b&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;	&lt;/span&gt;DUST database model (first documented iteration):&lt;/b&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;" vertex="1" parent="1">
-          <mxGeometry x="40" y="20" width="1370" height="60" as="geometry" />
+        <mxCell id="Vyco7VZmiszpP_C7B0tZ-2" value="&lt;font style=&quot;font-size: 33px;&quot;&gt;&lt;span style=&quot;font-size: 33px;&quot;&gt;&lt;span style=&quot;white-space: pre; font-size: 33px;&quot;&gt;	&lt;/span&gt;DUST database model (first documented iteration):&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontStyle=1;fontSize=33;" vertex="1" parent="1">
+          <mxGeometry x="-400" y="20" width="1810" height="60" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=22;startArrow=ERone;startFill=0;endArrow=ERone;endFill=0;strokeWidth=2;endSize=8;startSize=8;" edge="1" parent="1" source="Vyco7VZmiszpP_C7B0tZ-44" target="2e49270ec7c68f3f-2">
           <mxGeometry relative="1" as="geometry" />
@@ -325,7 +325,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-160" value="Users" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14" vertex="1" parent="1">
-          <mxGeometry x="1650" y="130" width="160" height="198" as="geometry" />
+          <mxGeometry x="-350" y="470" width="160" height="198" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-161" value="_id: ObjectId" style="shape=partialRectangle;top=0;left=0;right=0;bottom=1;html=1;align=center;verticalAlign=middle;fillColor=none;spacingLeft=34;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dropTarget=0;fontStyle=1;strokeColor=none;" vertex="1" parent="Vyco7VZmiszpP_C7B0tZ-160">
           <mxGeometry y="26" width="160" height="34" as="geometry" />
@@ -364,7 +364,7 @@
           <mxGeometry width="30" height="26" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-173" value="permissions" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14" vertex="1" parent="1">
-          <mxGeometry x="1920" y="248" width="160" height="52" as="geometry">
+          <mxGeometry x="-80" y="588" width="160" height="52" as="geometry">
             <mxRectangle x="490" y="1058" width="120" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -375,7 +375,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-178" value="ConversionModels" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14" vertex="1" parent="1">
-          <mxGeometry x="1650" y="430" width="160" height="224" as="geometry" />
+          <mxGeometry x="-350" y="770" width="160" height="224" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-179" value="_id: ObjectId" style="shape=partialRectangle;top=0;left=0;right=0;bottom=1;html=1;align=center;verticalAlign=middle;fillColor=none;spacingLeft=34;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dropTarget=0;fontStyle=1;strokeColor=none;" vertex="1" parent="Vyco7VZmiszpP_C7B0tZ-178">
           <mxGeometry y="26" width="160" height="34" as="geometry" />
@@ -420,7 +420,7 @@
           <mxGeometry width="30" height="26" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-193" value="samples" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14" vertex="1" parent="1">
-          <mxGeometry x="1870" y="538" width="160" height="52" as="geometry">
+          <mxGeometry x="-130" y="878" width="160" height="52" as="geometry">
             <mxRectangle x="490" y="1058" width="120" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -431,7 +431,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-196" value="type" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14" vertex="1" parent="1">
-          <mxGeometry x="2120" y="516" width="160" height="84" as="geometry">
+          <mxGeometry x="120" y="856" width="160" height="84" as="geometry">
             <mxRectangle x="490" y="1058" width="120" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
@@ -443,6 +443,15 @@
         </mxCell>
         <mxCell id="Vyco7VZmiszpP_C7B0tZ-198" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;strokeWidth=1;fontSize=22;startArrow=open;startFill=0;endArrow=none;endFill=0;startSize=8;endSize=8;" edge="1" parent="1" source="Vyco7VZmiszpP_C7B0tZ-194" target="Vyco7VZmiszpP_C7B0tZ-196">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Vyco7VZmiszpP_C7B0tZ-202" value="&lt;div style=&quot;text-align: justify; font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;_id:&lt;/b&gt; This is an ObjectId created by the MongoDB. This way of identification is only used for internal purposes and will never be exposed through the API.&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify; font-size: 14px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;text-align: justify; font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;id:&lt;/b&gt;&amp;nbsp;This is a nanoId injected before creation of an entity in the database. The nanoId&#39;s are more secure and more random (maybe unpredictable is a better description, does true randomness exist?)&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="rounded=1;shadow=0;glass=0;sketch=0;strokeColor=default;strokeWidth=3;fontSize=14;fillColor=#ffcccc;rotation=0;align=center;overflow=visible;labelPadding=0;perimeter=rectanglePerimeter;imageAspect=1;imageAlign=left;imageHeight=24;spacingRight=20;spacing=20;labelPosition=center;verticalLabelPosition=middle;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-340" y="114" width="320" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="Vyco7VZmiszpP_C7B0tZ-203" value="&lt;font style=&quot;font-size: 33px;&quot;&gt;&lt;span style=&quot;font-size: 33px;&quot;&gt;&lt;span style=&quot;white-space: pre; font-size: 33px;&quot;&gt;	&lt;/span&gt;DUST database model (second documented iteration):&lt;/span&gt;&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;fontStyle=1;fontSize=33;" vertex="1" parent="1">
+          <mxGeometry x="-400" y="1060" width="1810" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Vyco7VZmiszpP_C7B0tZ-204" value="&lt;div style=&quot;text-align: justify; font-size: 14px;&quot;&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;b style=&quot;font-size: 14px;&quot;&gt;To Do: &lt;/b&gt;change the verbage of the devId attribute so we can better implement an ID for hardware.&lt;/font&gt;&lt;/span&gt;&lt;span style=&quot;background-color: initial; font-size: 14px;&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="rounded=1;shadow=0;glass=0;sketch=0;strokeColor=default;strokeWidth=3;fontSize=14;fillColor=#ffcccc;rotation=0;align=center;overflow=visible;labelPadding=0;perimeter=rectanglePerimeter;imageAspect=1;imageAlign=left;imageHeight=24;spacingRight=20;spacing=20;labelPosition=center;verticalLabelPosition=middle;verticalAlign=middle;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1215" y="230" width="205" height="130" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
