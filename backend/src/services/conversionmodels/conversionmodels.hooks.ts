@@ -11,7 +11,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [generate_nanoid, validate.form(ConversionModelSchemas.create, joiOptions)],
+    create: [ generate_nanoid ],
     update: [],
     patch: [],
     remove: []
