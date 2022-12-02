@@ -25,8 +25,4 @@ export class Devices extends Service {
       return Array.isArray(data) ? data[0] : data;
     });
   }
-
-  async create(data: Partial<any> | Partial<any>[], params?: Params | undefined): Promise<any> {
-    
-  }
 }

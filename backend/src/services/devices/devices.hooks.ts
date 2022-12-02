@@ -6,7 +6,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [generate_nanoid, validate.form(DeviceSchemas.create, joiOptions)],
+    create: [generate_nanoid ],
     update: [],
     patch: [],
     remove: []
