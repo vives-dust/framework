@@ -96,16 +96,16 @@ services:
       - INFLUXDB_HOST=${INFLUXDB_HOST}
       - INFLUXDB_PORT=${INFLUXDB_PORT}
     restart: unless-stopped
-
-  # weatherstation:
-  #   image: 'telegraf'
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-  #   environment:
-  #     - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
-  #     - INFLUX_ORG=${INFLUXDB_INIT_ORG}
-  #     - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+  
+  weatherstation:
+    image: 'telegraf'
+    restart: unless-stopped
+    volumes:
+      - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    environment:
+      - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUX_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
 
   mongodb:
     image: mongo:6.0.2
