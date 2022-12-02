@@ -1,5 +1,12 @@
 # DUST Framework
 
+## Services
+
+* [Backend API (FeathersJS)](https://dust.devbitapp.be/api)
+* [Grafana](https://dust.devbitapp.be/grafana)
+* [API Docs](https://dust.devbitapp.be/docs/api)
+* [FrontEnd](https://dust.devbitapp.be)
+
 ## Development
 
 1. Setup the env files
@@ -24,6 +31,7 @@ create database "dust-staging"
 * [MongoExpress](http://localhost:8081/)
 * [FeathersJS](http://localhost:3030/)
 * [Grafana](http://localhost:3000/)
+* [API Docs](http://localhost/)
 
 ## Info Resources
 
