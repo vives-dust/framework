@@ -1,6 +1,4 @@
 import Joi from 'joi';
-import { ImageSchema } from './partials/image';
-import { LocationSchema } from './partials/location';
 import { NanoidSchema } from './partials/nanoid';
 import { ObjectIdSchema } from './partials/objectid';
 
