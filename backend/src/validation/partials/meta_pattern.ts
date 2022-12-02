@@ -3,7 +3,7 @@ import { NanoidSchema } from './nanoid';
 
 const MetaPatternSchema = Joi.object().keys({
     depth: Joi.number().less(0).negative(),
-    conversionModelId: NanoidSchema
+    conversion_model_id: NanoidSchema
 }).allow({})
 
 export { MetaPatternSchema }
