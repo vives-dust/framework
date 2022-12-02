@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 const ConversionModelSampleSchema = Joi.object().keys({
   raw: Joi.number().min(0).max(65535).required(),
-  moisture: Joi.number().min(0).max(100).required()
+  value: Joi.number().min(0).max(100).required()
 });
 
 const ConversionModelSchema = Joi.object().keys({
