@@ -12,9 +12,7 @@ export interface ConversionModel {
   description: string;
   input_unit: string;
   output_unit: string;
-  samples: {
-    type: [ConversionModelSample]
-  };
+  samples: [ConversionModelSample];
 }
 
 export class Conversionmodels extends Service {
