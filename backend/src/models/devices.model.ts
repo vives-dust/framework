@@ -15,7 +15,10 @@ export default function (app: Application): Model<any> {
     id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
     tree_id: { type: Schema.Types.ObjectId, ref: 'trees', required: true },
     devicetype_id: { type: Schema.Types.ObjectId, ref: 'devicetypes', required: true },
-    hardware_id: { type: String, required: true },
+    // Hardware ID is a hardware specific ID. For example for DUST devices it is a serial number
+    hardware_id: { type: String, required: false },
+    // The key identification of the device in the data source. For example for DUST device this is EUI
+    datasource_key: { type: String, required: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
 
