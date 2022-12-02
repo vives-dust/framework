@@ -7,6 +7,8 @@
 * [API Docs](https://dust.devbitapp.be/docs/api)
 * [FrontEnd](https://dust.devbitapp.be)
 
+![Services](img/framework-services.drawio.png)
+
 ## Development
 
 1. Setup the env files
