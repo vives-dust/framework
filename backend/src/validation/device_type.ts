@@ -3,16 +3,16 @@ import Joi from 'joi';
 import { ObjectIdSchema } from './partials/objectid';
 import { TypePatternSchema } from './partials/type_pattern';
 
-const SensorTypeCreateSchema = Joi.object().keys({
+const DeviceTypeCreateSchema = Joi.object().keys({
   _id: ObjectIdSchema,
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
-  unit: Joi.string().allow('').required(),
   description: Joi.string().required(),
+  image_url: Joi.string().allow('').required(),     // TODO: Do we need to require image ?
 });
 
-export const SensorTypeSchemas = {
+export const DeviceTypeSchemas = {
 
-  _create: SensorTypeCreateSchema,
+  _create: DeviceTypeCreateSchema,
 
 };
