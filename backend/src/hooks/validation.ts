@@ -23,3 +23,12 @@ export const dispatch = (schema : Joi.ObjectSchema<any>): Hook => {
     )(context);
   };
 };
+
+const joiInputOptions = {
+  convert: true,
+  abortEarly: false,
+};
+
+export const input = (schema : Joi.ObjectSchema<any>): Hook => {
+  return validate.form(schema, joiInputOptions);
+}
