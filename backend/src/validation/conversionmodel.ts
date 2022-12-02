@@ -6,6 +6,7 @@ const ConversionModelSampleSchema = Joi.object().keys({
 });
 
 const ConversionModelSchema = Joi.object().keys({
+  id: Joi.string().required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
   input_unit: Joi.string().required(),
