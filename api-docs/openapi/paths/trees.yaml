@@ -1,0 +1,18 @@
+get:
+  tags:
+    - Trees
+  summary: Get a listing of all the trees
+  operationId: GetAllTrees
+  security: []
+  responses:
+    '200':
+      description: An array containing a list of all the trees in JSON objects
+      content:
+        application/json:
+          schema:
+            type: array
+            $ref: ../components/schemas/Tree/GET-ALL.yaml
+          example:
+            $ref: ../components/responses/Tree/GET-ALL.yaml
+    '404':
+      description: No trees found.

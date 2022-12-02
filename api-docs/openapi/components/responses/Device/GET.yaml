@@ -1,0 +1,60 @@
+id: Ylh5uVdxP-BctTmkaow3k
+tree_id: SWxleYvqhkdieKCR-_WZa
+type: dust-soil-device
+name: My first DUST Soil Moisture device
+description: The device is located near the right side of the oak tree where the small patch of moss is located.
+image_url: https://via.placeholder.com/150
+# sensors:
+# - type: temperature
+#   name: internal temperature
+#   values:
+#     - value: 23.2
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: °C
+#   id: cWh_GJpwey46z0rUhRT98
+# - type: temperature
+#   name: soil temperature
+#   values:
+#     - value: 12.3
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: °C
+#   id: 6bFbSjNb9c5xs9lIoZmia
+# - type: moisture
+#   name: moisture level 1
+#   values:
+#     - value: 79.6
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: %
+#   id: lM3dbKeqP-vyvprK7PrNf
+#   depth: -10
+# - type: moisture
+#   name: moisture level 2
+#   values:
+#     - value: 56.6
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: %
+#   id: S_pUr_jaPJblbOsNd9M46
+#   depth: -20
+# - type: moisture
+#   name: moisture level 3
+#   values:
+#     - value: 36.4
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: %
+#   id: Yua9yUsp7nPYDN19TuwZx
+#   depth: -45
+#   - type: moisture
+#   name: moisture level 4
+#   values:
+#     - value: 19.7
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: %
+#   id: 6wP6xGAWrdqMEmPsdMtrP
+#   depth: -60
+# - type: battery
+#   name: 3V3 battery level
+#   values:
+#     - value: 3200
+#       timestamp: 2019-10-12T07:20:50.52Z
+#   unit: mV
+#   nominal_voltage: 3300

@@ -152,6 +152,7 @@ services:
       - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
       - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+      - BACKEND_API_URL=${BACKEND_API_URL}
     labels:
       traefik.enable: "true"
       traefik.http.routers.dust_backend.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/api`)
@@ -163,6 +164,7 @@ services:
     networks:
       - default
       - reverse_proxy
+
   api-docs:
     build:
       context: ./api-docs
@@ -183,6 +185,22 @@ services:
       traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-addslash, dust_api_docs-stripprefix
       traefik.http.services.dust_api_docs.loadbalancer.server.port: 80
       traefik.docker.network: reverse_proxy
+
+  public-frontend:
+    image: ghcr.io/vives-dust/frontend/dust-public-frontend:latest
+    ports:
+      - "8000:80"
+    depends_on:
+      - backend
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.dust_public_frontend.rule: Host(`${APPLICATION_DOMAIN_NAME}`)
+      traefik.http.services.dust_public_frontend.loadbalancer.server.port: 80
+      traefik.docker.network: reverse_proxy
+    restart: unless-stopped
+    networks:
+      - default
+      - reverse_proxy
  
 volumes:
   influxdb2-data:

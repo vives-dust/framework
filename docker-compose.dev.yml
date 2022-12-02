@@ -96,16 +96,16 @@ services:
       - INFLUXDB_HOST=${INFLUXDB_HOST}
       - INFLUXDB_PORT=${INFLUXDB_PORT}
     restart: unless-stopped
-
-  # weatherstation:
-  #   image: 'telegraf'
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-  #   environment:
-  #     - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
-  #     - INFLUX_ORG=${INFLUXDB_INIT_ORG}
-  #     - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+  
+  weatherstation:
+    image: 'telegraf'
+    restart: unless-stopped
+    volumes:
+      - ./devbit-weatherstation-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    environment:
+      - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUX_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
 
   mongodb:
     image: mongo:6.0.2
@@ -152,6 +152,7 @@ services:
       - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
       - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
       - BACKEND_DOMAIN=${BACKEND_DOMAIN}
+      - BACKEND_API_URL=${BACKEND_API_URL}
     restart: unless-stopped
     volumes:
       - ./backend/src:/app/src
@@ -161,15 +162,21 @@ services:
     build:
       context: ./api-docs
     ports:
-      - 80
+      - "80:80"
     restart: unless-stopped
     networks:
+      - default
       - reverse_proxy
     labels:
       traefik.enable: "true"
       traefik.http.routers.dust_api_docs.rule: Host(`${APPLICATION_DOMAIN_NAME}`) && PathPrefix(`/docs/api`)
       traefik.http.middlewares.dust_api_docs-stripprefix.stripprefix.prefixes: /docs/api
-      traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-stripprefix
+      # Adding the trailing slash to the url
+      traefik.http.middlewares.dust_api_docs-addslash.redirectregex.regex: ^([a-z0-9_]+:\/\/[^/]+\/docs\/api)$$
+      traefik.http.middlewares.dust_api_docs-addslash.redirectregex.replacement: $${1}/
+      traefik.http.middlewares.dust_api_docs-addslash.redirectregex.permanent: "true"
+      # Middlewares
+      traefik.http.routers.dust_api_docs.middlewares: dust_api_docs-addslash, dust_api_docs-stripprefix
       traefik.http.services.dust_api_docs.loadbalancer.server.port: 80
       traefik.docker.network: reverse_proxy
 

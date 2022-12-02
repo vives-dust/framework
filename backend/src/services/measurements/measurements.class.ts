@@ -28,16 +28,16 @@ export class Measurements implements ServiceMethods<Measurement> {
     const queryApi = this.app.get('influxQueryAPI');
 
     let influxQueryParams = {
-      bucket: this.app.get('influxdb').bucket,
+      bucket: params?.query?.bucket || this.app.get('influxdb').bucket,
       measurement: params?.query?.measurement || 'dust-sensor',
-      tags: { devId: params?.query?.deviceId },    // devId = InfluxDB2 tag that is knows as hardwareId in MongoDB
+      tags: (params?.query?.tags || undefined),
       fields: params?.query?.fields,
       drop: params?.query?.drop,
       period: (params?.query?.period ? <any>Period[params?.query?.period as any] : undefined),
       start: params?.query?.start,
       stop: params?.query?.stop,
       every: params?.query?.every,
-      aliases: (params?.query?.aliases ? Object.fromEntries(params?.query?.aliases) : undefined),
+      aliases: (params?.query?.aliases || undefined),
       pruneTags: params?.query?.pruneTags,
     }
 

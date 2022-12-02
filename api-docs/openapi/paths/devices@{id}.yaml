@@ -1,7 +1,9 @@
 get:
   tags:
     - Devices
-  summary: Device details
+  summary: Get the Device details
+  operationId: GetDevice
+  security: []
   parameters: 
     - in: path
       name: id
@@ -17,20 +19,32 @@ get:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/Device.yaml
+            $ref: ../components/schemas/Device/GET.yaml
           example:
-            $ref: ../components/responses/Device.yaml
+            $ref: ../components/responses/Device/GET.yaml
+    '404':
+      description: Device not found.
 post:
   tags:
     - Devices
   summary: Create a new device
+  operationId: CreateDevice
+  security: []
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the device
+      required: true
+      schema:
+        type: string
+      example: "62385db5f2aebbd3b79f98d0"
   requestBody:
     description: A JSON object containing the details of the new device
     content:
       application/json:
         schema:
           type: object
-          $ref: ../components/schemas/Device.yaml
+          $ref: ../components/schemas/Device/POST.yaml
         example:
           $ref: ../components/requestBodies/Device.yaml
   responses:
@@ -40,6 +54,8 @@ post:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/Device.yaml
+            $ref: ../components/schemas/Device/POST.yaml
           example:
-            $ref: ../components/responses/Device.yaml
+            $ref: ../components/responses/Device/POST.yaml
+    '400':
+      description: Bad request by user, check input.
