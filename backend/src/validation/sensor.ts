@@ -44,6 +44,6 @@ export const SensorSchemas = {
   _base: SensorBaseSchema,
   _details: SensorDetailsSchema,
   
-  _get: SensorDetailsSchema
-
+  _get: SensorDetailsSchema,
+  _create: SensorCreateSchema
 };
