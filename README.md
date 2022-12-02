@@ -25,6 +25,8 @@ create database "dust-staging"
 * [FeathersJS](http://localhost:3030/)
 * [Grafana](http://localhost:3000/)
 
+![Services](img/framework-services.drawio.png)
+
 ## Info Resources
 
 ### Flux Overview
