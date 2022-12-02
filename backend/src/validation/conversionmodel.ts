@@ -11,9 +11,9 @@ const ConversionModelSchema = Joi.object().keys({
   description: Joi.string().required(),
   input_unit: Joi.string().required(),
   output_unit: Joi.string().required(),
-  samples: Joi.array().has(Joi.object({
+  samples: Joi.object().keys({
     type: Joi.array().min(1).items(ConversionModelSampleSchema).required()
-  })),
+  }),
 });
 
 export const ConversionModelSchemas = {
