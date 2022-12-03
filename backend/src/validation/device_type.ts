@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import { ImageUrlSchema } from './partials/image_url';
-
 import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { TypePatternSchema } from './partials/type_pattern';
 
@@ -9,7 +8,7 @@ const DeviceTypeCreateSchema = Joi.object().keys({
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
   description: Joi.string().required(),
-  image_url: ImageUrlSchema
+  image_url: ImageUrlSchema.required(),
 });
 
 export const DeviceTypeSchemas = {
