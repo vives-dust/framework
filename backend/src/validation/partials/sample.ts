@@ -5,7 +5,7 @@ const SampleSchema = Joi.alternatives().try(
     time: Joi.date().required(),
     value: Joi.number().required()
   }),
-  Joi.object()
+  Joi.object(),
 );
 
-export { SampleSchema }
+export { SampleSchema };
