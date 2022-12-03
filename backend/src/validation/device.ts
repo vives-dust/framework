@@ -2,6 +2,8 @@ import Joi from 'joi';
 import { NanoIdSchema } from './partials/nano_id';
 import { MongoObjectIdSchema } from './partials/mongo_object_id';
 
+// Management Schema's
+
 const DeviceCreateSchema = Joi.object().keys({
   _id: MongoObjectIdSchema,
   id: NanoIdSchema.required(),
@@ -17,3 +19,4 @@ export const DeviceSchemas = {
   _create: DeviceCreateSchema,
 
 };
+

@@ -1,5 +1,7 @@
 import Joi from 'joi';
 
+// TODO: Remove ! File is deprecated!
+
 const SoilModelSampleSchema = Joi.object().keys({
   raw: Joi.number().min(0).max(65535).required(),
   moisture: Joi.number().min(0).max(100).required()

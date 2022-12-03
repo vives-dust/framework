@@ -9,7 +9,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [generate_nanoid, Validation.input(ConversionModelSchemas._create) ],
+    create: [ generate_nanoid, Validation.input(ConversionModelSchemas._create) ],
     update: [],
     patch: [],
     remove: []

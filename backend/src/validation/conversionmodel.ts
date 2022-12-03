@@ -4,6 +4,8 @@ import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { SampleSchema } from './partials/sample';
 import { UnitSchema } from './partials/unit';
 
+// Management Schema's
+
 const ConversionModelCreateSchema = Joi.object().keys({
   _id: MongoObjectIdSchema,
   id: NanoIdSchema.required(),

@@ -4,16 +4,18 @@ import { NanoIdSchema } from './partials/nano_id';
 import { LocationSchema } from './partials/location';
 import { SensorSchemas } from './sensor';
 import { PaginationSchema } from './partials/pagination';
-import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { ImageUrlSchema } from './partials/image_url';
 import { ResourceUrlSchema } from './partials/resource_url';
+import { MongoObjectIdSchema } from './partials/mongo_object_id';
+
+// Public API Schema's
 
 const TreeBaseSchema = Joi.object().keys({
   id: NanoIdSchema.required(),
   location: LocationSchema.required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
-  image_url: ImageUrlSchema,
+  image_url: ImageUrlSchema.required(),
 });
 
 const TreeDetailsSchema = TreeBaseSchema.keys({
@@ -35,13 +37,10 @@ const PaginatedTreesSchema = PaginationSchema.keys({
   ).required(),
 });
 
-const TreeCreateSchema = Joi.object().keys({
+// Management Schema's
+
+const TreeCreateSchema = TreeBaseSchema.keys({
   _id: MongoObjectIdSchema,
-  id: NanoIdSchema.required(),
-  name: Joi.string().required(),
-  description: Joi.string().required(),
-  location: LocationSchema.required(),
-  image_url: ImageUrlSchema
 });
 
 export const TreeSchemas = {
@@ -50,5 +49,7 @@ export const TreeSchemas = {
 
   _get: TreeDetailsSchema,
   _find: PaginatedTreesSchema,
+
   _create: TreeCreateSchema,
+
 };
