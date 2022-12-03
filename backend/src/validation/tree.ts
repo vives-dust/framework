@@ -5,15 +5,15 @@ import { LocationSchema } from './partials/location';
 import { SensorSchemas } from './sensor';
 import { PaginationSchema } from './partials/pagination';
 import { ObjectIdSchema } from './partials/objectid';
-import { ImageSchema } from './partials/image';
+import { ImageUrlSchema } from './partials/image_url';
 
 const TreeBaseSchema = Joi.object().keys({
   id: NanoidSchema.required(),
   location: LocationSchema.required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
-  image_url: Joi.string().uri().required(),
-})
+  image_url: ImageUrlSchema,
+});
 
 const TreeDetailsSchema = TreeBaseSchema.keys({
   devices: Joi.array().items(Joi.object().keys({
@@ -24,7 +24,7 @@ const TreeDetailsSchema = TreeBaseSchema.keys({
     sensor_url: Joi.string().uri().required(),
     device_id: NanoidSchema.required(),
   })).required(),
-})
+});
 
 const PaginatedTreesSchema = PaginationSchema.keys({
   data: Joi.array().items(
@@ -32,7 +32,7 @@ const PaginatedTreesSchema = PaginationSchema.keys({
       tree_url: Joi.string().uri().required(),
     })
   ).required(),
-})
+});
 
 const TreeCreateSchema = Joi.object().keys({
   _id: ObjectIdSchema,
@@ -40,8 +40,8 @@ const TreeCreateSchema = Joi.object().keys({
   name: Joi.string().required(),
   description: Joi.string().required(),
   location: LocationSchema.required(),
-  image_url: ImageSchema
-})
+  image_url: ImageUrlSchema
+});
 
 export const TreeSchemas = {
 
