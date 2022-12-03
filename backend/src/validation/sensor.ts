@@ -3,7 +3,7 @@ import Joi from 'joi';
 import { SampleSchema } from './partials/sample';
 import { NanoidSchema } from './partials/nanoid';
 import { TypePatternSchema } from './partials/type_pattern';
-import { ObjectIdSchema } from './partials/objectid';
+import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { MetaSchema } from './partials/meta';
 import { UnitSchema } from './partials/unit';
 import { ResourceUrlSchema } from './partials/resource_url';
@@ -28,7 +28,7 @@ const SensorDetailsSchema = SensorBaseSchema.keys({
 });
 
 const SensorCreateSchema = Joi.object().keys({
-  _id: ObjectIdSchema,
+  _id: MongoObjectIdSchema,
   id: NanoidSchema.required(),
   name: Joi.string().required(),
   type: TypePatternSchema.required(),

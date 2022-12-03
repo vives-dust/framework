@@ -4,7 +4,7 @@ import { NanoidSchema } from './partials/nanoid';
 import { LocationSchema } from './partials/location';
 import { SensorSchemas } from './sensor';
 import { PaginationSchema } from './partials/pagination';
-import { ObjectIdSchema } from './partials/objectid';
+import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { ImageUrlSchema } from './partials/image_url';
 import { ResourceUrlSchema } from './partials/resource_url';
 
@@ -36,7 +36,7 @@ const PaginatedTreesSchema = PaginationSchema.keys({
 });
 
 const TreeCreateSchema = Joi.object().keys({
-  _id: ObjectIdSchema,
+  _id: MongoObjectIdSchema,
   id: NanoidSchema.required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
