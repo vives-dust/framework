@@ -1,5 +1,5 @@
 import Joi from 'joi';
 
-const ImageUrlSchema = Joi.string().uri().required();
+const ImageUrlSchema = Joi.string().uri();
 
 export { ImageUrlSchema };
