@@ -6,19 +6,20 @@ import { TypePatternSchema } from './partials/type_pattern';
 import { ObjectIdSchema } from './partials/objectid';
 import { MetaSchema } from './partials/meta';
 import { UnitSchema } from './partials/unit';
+import { ResourceUrlSchema } from './partials/resource_url';
 
 const SensorBaseSchema = Joi.object().keys({
   id: NanoidSchema.required(),
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
-  unit: Joi.string().allow('').required(),
+  unit: UnitSchema.required(),
   last_value: SampleSchema.required(),
 });
 
 // We can extend base schema keys
 const SensorDetailsSchema = SensorBaseSchema.keys({
   tree_id: NanoidSchema.required(),
-  tree_url: Joi.string().uri().required(),
+  tree_url: ResourceUrlSchema.required(),
   description: Joi.string().required(),
   values: Joi.array().items(
     SampleSchema
@@ -32,7 +33,7 @@ const SensorCreateSchema = Joi.object().keys({
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
   tree_id: NanoidSchema.required(),
-  tree_url: Joi.string().uri().required(),
+  tree_url: ResourceUrlSchema.required(),
   description: Joi.string().required(),
   unit: UnitSchema.required(),
   meta: MetaSchema.required(),

@@ -6,6 +6,7 @@ import { SensorSchemas } from './sensor';
 import { PaginationSchema } from './partials/pagination';
 import { ObjectIdSchema } from './partials/objectid';
 import { ImageUrlSchema } from './partials/image_url';
+import { ResourceUrlSchema } from './partials/resource_url';
 
 const TreeBaseSchema = Joi.object().keys({
   id: NanoidSchema.required(),
@@ -21,7 +22,7 @@ const TreeDetailsSchema = TreeBaseSchema.keys({
     name: Joi.string().required(),
   })).required(),
   sensors: Joi.array().items(SensorSchemas._base.keys({
-    sensor_url: Joi.string().uri().required(),
+    sensor_url: ResourceUrlSchema.required(),
     device_id: NanoidSchema.required(),
   })).required(),
 });
@@ -29,7 +30,7 @@ const TreeDetailsSchema = TreeBaseSchema.keys({
 const PaginatedTreesSchema = PaginationSchema.keys({
   data: Joi.array().items(
     TreeBaseSchema.keys({
-      tree_url: Joi.string().uri().required(),
+      tree_url: ResourceUrlSchema.required(),
     })
   ).required(),
 });
