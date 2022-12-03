@@ -5,6 +5,7 @@ import { NanoidSchema } from './partials/nanoid';
 import { TypePatternSchema } from './partials/type_pattern';
 import { ObjectIdSchema } from './partials/objectid';
 import { MetaSchema } from './partials/meta';
+import { UnitSchema } from './partials/unit';
 
 const SensorBaseSchema = Joi.object().keys({
   id: NanoidSchema.required(),
@@ -33,8 +34,8 @@ const SensorCreateSchema = Joi.object().keys({
   tree_id: NanoidSchema.required(),
   tree_url: Joi.string().uri().required(),
   description: Joi.string().required(),
-  unit: Joi.string().allow('').required(),
-  meta: MetaSchema.required()
+  unit: UnitSchema.required(),
+  meta: MetaSchema.required(),
 });
 
 export const SensorSchemas = {
