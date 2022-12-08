@@ -1,11 +1,8 @@
 import Joi from 'joi';
 
-const SampleSchema = Joi.alternatives().try(
-  Joi.object().keys({
-    time: Joi.date().required(),
+const SampleSchema = Joi.object().keys({
+    raw: Joi.number().required(),
     value: Joi.number().required()
-  }),
-  Joi.object(),
-);
+  });
 
 export { SampleSchema };
