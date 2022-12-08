@@ -21,9 +21,7 @@ export default {
         [ /* hooks for internal requests */ ],
       ),
     ],
-    create: [
-      generate_nanoid
-    ],
+    create: [generate_nanoid],
     update: [],
     patch: [],
     remove: []

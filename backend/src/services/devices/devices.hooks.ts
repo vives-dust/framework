@@ -1,12 +1,14 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { generate_nanoid } from '../../hooks/nanoid';
+import * as DeviceBuilder from '../devices/devices.middleware';
+import * as DevicesMiddleware from './devices.middleware';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ generate_nanoid ],
+    create: [ DeviceBuilder.create_device],
     update: [],
     patch: [],
     remove: []
