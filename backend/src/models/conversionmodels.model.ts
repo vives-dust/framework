@@ -21,7 +21,7 @@ export default function (app: Application): Model<any> {
       type: [
         {
           raw: { type: Number, required: true },
-          moisture: { type: Number, required: true }
+          value: { type: Number, required: true }
         }
       ],
       required: true,
