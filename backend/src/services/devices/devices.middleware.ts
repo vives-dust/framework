@@ -1,4 +1,5 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
+import { callingParams } from 'feathers-hooks-common';
 
 // Interfaces
 export interface DeviceParams {
@@ -14,25 +15,35 @@ export async function create_device(context: HookContext) {
     const device: DeviceParams = {
         name: context.data.name,
         description: context.data.description,
-        devicetype_id: (await fetch_devicetype(context)).data[0]._id.toString(),
-        tree_id: (await fetch_tree(context)).data[0]._id.toString(),
+        devicetype_id: (await fetch_devicetype(context))[0]._id.toString(),
+        tree_id: (await fetch_tree(context))[0]._id.toString(),
         datasource_key: context.data.datasource_key
     }
 
-    console.log(device)
+    inject_device_params( device, context )
+
+    return context
 };
 
 const fetch_devicetype = (context: HookContext) => context.app.service('devicetypes').find({
-    query: {
-        type: context.data.devicetype
-    }
+    query: { type: context.data.devicetype },
+    paginate: false
 });
 
 const fetch_tree = (context: HookContext) => context.app.service('trees').find({
-    query: {
-        id: context.data.tree_id
-    }
+    query: { id: context.data.tree_id },
+    paginate: false
 });
+
+async function inject_device_params( device : DeviceParams, context: HookContext ) {
+    context.data.name = device.name
+    context.data.description = device.description
+    context.data.devicetype_id = device.devicetype_id
+    context.data.tree_id = device.tree_id
+    context.data.datasource_key = device.datasource_key
+
+    return context
+}
 
 // sensor creation
 const create_sensor_entity = ( context: HookContext ) => context.app.service('sensors').create({
@@ -48,7 +59,7 @@ const create_sensor_entity = ( context: HookContext ) => context.app.service('se
             },
             "field": "internalTemperature"
         },
-        "device_id": "636df69de89936aad2253dae"
+        "device_id": context.result._id.toString()
     }
 );
 
