@@ -1,13 +1,16 @@
 import Joi from 'joi';
 
-import { ObjectIdSchema } from './partials/objectid';
+import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { TypePatternSchema } from './partials/type_pattern';
+import { UnitSchema } from './partials/unit';
+
+// Management Schema's
 
 const SensorTypeCreateSchema = Joi.object().keys({
-  _id: ObjectIdSchema,
+  _id: MongoObjectIdSchema,
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
-  unit: Joi.string().allow('').required(),
+  unit: UnitSchema.required(),
   description: Joi.string().required(),
 });
 

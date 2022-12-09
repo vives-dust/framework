@@ -1,14 +1,16 @@
 import Joi from 'joi';
-
-import { ObjectIdSchema } from './partials/objectid';
+import { ImageUrlSchema } from './partials/image_url';
+import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { TypePatternSchema } from './partials/type_pattern';
 
+// Management Schema's
+
 const DeviceTypeCreateSchema = Joi.object().keys({
-  _id: ObjectIdSchema,
+  _id: MongoObjectIdSchema,
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
   description: Joi.string().required(),
-  image_url: Joi.string().allow('').required(),     // TODO: Do we need to require image ?
+  image_url: ImageUrlSchema.required(),
 });
 
 export const DeviceTypeSchemas = {

@@ -1,12 +1,14 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { generate_nanoid } from '../../hooks/nanoid';
+import * as Validation from '../../hooks/validation';
+import { DeviceSchemas } from '../../validation/device';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ generate_nanoid ],
+    create: [ generate_nanoid, Validation.input(DeviceSchemas._create) ],
     update: [],
     patch: [],
     remove: []

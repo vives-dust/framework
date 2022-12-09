@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { Period } from '../influxdb/query_builder'
+import { Period } from '../influxdb/query_builder';
 
 const key_values = Object.values(Period);   // First half = labels, second half = numerical value
 const valid_periods = key_values.slice(0, key_values.length/2);
