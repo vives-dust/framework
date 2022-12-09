@@ -1,8 +1,8 @@
 import Joi from 'joi';
 
-const ConversionModelSampleSchema = Joi.object().keys({
-  raw: Joi.number().min(0).max(65535).required(),
-  value: Joi.number().min(0).max(100).required()
+const ConversionSampleSchema = Joi.object().keys({
+  input_value: Joi.number().required(),
+  output_value: Joi.number().required()
 });
 
 const ConversionModelSchema = Joi.object().keys({
@@ -11,7 +11,7 @@ const ConversionModelSchema = Joi.object().keys({
   description: Joi.string().required(),
   input_unit: Joi.string().required(),
   output_unit: Joi.string().required(),
-  samples: Joi.array().min(1).items(ConversionModelSampleSchema).required()
+  samples: Joi.array().min(1).items(ConversionSampleSchema).required()
 });
 
 export const ConversionModelSchemas = {

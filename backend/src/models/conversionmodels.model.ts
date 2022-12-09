@@ -12,18 +12,16 @@ export default function (app: Application): Model<any> {
 
   const conversionSchema = new Schema({
 
-    id: { type: String, required: true, immutable: true },   // TODO: nanoid ID
+    id: { type: String, required: true, immutable: true },
     name: { type: String, required: true },
     description: { type: String, required: true },
     input_unit: { type: String, required: true },
     output_unit: { type: String, required: true },
     samples: { 
-      type: [
-        {
-          raw: { type: Number, required: true },
-          value: { type: Number, required: true }
-        }
-      ],
+      type: [{
+        input_value: { type: Number, required: true },
+        output_value: { type: Number, required: true }
+      }],
       required: true,
       _id: false    // Don't generate _id fields for subdocument
     }
