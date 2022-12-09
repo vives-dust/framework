@@ -1,5 +1,6 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { callingParams } from 'feathers-hooks-common';
+import { Container } from 'winston';
 
 // Interfaces
 export interface DeviceParams {
@@ -9,6 +10,20 @@ export interface DeviceParams {
     tree_id: string,                // This will be a nanoId and needs to be MongoDB ObjectId for internal use
     datasource_key: string
 };
+
+export interface SensorParams {
+    name: string,
+    device_id: string,
+    sensortype_id: string,
+    meta: Object,
+    data_source: {
+        source: string,
+        bucket: string,
+        measurement: string,
+        tags: Object,
+        field: string
+    }
+}
 
 // Device creation
 export async function create_device(context: HookContext) {   
@@ -32,6 +47,16 @@ const fetch_devicetype = (context: HookContext) => context.app.service('devicety
 
 const fetch_tree = (context: HookContext) => context.app.service('trees').find({
     query: { id: context.data.tree_id },
+    paginate: false
+});
+
+const fetch_devicesensors = (context: HookContext) => context.app.service('devicesensors').find({
+    query: { devicetype_id: context.result.devicetype_id},
+    paginate: false
+})
+
+const fetch_sensortype = (context: HookContext, data: any ) => context.app.service('sensortypes').find({
+    query: { _id: data.sensortype_id.toString() },
     paginate: false
 });
 
@@ -64,7 +89,26 @@ const create_sensor_entity = ( context: HookContext ) => context.app.service('se
 );
 
 export async function create_sensors(context: HookContext) {
-    await create_sensor_entity( context )
+    const devicesensors: Array<Object> = await fetch_devicesensors(context)
+    
+    devicesensors.forEach(async (devicesensor: any) => {
+        const sensor_template: SensorParams = {
+            name: (await fetch_sensortype(context, devicesensor))[0].name,
+            device_id: context.result.id,
+            sensortype_id: devicesensor.sensortype_id.toString(),
+            meta: devicesensor.meta,
+            data_source: {
+                source: devicesensor.data_source.source,
+                bucket: devicesensor.data_source.bucket,
+                measurement: devicesensor.data_source.measurement,
+                tags: {},
+                field: devicesensor.data_source.field
+            }
+        }
+        console.log("********************SENSOR*****************")
+        console.log(sensor_template)
+        //create_sensor_entity(context)
+    });
 
     return context;
 }
