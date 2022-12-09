@@ -1,6 +1,6 @@
 import Joi from 'joi';
 
-import { SampleSchema } from './partials/sample';
+import { MeasurementSampleSchema } from './partials/measurement_sample';
 import { NanoIdSchema } from './partials/nano_id';
 import { TypePatternSchema } from './partials/type_pattern';
 import { MetaSchema } from './partials/meta';
@@ -16,7 +16,7 @@ const SensorBaseSchema = Joi.object().keys({
   name: Joi.string().required(),
   type: TypePatternSchema.required(),
   unit: UnitSchema.required(),
-  last_value: SampleSchema.required(),
+  last_value: MeasurementSampleSchema.required(),
 });
 
 const SensorDetailsSchema = SensorBaseSchema.keys({
@@ -28,7 +28,7 @@ const SensorDetailsSchema = SensorBaseSchema.keys({
 
 const SensorDetailsWithValuesSchema = SensorDetailsSchema.keys({
   values: Joi.array().items(
-    SampleSchema
+    MeasurementSampleSchema
   ),
 });
 
