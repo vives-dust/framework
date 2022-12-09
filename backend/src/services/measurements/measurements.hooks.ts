@@ -1,7 +1,7 @@
 import { HookContext, HooksObject } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import validate from 'feathers-validate-joi';
-import { MeasurementSchemas } from '../../validation/measurement_query';
+import { MeasurementSchemas } from '../../validation/measurement';
 
 const joiOptions = {
   convert: true,
