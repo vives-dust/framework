@@ -6,7 +6,7 @@ import { Container } from 'winston';
 export interface DeviceParams {
     name: string,
     description: string,
-    devicetype_id: string,             // This will be a hardcoded string that complies with the devicetype name
+    devicetype_id: string,             // This will be a hardcoded string that maps with the devicetype name
     tree_id: string,                // This will be a nanoId and needs to be MongoDB ObjectId for internal use
     datasource_key: string
 };
@@ -31,21 +31,21 @@ export async function create_device(context: HookContext) {
         name: context.data.name,
         description: context.data.description,
         devicetype_id: (await fetch_devicetype(context))[0]._id.toString(),
-        tree_id: (await fetch_tree(context))[0]._id.toString(),
+        tree_id: (await fetch_tree_via_nanoId(context))[0]._id.toString(),
         datasource_key: context.data.datasource_key
     }
 
     inject_device_params( device, context )
-    console.log((fetch_tree(context)))
     return context
 };
 
+// Fetch certain information from the mongoDB
 const fetch_devicetype = (context: HookContext) => context.app.service('devicetypes').find({
     query: { type: context.data.devicetype },
     paginate: false
 });
 
-const fetch_tree = (context: HookContext, mongoDB?: String) => context.app.service('trees').find({ 
+const fetch_tree_via_nanoId = (context: HookContext, mongoDB?: String) => context.app.service('trees').find({ 
     query: { id: context.data.tree_id }, 
     paginate: false
 });
@@ -65,6 +65,8 @@ const fetch_sensortype = (context: HookContext, data: any ) => context.app.servi
     paginate: false
 });
 
+// Making sure the altered params are put in the data attriute of context
+// so feathers can automatically call the create with the correct params.
 async function inject_device_params( device : DeviceParams, context: HookContext ) {
     context.data.name = device.name
     context.data.description = device.description
