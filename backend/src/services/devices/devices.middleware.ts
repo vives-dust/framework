@@ -1,5 +1,5 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
-import { callingParams } from 'feathers-hooks-common';
+import { iffElse } from 'feathers-hooks-common';
 import { Container } from 'winston';
 
 // Interfaces
@@ -36,7 +36,7 @@ export async function create_device(context: HookContext) {
     }
 
     inject_device_params( device, context )
-
+    console.log((fetch_tree(context)))
     return context
 };
 
@@ -45,8 +45,13 @@ const fetch_devicetype = (context: HookContext) => context.app.service('devicety
     paginate: false
 });
 
-const fetch_tree = (context: HookContext) => context.app.service('trees').find({
-    query: { id: context.data.tree_id },
+const fetch_tree = (context: HookContext, mongoDB?: String) => context.app.service('trees').find({ 
+    query: { id: context.data.tree_id }, 
+    paginate: false
+});
+
+const fetch_tree_via_ObjectId = (context: HookContext, objectId: string) => context.app.service('trees').find({
+    query: { _id: objectId },
     paginate: false
 });
 
@@ -70,7 +75,7 @@ async function inject_device_params( device : DeviceParams, context: HookContext
     return context
 }
 
-// sensor creation
+// Sensor creation
 const create_sensor_entity = ( context: HookContext, sensor_template: SensorParams ) => context.app.service('sensors').create(sensor_template);
 
 export async function create_sensors(context: HookContext) {
@@ -95,4 +100,17 @@ export async function create_sensors(context: HookContext) {
     });
 
     return context;
+}
+
+// Sanitisation
+export async function sanitize_create_device(context: HookContext) {
+    context.dispatch = {
+        id: context.result.id,
+        name: context.result.name,
+        description: context.result.description,
+        tree_id: (await fetch_tree_via_ObjectId(context, context.result.tree_id))[0].id.toString(),
+        datasource_key: context.result.datasource_key
+    }
+    //context.dispatch.original = context.result;    // For testing/debugging
+    return context
 }

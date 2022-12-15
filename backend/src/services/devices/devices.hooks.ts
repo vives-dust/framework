@@ -1,6 +1,9 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
+import { debug, fastJoin, iff, iffElse, isProvider } from 'feathers-hooks-common';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as DevicesMiddleware from './devices.middleware';
+import { DeviceSchemas } from '../../validation/devices';
+import * as Validation from '../../hooks/validation';
 
 export default {
   before: {
@@ -17,7 +20,16 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ DevicesMiddleware.create_sensors ],
+    create: [
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          DevicesMiddleware.sanitize_create_device,
+          Validation.dispatch(DeviceSchemas._create),
+          DevicesMiddleware.create_sensors
+        ],
+        [ /* hooks for internal requests */ ],
+      )
+    ],
     update: [],
     patch: [],
     remove: []

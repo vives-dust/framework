@@ -89,7 +89,6 @@ export function sanitize_get_sensor(context : HookContext) {
 
 // Convert nanoId to MongoDB ObjectID
 export async function id_conversion(context: HookContext) {
-  console.log((await fetch_device(context)))
   context.data.device_id = (await fetch_device(context))[0]._id.toString()
   return context
 }
