@@ -71,22 +71,7 @@ async function inject_device_params( device : DeviceParams, context: HookContext
 }
 
 // sensor creation
-const create_sensor_entity = ( context: HookContext ) => context.app.service('sensors').create({
-        "sensortype_id": "636dec5dd73da24da581d973",
-        "name": "Internal Temperature Sensor",
-        "meta": {},
-        "data_source": {
-            "source": "influxdb",
-            "bucket": "dust",
-            "measurement": "dust-sensor",
-            "tags": {
-                "devId": context.data.datasource_key
-            },
-            "field": "internalTemperature"
-        },
-        "device_id": context.result._id.toString()
-    }
-);
+const create_sensor_entity = ( context: HookContext, sensor_template: SensorParams ) => context.app.service('sensors').create(sensor_template);
 
 export async function create_sensors(context: HookContext) {
     const devicesensors: Array<Object> = await fetch_devicesensors(context)
@@ -106,9 +91,7 @@ export async function create_sensors(context: HookContext) {
                 field: devicesensor.data_source.field
             }
         }
-        console.log("********************SENSOR*****************")
-        console.log(sensor_template)
-        //create_sensor_entity(context)
+        create_sensor_entity(context, sensor_template)
     });
 
     return context;

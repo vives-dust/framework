@@ -21,7 +21,7 @@ export default {
         [ /* hooks for internal requests */ ],
       ),
     ],
-    create: [generate_nanoid],
+    create: [ generate_nanoid, SensorMiddleware.id_conversion],
     update: [],
     patch: [],
     remove: []
