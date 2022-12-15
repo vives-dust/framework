@@ -1,5 +1,4 @@
 import Joi from 'joi';
-
 import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { DataSourceSpecSchema } from './partials/datasource';
 import { MetaSchema } from './partials/meta';

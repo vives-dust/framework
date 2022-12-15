@@ -30,7 +30,7 @@ export async function create_device(context: HookContext) {
     const device: DeviceParams = {
         name: context.data.name,
         description: context.data.description,
-        devicetype_id: (await fetch_devicetype(context))[0]._id.toString(),
+        devicetype_id: (await fetch_devicetype_via_name(context))[0]._id.toString(),
         tree_id: (await fetch_tree_via_nanoId(context))[0]._id.toString(),
         datasource_key: context.data.datasource_key
     }
@@ -40,8 +40,14 @@ export async function create_device(context: HookContext) {
 };
 
 // Fetch certain information from the mongoDB
-const fetch_devicetype = (context: HookContext) => context.app.service('devicetypes').find({
+// To Do: combine fetches and check for what type of query should be performed
+const fetch_devicetype_via_name = (context: HookContext) => context.app.service('devicetypes').find({
     query: { type: context.data.devicetype },
+    paginate: false
+});
+
+const fetch_devicetype_via_id = (context: HookContext) => context.app.service('devicetypes').find({
+    query: { _id: context.result.devicetype_id },
     paginate: false
 });
 
@@ -111,6 +117,7 @@ export async function sanitize_create_device(context: HookContext) {
         name: context.result.name,
         description: context.result.description,
         tree_id: (await fetch_tree_via_ObjectId(context, context.result.tree_id))[0].id.toString(),
+        devicetype: (await fetch_devicetype_via_id(context))[0].type,
         datasource_key: context.result.datasource_key
     }
     //context.dispatch.original = context.result;    // For testing/debugging
