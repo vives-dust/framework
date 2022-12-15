@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
   version: 0.1.0
-  title: dust.devbit.be
+  title: dust.devbitapp.be
   termsOfService: "ToDo TOS"
   license:
     name: MIT
@@ -16,6 +16,8 @@ info:
 tags:
   - name: Trees
     description: Public tree data
+  - name: Devices
+    description: Public device data
   - name: Sensors
     description: Public sensor data
 servers:
