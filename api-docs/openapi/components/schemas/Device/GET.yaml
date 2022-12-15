@@ -8,20 +8,25 @@ properties:
   tree_id:
     description: A unique identifier for the tree the device belongs to
     type: string
-  type:
+  devicetype:
     description: The device type defines what sensors the devices contains
     type: string
     enum:
-      - dust-soil-device
+      - dust-soil-device-v4
       - weather-station
+  datasource_key:
+    description: A key that links the datasource to this device
+    type: string
   name:
     description: A descriptive name for the device that is coupled to the type of the device
     type: string
-  image_url:
-    description: A photograph of the device
+  description:
+    description: A descriptive text for the device containing valuable information
     type: string
-  sensors:
-    description: A listing of all the sensors of this device with their values
-    type: array
-    items:
-      $ref: ../Sensor/GET.yaml
+required:
+- id
+- tree_id
+- devicetype
+- datasource_key
+- name
+- description
