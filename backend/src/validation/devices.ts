@@ -1,9 +1,9 @@
 import Joi from 'joi';
 
-import { NanoidSchema } from './partials/nanoid';
+import { NanoIdSchema } from './partials/nano_id';
 
 const DeviceCreationSchema = Joi.object().keys({
-    id: NanoidSchema.required(),
+    id: NanoIdSchema.required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     tree_id: Joi.string().required(),
