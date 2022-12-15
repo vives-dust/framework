@@ -11,9 +11,7 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [
-      generate_nanoid
-    ],
+    create: [ generate_nanoid, Validation.input(TreeSchemas._create)],
     update: [],
     patch: [],
     remove: []

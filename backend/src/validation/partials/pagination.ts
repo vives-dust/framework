@@ -6,4 +6,4 @@ const PaginationSchema = Joi.object().keys({
   skip: Joi.number().required(),
 });
 
-export { PaginationSchema }
+export { PaginationSchema };
