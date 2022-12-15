@@ -6,7 +6,7 @@ get:
   security: []
   responses:
     '200':
-      description: An array containing a list of all the trees in JSON objects
+      description: An array containing a list of JSON objects of all the registered trees
       content:
         application/json:
           schema:
