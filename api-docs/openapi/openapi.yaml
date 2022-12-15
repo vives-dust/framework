@@ -15,11 +15,11 @@ info:
     $ref: ./info-description.md
 tags:
   - name: Trees
-    description: Public tree data
+    description: Tree routes
   - name: Devices
-    description: Public device data
+    description: Device routes
   - name: Sensors
-    description: Public sensor data
+    description: Sensor routes
 servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
@@ -28,6 +28,12 @@ paths:
     $ref: 'paths/trees.yaml'
   '/trees/{id}':
     $ref: 'paths/trees@{id}.yaml'
+  '/devices':
+    $ref: 'paths/devices.yaml'
+  '/devices/{id}':
+    $ref: 'paths/devices@{id}.yaml'
+  '/sensors':
+    $ref: 'paths/sensors.yaml'
   '/sensors/{id}':
     $ref: 'paths/sensors@{id}.yaml'
 components:
