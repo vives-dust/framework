@@ -101,7 +101,8 @@ export async function create_sensors(context: HookContext) {
                 source: devicesensor.data_source.source,
                 bucket: devicesensor.data_source.bucket,
                 measurement: devicesensor.data_source.measurement,
-                tags: {},
+                // To Do: change any-type to correct type...
+                tags: Object.keys(devicesensor.data_source.tags).reduce((newObj: any, tag) => { newObj[tag] = context.data.datasource_key; return newObj; }, {}),
                 field: devicesensor.data_source.field
             }
         }
@@ -112,4 +113,3 @@ export async function create_sensors(context: HookContext) {
 
     return context;
 }
-
