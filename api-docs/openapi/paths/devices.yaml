@@ -1,7 +1,7 @@
 get:
   tags:
     - Devices
-  summary: Get all devices
+  summary: Get all Devices
   operationId: GetDevice
   security: []
   responses:
@@ -19,7 +19,7 @@ get:
 post:
   tags:
     - Devices
-  summary: Create a new device
+  summary: Create a new Device
   operationId: CreateDevice
   security: []
   requestBody:

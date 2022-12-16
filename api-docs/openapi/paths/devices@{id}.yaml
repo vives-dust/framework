@@ -1,7 +1,7 @@
 get:
   tags:
     - Devices
-  summary: Get a single device
+  summary: Get a single Device
   operationId: GetSingleDevice
   security: []
   parameters: 

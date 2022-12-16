@@ -1,7 +1,7 @@
 get:
   tags:
     - Trees
-  summary: Get the details of a single tree
+  summary: Get a single Tree
   operationId: GetTree
   security: []
   parameters: 

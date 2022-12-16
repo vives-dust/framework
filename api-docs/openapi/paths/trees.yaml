@@ -1,7 +1,7 @@
 get:
   tags:
     - Trees
-  summary: Get a listing of all the trees
+  summary: Get all Trees
   operationId: GetAllTrees
   security: []
   responses:
