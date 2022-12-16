@@ -36,6 +36,8 @@ paths:
     $ref: 'paths/sensors.yaml'
   '/sensors/{id}':
     $ref: 'paths/sensors@{id}.yaml'
+  '/conversionmodels':
+    $ref: 'paths/conversionmodels.yaml'
 components:
   securitySchemes:
     main_auth:

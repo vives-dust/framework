@@ -8,7 +8,7 @@ properties:
     description: A descriptive text that serves the purpose of further clarifying important details about the Tree
     type: string
   location:
-    description: A location in longitude and latitude decimal degrees based on the 1984 World Geodatic System.
+    description: A location in longitude and latitude decimal degrees based on the 1984 World Geodatic System
     type: object
     properties:
       latitude:
