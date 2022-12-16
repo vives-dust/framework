@@ -2,16 +2,16 @@ get:
   tags:
     - Devices
   summary: Get a single device
-  operationId: GetDevice
+  operationId: GetSingleDevice
   security: []
   parameters: 
     - in: path
       name: id
-      description: The unique id of the device
+      description: The unique identifier of the device
       required: true
       schema:
         type: string
-      example: "62385db5f2aebbd3b79f98d0"
+      example: "Ylh5uVdxP-BctTmkaow3k"
   responses:
     '200':
       description: A JSON object containing the details of a single device

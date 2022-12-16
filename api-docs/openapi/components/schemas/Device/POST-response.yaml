@@ -3,6 +3,7 @@ description: A device is a logical entity that bundles a number of sensors and i
 properties:
   id:
     description: A unique identifier for the device
+    readOnly: true
     type: string
   name:
     description: A descriptive name for the device
