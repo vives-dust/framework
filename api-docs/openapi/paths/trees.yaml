@@ -6,7 +6,7 @@ get:
   security: []
   responses:
     '200':
-      description: An array containing a list of JSON objects of all the registered trees
+      description: An array containing a list of JSON objects of all the registered Trees
       content:
         application/json:
           schema:
@@ -15,7 +15,7 @@ get:
           example:
             $ref: ../components/responses/Tree/GET-ALL.yaml
     '404':
-      description: No trees found.
+      description: No Trees found.
 post:
   tags:
     - Trees

@@ -20,6 +20,10 @@ tags:
     description: Device routes
   - name: Sensors
     description: Sensor routes
+  - name: ConversionModels
+    description: ConversionModel routes
+  - name: Users
+    description: User routes
 servers:
   - url: 'http://dust.devbit.be/api/v1'
   - url: 'https://dust.devbit.be/api/v1'
@@ -46,18 +50,26 @@ paths:
     $ref: 'paths/users@{id}.yaml'
 components:
   securitySchemes:
-    main_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: "ToDoauth.com"
-          scopes:
-            'read:users': read users info
-            'write:users': modify or remove users
-    api_key:
-      type: apiKey
+    JWT:
+      description: Authenticating Users is only possible via JWT bearer token
       in: header
-      name: api_key
-    basic_auth:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+    # main_auth:
+    #   type: http
+    #   description: Authenticating Users is essential to be able to visit certain routes and execute http requests
+    #   in: header
+    #   flows:
+    #     implicit:
+    #       authorizationUrl: "ToDoauth.com"
+    #       scopes:
+    #         'read:users': read users info
+    #         'write:users': modify or remove users
+    # api_key:
+    #   type: apiKey
+    #   in: header
+    #   name: api_key
+    # basic_auth:
+    #   type: http
+    #   scheme: basic

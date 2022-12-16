@@ -1,0 +1,26 @@
+get:
+  tags:
+    - Users
+  summary: Get a single User
+  operationId: GetSingleUser
+  security: []
+  parameters: 
+    - in: path
+      name: id
+      description: The unique id of the User
+      required: true
+      schema:
+        type: string
+      example: uKdBOWAi4ey4i7IdLWobP
+  responses:
+    '200':
+      description: A JSON object containing the details of a single User
+      content:
+        application/json:
+          schema:
+            type: array
+            $ref: ../components/schemas/User/GET-ALL.yaml
+          example:
+            $ref: ../components/responses/User/GET.yaml
+    '404':
+      description: No Users found.

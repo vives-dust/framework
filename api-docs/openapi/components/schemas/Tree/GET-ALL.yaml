@@ -1,30 +1,30 @@
 type: array
-description: A listing in array format of all the trees
+description: A listing in array format of all the Trees
 items:
   type: object
-  description: A tree is a physical entity that relates to the location where devices are placed at
+  description: A Tree is a physical entity that relates to the location where devices are placed at
   properties:
     id:
-      description: A unique identifier for the tree
+      description: A unique identifier for the Tree
       readOnly: true
       type: string
     name:
-      description: A descriptive name for the tree that is situated at a physical location
+      description: A descriptive name for the Tree that is situated at a physical location
       type: string
     description:
-      description: A descriptive excerpt of text to give more information about the look & feel of the tree
+      description: A descriptive excerpt of text to give more information about the look & feel of the Tree
       type: string
     location:
-      description: A latitude - longitude based way of describing the exact location of the tree
+      description: A latitude - longitude based way of describing the exact location of the Tree
       type: object
       properties:
         latitude:
-          description: The latitude of the location of the tree
+          description: The latitude of the location of the Tree
           type: integer
           minimum: -90
           maximum: 90
         longitude:
-          description: The longitude of the location of the tree
+          description: The longitude of the location of the Tree
           type: integer
           minimum: -180
           maximum: 180
@@ -32,10 +32,10 @@ items:
         - longitude
         - latitude
     image_url:
-      description: A photograph of the tree
+      description: A photograph of the Tree
       type: string
     tree_url:
-      description: A link to the tree in the API
+      description: A link to the Tree in the API
       type: string
   required:
     - id
