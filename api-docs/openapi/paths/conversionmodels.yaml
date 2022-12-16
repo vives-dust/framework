@@ -21,7 +21,8 @@ post:
     - ConversionModels
   summary: Create a new ConversionModel
   operationId: CreateConversionModels
-  security: []
+  security:
+    - jwt: []
   requestBody:
     description: A JSON object containing the details of the new ConversionModels
     content:

@@ -50,8 +50,8 @@ paths:
     $ref: 'paths/users@{id}.yaml'
 components:
   securitySchemes:
-    JWT:
-      description: Authenticating Users is only possible via JWT bearer token
+    jwt:
+      description: Only Authenticated Users can perform this request. Authentication is only possible via JWT bearer token!
       in: header
       type: http
       scheme: bearer

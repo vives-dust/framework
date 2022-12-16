@@ -21,7 +21,8 @@ post:
     - Users
   summary: Create a new User
   operationId: CreateUser
-  security: []
+  security:
+    - jwt: []
   requestBody:
     description: A JSON object containing the details of the new User
     content:

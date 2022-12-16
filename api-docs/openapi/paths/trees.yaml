@@ -21,7 +21,8 @@ post:
     - Trees
   summary: Create a new Tree
   operationId: CreateTree
-  security: []
+  security:
+    - jwt: []
   requestBody:
     description: A JSON object containing the details of the new Tree
     content:

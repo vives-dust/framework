@@ -21,7 +21,8 @@ post:
     - Devices
   summary: Create a new Device
   operationId: CreateDevice
-  security: []
+  security:
+    - jwt: []
   requestBody:
     description: A JSON object containing the details of the new Device
     content:
