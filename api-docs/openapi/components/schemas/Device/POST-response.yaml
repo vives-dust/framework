@@ -1,0 +1,31 @@
+type: object
+description: A device is a logical entity that bundles a number of sensors and is placed in the vicinity of a tree.
+properties:
+  id:
+    description: A unique identifier for the device
+    type: string
+  name:
+    description: A descriptive name for the device
+    type: string
+  description:
+    description: A descriptive text that serves the purpose of further clarifying important details about the device
+    type: string
+  devicetype:
+    description: The devicetype defines the specific model of device and what sensors the device contains
+    type: string
+    enum:
+      - dust-soil-v4
+      - weatherstation-garni-1025-arcus
+  tree_id:
+    description: A unique identifier for the tree the device belongs to
+    type: string
+  datasource_key:
+    description: The datasource key of the device that is coupled to match the source of its data to this logical device
+    type: string
+required:
+  - id
+  - name
+  - description
+  - devicetype
+  - tree_id
+  - datasource_key

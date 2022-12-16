@@ -28,7 +28,7 @@ post:
       application/json:
         schema:
           type: object
-          $ref: ../components/schemas/Device/POST.yaml
+          $ref: ../components/schemas/Device/POST-request.yaml
         example:
           $ref: ../components/requestBodies/Device.yaml
   responses:
@@ -38,7 +38,7 @@ post:
         application/json:
           schema:
             type: object
-            $ref: ../components/schemas/Device/POST.yaml
+            $ref: ../components/schemas/Device/POST-response.yaml
           example:
             $ref: ../components/responses/Device/POST.yaml
     '400':
