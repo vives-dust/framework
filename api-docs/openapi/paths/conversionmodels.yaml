@@ -15,7 +15,7 @@ get:
           example:
             $ref: ../components/responses/ConversionModel/GET-ALL.yaml
     '404':
-      description: No devices found.
+      description: No ConversionModels found.
 post:
   tags:
     - ConversionModels

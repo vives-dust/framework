@@ -40,6 +40,10 @@ paths:
     $ref: 'paths/conversionmodels.yaml'
   '/conversionmodels/{id}':
     $ref: 'paths/conversionmodels@{id}.yaml'
+  '/users':
+    $ref: 'paths/users.yaml'
+  '/users/{id}':
+    $ref: 'paths/users@{id}.yaml'
 components:
   securitySchemes:
     main_auth:
