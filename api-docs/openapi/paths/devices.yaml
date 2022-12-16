@@ -13,7 +13,7 @@ get:
             type: object
             $ref: ../components/schemas/Device/GET.yaml
           example:
-            $ref: ../components/responses/Device/GET.yaml
+            $ref: ../components/responses/Device/GET-ALL.yaml
     '404':
       description: No devices found.
 post:
