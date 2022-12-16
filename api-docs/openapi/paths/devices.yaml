@@ -6,7 +6,7 @@ get:
   security: []
   responses:
     '200':
-      description: An array containing a list of JSON objects of all the registered devices
+      description: An array containing a list of JSON objects of all the registered Devices
       content:
         application/json:
           schema:
@@ -23,7 +23,7 @@ post:
   operationId: CreateDevice
   security: []
   requestBody:
-    description: A JSON object containing the details of the new device
+    description: A JSON object containing the details of the new Device
     content:
       application/json:
         schema:
@@ -33,7 +33,7 @@ post:
           $ref: ../components/requestBodies/Device.yaml
   responses:
     '201':
-      description: A JSON object containing the details of the new device
+      description: A JSON object containing the details of the new Device
       content:
         application/json:
           schema:

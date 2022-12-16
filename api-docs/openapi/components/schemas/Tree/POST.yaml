@@ -1,8 +1,0 @@
-type: object
-description: A tree is a physical entity that relates to the location where devices are placed at.
-properties:
-  id:
-    description: A unique identifier for the tree.
-    readOnly: true
-    type: string
-    example: 7Eq1MC-WjcLA-rRvjVNcS

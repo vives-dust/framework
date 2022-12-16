@@ -1,0 +1,30 @@
+type: object
+description: A Tree is a physical location that relates to the location where entites are placed at.
+properties:
+  name:
+    description: A descriptive name for the Tree
+    type: string
+  description:
+    description: A descriptive text that serves the purpose of further clarifying important details about the Tree
+    type: string
+  location:
+    description: A location in longitude and latitude decimal degrees based on the 1984 World Geodatic System.
+    type: object
+    properties:
+      latitude:
+        description: The latitude in decimal degrees
+        type: double
+      longitude:
+        description: The longitude in decimal degrees
+        type: double
+    required:
+      - latitude
+      - longitude
+  image_url:
+    description: An URI type string that links an image of the Tree
+    type: string
+required:
+  - name
+  - description
+  - location
+  - image_url

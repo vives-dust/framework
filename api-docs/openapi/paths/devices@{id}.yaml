@@ -7,14 +7,14 @@ get:
   parameters: 
     - in: path
       name: id
-      description: The unique identifier of the device
+      description: The unique identifier of the Device
       required: true
       schema:
         type: string
       example: "Ylh5uVdxP-BctTmkaow3k"
   responses:
     '200':
-      description: A JSON object containing the details of a single device
+      description: A JSON object containing the details of a single Device
       content:
         application/json:
           schema:
