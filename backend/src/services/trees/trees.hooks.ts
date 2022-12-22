@@ -11,7 +11,16 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ generate_nanoid, Validation.input(TreeSchemas._create)],
+    create: [
+      iffElse(isProvider('external'),
+        [/* hooks for external requests (rest/socketio/...) */
+          generate_nanoid, 
+          Validation.input(TreeSchemas._create),
+        ],
+        [/* hooks for internal requests */
+        ]
+      ),
+    ],
     update: [],
     patch: [],
     remove: []
@@ -43,7 +52,16 @@ export default {
         [ /* hooks for internal requests */ ],
       ),
     ],
-    create: [],
+    create: [
+      iffElse(isProvider('external'),
+        [/* hooks for external requests (rest/socketio/...) */
+          TreeMiddleware.sanaitize_create_tree,
+          Validation.dispatch(TreeSchemas._create)
+        ],
+        [/* hooks for internal requests */
+        ]
+      ),
+    ],
     update: [],
     patch: [],
     remove: []

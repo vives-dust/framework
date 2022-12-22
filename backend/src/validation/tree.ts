@@ -39,9 +39,6 @@ const PaginatedTreesSchema = PaginationSchema.keys({
 
 // Management Schema's
 
-const TreeCreateSchema = TreeBaseSchema.keys({
-  _id: MongoObjectIdSchema,
-});
 
 export const TreeSchemas = {
 
@@ -50,6 +47,6 @@ export const TreeSchemas = {
   _get: TreeDetailsSchema,
   _find: PaginatedTreesSchema,
 
-  _create: TreeCreateSchema,
+  _create: TreeBaseSchema,
 
 };

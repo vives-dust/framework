@@ -1,4 +1,5 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
+import { Hook } from 'mocha';
 
 // Resolvers are used by fastJoin to populate child object relations
 export const tree_resolvers = {
@@ -27,6 +28,18 @@ export const tree_resolvers = {
   }
 };
 
+export function sanaitize_create_tree(context: HookContext) {
+  context.dispatch = {
+    id: context.result.id,
+    name: context.result.name,
+    description: context.result.description,
+    location: context.result.location,
+    image_url: context.result.image_url
+  }
+  // context.dispatch.original = context.result         // For testing/debugging
+  return context;
+}
+
 export function sanitize_get_tree(context : HookContext) {
   context.dispatch = {
     id: context.result.id,
@@ -53,6 +66,7 @@ export function sanitize_get_tree(context : HookContext) {
   return context;
 }
 
+// To Do : is this function necessary since you can do a paginate: false on a .find method of a service?
 export function sanitize_find_trees(context : HookContext) {
   context.dispatch = {
     total: context.result.total,
