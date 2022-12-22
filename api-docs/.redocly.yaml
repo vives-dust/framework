@@ -2,11 +2,10 @@
 apis:
   main: 
     root: openapi/openapi.yaml
-styleguide:
-  extends:
-    - recommended
-  rules:
-    no-unused-components: warn
+extends:
+  - recommended
+rules:
+  no-unused-components: warn
 features.openapi:
   htmlTemplate: ./docs/index.html
   theme:
