@@ -3,6 +3,7 @@ import * as local from '@feathersjs/authentication-local';
 import { iffElse, isProvider } from 'feathers-hooks-common';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
+import * as UsersMiddleware from './users.middleware'
 import { UserSchemas } from '../../validation/user';
 // Don't remove this comment. It's needed to format import lines nicely.
 
@@ -40,6 +41,7 @@ export default {
     create: [
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
+          UsersMiddleware.sanitize_create_user,
           Validation.dispatch(UserSchemas._details)
         ],
         [ /* hooks for internal requests */ ],
