@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import { NanoIdSchema } from './partials/nano_id';
-import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { ConversionSampleSchema } from './partials/conversion_sample';
 import { UnitSchema } from './partials/unit';
 
@@ -12,16 +11,11 @@ const ConversionModelBaseSchema = Joi.object().keys({
   description: Joi.string().required(),
   input_unit: UnitSchema.required(),
   output_unit: UnitSchema.required(),
-})
-
-const ConversionModelCreateSchema = ConversionModelBaseSchema.keys({
   samples: Joi.array().min(1).items(ConversionSampleSchema).required(),
 });
-
-
   
 export const ConversionModelSchemas = {
 
-  _create: ConversionModelCreateSchema,
-  _sanitize: ConversionModelBaseSchema
+  _create: ConversionModelBaseSchema,          // User input
+  _created: ConversionModelBaseSchema,         // Output result
 };
