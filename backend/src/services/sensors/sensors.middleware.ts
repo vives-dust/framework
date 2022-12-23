@@ -1,4 +1,5 @@
 import { default as feathers, HookContext } from '@feathersjs/feathers';
+import { ValueMapper } from '../conversionmodels/converters/value_mapper';
 
 // Resolvers are used by fastJoin to populate child object relations
 export const sensor_resolvers = {
@@ -13,6 +14,7 @@ export const sensor_resolvers = {
       }
     },
     sensor_type: () => async (sensor : any, context: HookContext) => sensor.sensor_type = (await context.app.service('sensortypes').get(sensor.sensortype_id)),
+    conversion_model: () => async (sensor : any, context: HookContext) => sensor.conversion_model = (await context.app.service('conversionmodels').get(sensor.meta.conversion_model_id)),
   }
 };
 
@@ -80,9 +82,33 @@ export function sanitize_get_sensor(context : HookContext) {
     description: context.result.sensor_type.description,
     last_value: context.result.last_value,
     values: context.result.values,
-    unit: context.result.sensor_type.unit,
+    unit: context.result.unit || context.result.sensor_type.unit,
     meta: context.result.meta || {},    // TODO: Why can meta be undefined if required in model?
   };
+  context.dispatch.meta.conversion_model_name = context.result.conversion_model?.name;
+  delete context.dispatch.meta.conversion_model_id;
+
   // context.dispatch.original = context.result;    // For testing/debugging
+  return context;
+}
+
+export function convert_values(context : HookContext) {
+  let mapper = new ValueMapper(context.result.conversion_model.samples);
+
+  // Convert unit
+  if (context.result.sensor_type.unit === context.result.conversion_model.input_unit) {
+    context.result.unit = context.result.conversion_model.output_unit;
+  } else {
+    throw new Error('Conversion model input unit does not match sample unit');
+  }
+
+  if (context.result.values) {
+    context.result.values = mapper.convert_values(context.result.values);
+  }
+
+  if (context.result.last_value) {
+    context.result.last_value = mapper.convert_single(context.result.last_value);
+  }
+
   return context;
 }
