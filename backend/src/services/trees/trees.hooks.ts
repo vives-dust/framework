@@ -1,8 +1,7 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { TreeSchemas } from '../../validation/tree';
 import * as TreeMiddleware from './trees.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-import { debug, fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
+import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
 
@@ -13,12 +12,11 @@ export default {
     get: [],
     create: [
       iffElse(isProvider('external'),
-        [/* hooks for external requests (rest/socketio/...) */
+        [ /* hooks for external requests (rest/socketio/...) */
           generate_nanoid, 
           Validation.input(TreeSchemas._create),
         ],
-        [/* hooks for internal requests */
-        ]
+        [ /* hooks for internal requests */ ]
       ),
     ],
     update: [],
@@ -54,12 +52,11 @@ export default {
     ],
     create: [
       iffElse(isProvider('external'),
-        [/* hooks for external requests (rest/socketio/...) */
-          TreeMiddleware.sanaitize_create_tree,
-          Validation.dispatch(TreeSchemas._create)
+        [ /* hooks for external requests (rest/socketio/...) */
+          TreeMiddleware.sanitize_created_tree,
+          Validation.dispatch(TreeSchemas._created)
         ],
-        [/* hooks for internal requests */
-        ]
+        [ /* hooks for internal requests */ ]
       ),
     ],
     update: [],

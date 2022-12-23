@@ -1,5 +1,4 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
-import { Hook } from 'mocha';
+import type { HookContext } from '@feathersjs/feathers';
 
 // Resolvers are used by fastJoin to populate child object relations
 export const tree_resolvers = {
@@ -28,14 +27,14 @@ export const tree_resolvers = {
   }
 };
 
-export function sanaitize_create_tree(context: HookContext) {
+export function sanitize_created_tree(context: HookContext) {
   context.dispatch = {
     id: context.result.id,
     name: context.result.name,
     description: context.result.description,
     location: context.result.location,
     image_url: context.result.image_url
-  }
+  };
   // context.dispatch.original = context.result         // For testing/debugging
   return context;
 }

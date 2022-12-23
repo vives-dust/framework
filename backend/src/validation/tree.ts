@@ -6,7 +6,6 @@ import { SensorSchemas } from './sensor';
 import { PaginationSchema } from './partials/pagination';
 import { ImageUrlSchema } from './partials/image_url';
 import { ResourceUrlSchema } from './partials/resource_url';
-import { MongoObjectIdSchema } from './partials/mongo_object_id';
 
 // Public API Schema's
 
@@ -47,6 +46,7 @@ export const TreeSchemas = {
   _get: TreeDetailsSchema,
   _find: PaginatedTreesSchema,
 
-  _create: TreeBaseSchema,
+  _create: TreeBaseSchema,          // User input
+  _created: TreeBaseSchema,         // Output result
 
 };
