@@ -1,5 +1,9 @@
 import * as feathersAuthentication from '@feathersjs/authentication';
 import * as local from '@feathersjs/authentication-local';
+import { iffElse, isProvider } from 'feathers-hooks-common';
+import { generate_nanoid } from '../../hooks/nanoid';
+import * as Validation from '../../hooks/validation';
+import { UserSchemas } from '../../validation/user';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -10,7 +14,16 @@ export default {
     all: [],
     find: [ authenticate('jwt') ],
     get: [ authenticate('jwt') ],
-    create: [ hashPassword('password') ],
+    create: [ 
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          hashPassword('password'),
+          Validation.input(UserSchemas._create),
+          generate_nanoid,
+        ],
+        [ /* hooks for internal requests */ ],
+      )
+    ],
     update: [ hashPassword('password'),  authenticate('jwt') ],
     patch: [ hashPassword('password'),  authenticate('jwt') ],
     remove: [ authenticate('jwt') ]
@@ -24,7 +37,14 @@ export default {
     ],
     find: [],
     get: [],
-    create: [],
+    create: [
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          Validation.dispatch(UserSchemas._details)
+        ],
+        [ /* hooks for internal requests */ ],
+      )
+    ],
     update: [],
     patch: [],
     remove: []
