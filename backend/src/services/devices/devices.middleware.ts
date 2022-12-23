@@ -26,7 +26,7 @@ export interface SensorParams {
 }
 
 // Device creation
-export async function create_device(context: HookContext) {   
+export async function create_device(context: HookContext) {
     const device: DeviceParams = {
         name: context.data.name,
         description: context.data.description,
@@ -34,8 +34,7 @@ export async function create_device(context: HookContext) {
         tree_id: (await fetch_tree_via_nanoId(context))[0]._id.toString(),
         datasource_key: context.data.datasource_key
     }
-
-    inject_device_params( device, context )
+    context.data = device
     return context
 };
 
@@ -70,18 +69,6 @@ const fetch_sensortype = (context: HookContext, data: any ) => context.app.servi
     query: { _id: data.sensortype_id.toString() },
     paginate: false
 });
-
-// Making sure the altered params are put in the data attriute of context
-// so feathers can automatically call the create with the correct params.
-async function inject_device_params( device : DeviceParams, context: HookContext ) {
-    context.data.name = device.name
-    context.data.description = device.description
-    context.data.devicetype_id = device.devicetype_id
-    context.data.tree_id = device.tree_id
-    context.data.datasource_key = device.datasource_key
-
-    return context
-}
 
 // Sensor creation
 const create_sensor_entity = ( context: HookContext, sensor_template: SensorParams ) => context.app.service('sensors').create(sensor_template);

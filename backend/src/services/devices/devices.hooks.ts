@@ -10,7 +10,16 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ generate_nanoid, DevicesMiddleware.create_device],
+    create: [ 
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          Validation.input(DeviceSchemas._base),
+          DevicesMiddleware.create_device,
+          generate_nanoid,          // inject nanoId last, ObjectId's are fetched first
+        ],
+        [ /* hooks for internal requests */ ],
+      ),
+    ],
     update: [],
     patch: [],
     remove: []
