@@ -50,7 +50,7 @@ const fetch_devicetype_via_id = (context: HookContext) => context.app.service('d
     paginate: false
 });
 
-const fetch_tree_via_nanoId = (context: HookContext, mongoDB?: String) => context.app.service('trees').find({ 
+const fetch_tree_via_nanoId = (context: HookContext) => context.app.service('trees').find({ 
     query: { id: context.data.tree_id }, 
     paginate: false
 });
