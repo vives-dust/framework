@@ -14,7 +14,8 @@ export default function (app: Application): Model<any> {
     name: { type: String },
     email: { type: String, unique: true, lowercase: true, trim: true, required: true },
     password: { type: String, required: true },
-  
+    permissions: { type: Array, default: 'user', required: true },
+
   }, {
     timestamps: true
   });
