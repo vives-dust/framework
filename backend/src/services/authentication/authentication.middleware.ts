@@ -1,7 +1,6 @@
 import type { HookContext } from '@feathersjs/feathers';
 
-
-export function sanitize_create(context: HookContext) {
+export function sanitize_authentication_reply(context: HookContext) {
   context.dispatch = {
     accessToken: context.result.accessToken,
     authentication: context.result.authentication,

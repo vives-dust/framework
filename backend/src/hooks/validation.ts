@@ -31,4 +31,4 @@ const joiInputOptions = {
 
 export const input = (schema : Joi.ObjectSchema<any>): Hook => {
   return validate.form(schema, joiInputOptions);
-}
+};
