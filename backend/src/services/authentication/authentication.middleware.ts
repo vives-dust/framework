@@ -8,6 +8,7 @@ export function sanitize_authentication_reply(context: HookContext) {
       id: context.result.user.id,
       name: context.result.user.name,
       email: context.result.user.email,
+      permissions: context.result.user.permissions,
     }
   };
   // context.dispatch.original = context.result         // For testing/debugging

@@ -17,7 +17,7 @@ const AuthenticationTokenGrantedSchema = Joi.object().keys({
     accessToken: TokenSchema.required(),
     payload: PayloadSchema.required(),
   }).required(),
-  user: UserSchemas._base.required(),
+  user: UserSchemas._get.required(),
 });
 
 
