@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 import { NanoIdSchema } from './partials/nano_id';
+import { PermissionsSchema } from './partials/permissions';
 
 // Public API Schema's
 
@@ -14,6 +15,10 @@ const UserCreateSchema = UserBaseSchema.keys({
   password: Joi.string().required(),
 });
 
+const UserDetailsSchema = UserBaseSchema.keys({
+  permissions: PermissionsSchema.required(),
+});
+
 // Management Schema's
 
 
@@ -21,9 +26,9 @@ export const UserSchemas = {
 
   _base: UserBaseSchema,
 
-  _get: UserBaseSchema,
+  _get: UserDetailsSchema,
 
-  _create: UserCreateSchema,        // User input
-  _created: UserBaseSchema,         // Output result
+  _create: UserCreateSchema,            // User input
+  _created: UserDetailsSchema,          // Output result
 
 };

@@ -40,7 +40,7 @@ export default {
     get: [
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
-          UserMiddleware.sanitize_get_user,
+          UserMiddleware.sanitize_user_details,
           Validation.dispatch(UserSchemas._get)
         ],
         [ /* hooks for internal requests */ ]
@@ -49,7 +49,7 @@ export default {
     create: [
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
-          UserMiddleware.sanitize_created_user,
+          UserMiddleware.sanitize_user_details,
           Validation.dispatch(UserSchemas._created)
         ],
         [ /* hooks for internal requests */ ]
