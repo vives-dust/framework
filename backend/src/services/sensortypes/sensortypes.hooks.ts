@@ -1,13 +1,16 @@
-import { HooksObject } from '@feathersjs/feathers';
 import { SensorTypeSchemas } from '../../validation/sensor_type';
 import * as Validation from '../../hooks/validation';
+import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ Validation.input(SensorTypeSchemas._create) ],
+    create: [
+      ...require_admin,
+      Validation.input(SensorTypeSchemas._create)
+    ],
     update: [],
     patch: [],
     remove: []

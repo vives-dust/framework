@@ -9,8 +9,8 @@ import { AuthenticationSchemas } from '../../validation/authentication';
 export default {
   before: {
     all: [],
-    find: [],
-    get: [],
+    find: [],     // Disabled out-of-the-box
+    get: [],      // Disabled out-of-the-box
     create: [
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */

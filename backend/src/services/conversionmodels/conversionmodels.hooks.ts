@@ -3,6 +3,7 @@ import { generate_nanoid } from '../../hooks/nanoid';
 import { ConversionModelSchemas } from '../../validation/conversionmodel';
 import { iffElse, isProvider } from 'feathers-hooks-common';
 import * as ConversionModelsMiddleware from './conversionmodels.middleware';
+import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
@@ -10,6 +11,7 @@ export default {
     find: [],
     get: [],
     create: [
+      ...require_admin,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           generate_nanoid, 

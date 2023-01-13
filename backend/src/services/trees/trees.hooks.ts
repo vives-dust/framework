@@ -4,6 +4,7 @@ import { generate_nanoid } from '../../hooks/nanoid';
 import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
+import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
@@ -11,6 +12,7 @@ export default {
     find: [],
     get: [],
     create: [
+      ...require_admin,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           generate_nanoid, 
