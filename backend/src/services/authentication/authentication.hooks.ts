@@ -3,12 +3,12 @@
 
 import * as AuthenticationMiddleware from './authentication.middleware';
 import * as Validation from '../../hooks/validation';
-import { iffElse, isProvider } from 'feathers-hooks-common';
+import { iffElse, isProvider,debug } from 'feathers-hooks-common';
 import { AuthenticationSchemas } from '../../validation/authentication';
 
 export default {
   before: {
-    all: [],
+    all: [debug('Hitting /AUTH')],
     find: [],     // Disabled out-of-the-box
     get: [],      // Disabled out-of-the-box
     create: [
