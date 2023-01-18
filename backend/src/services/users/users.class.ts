@@ -1,4 +1,4 @@
-import { Id, Params } from '@feathersjs/feathers';
+import { Id, NullableId, Params } from '@feathersjs/feathers';
 import { Service, MongooseServiceOptions } from 'feathers-mongoose';
 import { Application } from '../../declarations';
 
@@ -26,4 +26,17 @@ export class Users extends Service {
     });
   }
 
+  async remove(id: NullableId, params?: Params) {
+    // Internal request uses mongodb _id
+    if ((!params.provider || params.force_mongo_id) && !params.force_nanoid_id) {   
+      return super.remove(id, params);
+    }
+
+    return this.get(id, params).then(function (result : any) {
+      const data = result.data || result;
+      return Array.isArray(data) ? data[0] : data;
+    }).then((user) => {
+      return super.remove(user._id, params);
+    });
+  }
 }

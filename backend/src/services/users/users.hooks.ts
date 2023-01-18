@@ -32,9 +32,12 @@ export default {
         [ /* hooks for internal requests */ ]
       ),
     ],
-    update: [ disallow('external') ],
+    update: [ disallow('external') ],       // We don't support PUT (replacing entity)
     patch: [ disallow('external') ],
-    remove: [ disallow('external') ]
+    remove: [
+      authenticate('jwt'),
+      ...require_admin
+    ]
   },
 
   after: {
