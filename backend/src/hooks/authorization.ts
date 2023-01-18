@@ -14,7 +14,7 @@ export const require_admin = [
 
 // Use as ...check_if_admin
 export const check_if_admin = [
-  authenticate('jwt'),        // TODO: This does not belong here. It's authentication and n`ot authorization
+  authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
   checkPermissions({ roles: [ 'admin' ], error: false }),
 ];
 
