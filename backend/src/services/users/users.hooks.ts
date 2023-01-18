@@ -18,75 +18,12 @@ export default {
   before: {
     all: [  ],
     find: [
+      authenticate('jwt'),
       // require_admin,      // Throws error if not. Do note that find(byemail) for auth seems to skip this.
     ],
     get: [
-      if_not_admin(
-        (context: HookContext) => {
-
-          console.log('Inside the GET /USERS');
-          // console.log(context.params);
-          console.log(`Auth User ID: ${context.params.user?.id}`);
-          console.log(`Route id: ${context.id}`);
-          console.log(`Provider: ${context.params.provider}`);
-          console.log(`Authenticated?: ${context.params.authenticated}`);
-  
-  
-          // Check if request is part of authentication process
-          if (!context.params.provider && !context.params.user) {
-            console.log('This request is part of the auth process.');
-            return context;
-          }
-  
-          // In other case ID's need to match !
-          const userId = context.params.force_mongo_id ? context.params.user._id : context.params.user.id;
-          // context.params.user.id !== context.id && context.params.user._id !== context.id
-          if (userId !== context.id) {
-            console.log('User is not authorized to access other user details !');
-            return Promise.reject(new GeneralError('Unauthorized to access user details'));
-          }
-  
-          return context;
-  
-        },
-      )
-
-      // authenticate('jwt'),
-      // checkPermissions({ roles: [ 'admin' ], error: false }),
-      // iff((context) => !context.params.permitted,
-      //   (context: HookContext) => {
-      //     console.log('User is not an admin so we need to check rest of info');
-      //     return context;
-      //   },
-
-      //   (context: HookContext) => {
-
-      //     console.log('Inside the GET /USERS');
-      //     // console.log(context.params);
-      //     console.log(`Auth User ID: ${context.params.user?.id}`);
-      //     console.log(`Route id: ${context.id}`);
-      //     console.log(`Provider: ${context.params.provider}`);
-      //     console.log(`Authenticated?: ${context.params.authenticated}`);
-  
-  
-      //     // Check if request is part of authentication process
-      //     if (!context.params.provider && !context.params.user) {
-      //       console.log('This request is part of the auth process.');
-      //       return context;
-      //     }
-  
-      //     // In other case ID's need to match !
-      //     const userId = context.params.force_mongo_id ? context.params.user._id : context.params.user.id;
-      //     // context.params.user.id !== context.id && context.params.user._id !== context.id
-      //     if (userId !== context.id) {
-      //       console.log('User is not authorized to access other user details !');
-      //       return Promise.reject(new GeneralError('Unauthorized to access user details'));
-      //     }
-  
-      //     return context;
-  
-      //   },
-      // ),
+      authenticate('jwt'),
+      UserMiddleware.protect_user_details,      // Only admin can access other user's details
     ],
     create: [
       hashPassword('password'),

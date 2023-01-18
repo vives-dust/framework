@@ -7,20 +7,18 @@ const { processHooks } = hooks;
 const { authenticate } = feathersAuthentication.hooks;
 
 export const require_admin = [
-  authenticate('jwt'),
+  authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
   checkPermissions({ roles: ['admin'] }),
 ];
 
 export const check_if_admin = [
-  authenticate('jwt'),
+  authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
   checkPermissions({ roles: [ 'admin' ], error: false }),
 ];
-
 
 export function if_not_admin(...serviceHooks: Hook[]): Hook {
   return function (this: any, context: any) {
     return processHooks.call(this, [
-      authenticate('jwt'),
       checkPermissions({ roles: [ 'admin' ], error: false }),
       iff((context: HookContext) => !context.params.permitted,
         ...serviceHooks,
@@ -28,4 +26,3 @@ export function if_not_admin(...serviceHooks: Hook[]): Hook {
     ], context);
   };
 }
-
