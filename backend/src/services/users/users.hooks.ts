@@ -5,10 +5,7 @@ import * as UserMiddleware from './users.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import { disallow, iffElse, isProvider, debug, iff } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
-import { Hook, HookContext } from '@feathersjs/feathers';
-import { GeneralError } from '@feathersjs/errors';
-import checkPermissions from 'feathers-permissions';
-import { if_not_admin, require_admin } from '../../hooks/authorization';
+import { require_admin } from '../../hooks/authorization';
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const { authenticate } = feathersAuthentication.hooks;
@@ -19,7 +16,7 @@ export default {
     all: [  ],
     find: [
       authenticate('jwt'),
-      // require_admin,      // Throws error if not. Do note that find(byemail) for auth seems to skip this.
+      ...require_admin,      // Throws error if not. Do note that find(byemail) for auth seems to skip this.
     ],
     get: [
       authenticate('jwt'),

@@ -6,11 +6,13 @@ import { hooks } from '@feathersjs/commons';
 const { processHooks } = hooks;
 const { authenticate } = feathersAuthentication.hooks;
 
+// Use as ...required_admin
 export const require_admin = [
-  authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
+  // authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
   checkPermissions({ roles: ['admin'] }),
 ];
 
+// Use as ...check_if_admin
 export const check_if_admin = [
   authenticate('jwt'),        // TODO: This does not belong here. It's authentication and not authorization
   checkPermissions({ roles: [ 'admin' ], error: false }),
