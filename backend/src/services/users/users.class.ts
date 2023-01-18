@@ -39,4 +39,19 @@ export class Users extends Service {
       return super.remove(user._id, params);
     });
   }
+
+  async patch(id: NullableId, data: Partial<any>, params?: Params) {
+    // Internal request uses mongodb _id
+    if ((!params.provider || params.force_mongo_id) && !params.force_nanoid_id) {   
+      return super.patch(id, data, params);
+    }
+
+    return this.get(id, params).then(function (result : any) {
+      const data = result.data || result;
+      return Array.isArray(data) ? data[0] : data;
+    }).then((user) => {
+      return super.patch(user._id, data, params);
+    });
+  }
+
 }

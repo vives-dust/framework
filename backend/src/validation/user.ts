@@ -19,6 +19,17 @@ const UserDetailsSchema = UserBaseSchema.keys({
   permissions: PermissionsSchema.required(),
 });
 
+const UserPatchSchema = Joi.object().keys({
+  id: NanoIdSchema,
+  name: Joi.string(),
+  email: Joi.string(),
+  password: Joi.string(),
+});
+
+const UserPatchWithPermissionsSchema = UserPatchSchema.keys({
+  permissions: PermissionsSchema,
+});
+
 // Management Schema's
 
 
@@ -31,4 +42,8 @@ export const UserSchemas = {
   _create: UserCreateSchema,            // User input
   _created: UserDetailsSchema,          // Output result
 
+  _patch: UserPatchSchema,
+  _patched: UserDetailsSchema,
+
+  _patch_with_permissions: UserPatchWithPermissionsSchema,     // Allowed by admin
 };
