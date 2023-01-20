@@ -1,0 +1,46 @@
+get:
+  tags:
+    - ConversionModels
+  summary: Get all ConversionModels
+  operationId: GetConversionModels
+  security: []
+  responses:
+    '200':
+      description: An array containing a list of JSON objects of all the registered ConversionModels
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/ConversionModel/GET.yaml
+          example:
+            $ref: ../components/responses/ConversionModel/GET-ALL.yaml
+    '404':
+      description: No ConversionModels found.
+post:
+  tags:
+    - ConversionModels
+  summary: Create a new ConversionModel
+  operationId: CreateConversionModels
+  security:
+    - jwt: []
+  requestBody:
+    description: A JSON object containing the details of the new ConversionModels
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: ../components/schemas/ConversionModel/POST-request.yaml
+        example:
+          $ref: ../components/requestBodies/ConversionModel.yaml
+  responses:
+    '201':
+      description: A JSON object containing the details of the new Device
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/ConversionModel/POST-response.yaml
+          example:
+            $ref: ../components/responses/ConversionModel/POST.yaml
+    '400':
+      description: Bad request by user, check input.

@@ -1,0 +1,23 @@
+- id: uKdBOWAi4ey4i7IdLWobP
+  email: noah@dust.be
+  name: Noah Debaere
+  permissions:
+    - admin
+
+- id: 4Z5YTeOBBeP4wl7t29cbf
+  email: nico@dust.be
+  name: Nico De Witte
+  permissions:
+    - admin
+  
+- id: FGEyfF0OSpGe4JMdsnjzO
+  email: sille@dust.be
+  name: Sille Van Landschoot
+  permissions:
+    - admin
+
+- id: 4GFyfStl8JNRfa4P8Ff94
+  email: bregt@dust.be
+  name: Bregt Roobroeck
+  permissions:
+    - user

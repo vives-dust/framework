@@ -1,0 +1,46 @@
+get:
+  tags:
+    - Users
+  summary: Get all Users
+  operationId: GetAllUsers
+  security: []
+  responses:
+    '200':
+      description: An array containing a list of JSON objects of all the registered Users
+      content:
+        application/json:
+          schema:
+            type: array
+            $ref: ../components/schemas/User/GET-ALL.yaml
+          example:
+            $ref: ../components/responses/User/GET-ALL.yaml
+    '404':
+      description: No Users found.
+post:
+  tags:
+    - Users
+  summary: Create a new User
+  operationId: CreateUser
+  security:
+    - jwt: []
+  requestBody:
+    description: A JSON object containing the details of the new User
+    content:
+      application/json:
+        schema:
+          type: object
+          $ref: ../components/schemas/User/POST-request.yaml
+        example:
+          $ref: ../components/requestBodies/User.yaml
+  responses:
+    '201':
+      description: A JSON object containing the details of the new User
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/User/POST-response.yaml
+          example:
+            $ref: ../components/responses/User/POST.yaml
+    '400':
+      description: Bad request by user, check input.

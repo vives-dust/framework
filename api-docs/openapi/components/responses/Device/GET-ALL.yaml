@@ -1,0 +1,13 @@
+- id: Ylh5uVdxP-BctTmkaow3k
+  tree_id: SWxleYvqhkdieKCR-_WZa
+  devicetype: dust-soil-v4
+  datasource_key: eui-70b3d57ed0052b40
+  name: My first DUST Soil Moisture device
+  description: The device is located near the right side of the oak tree where the small patch of moss is located.
+
+- id: ZOjKHbHXHGzE3MOrdEY7Z
+  tree_id: SWxleYvqhkdieKCR-_WZa
+  devicetype: weatherstation-garni-1025-arcus
+  datasource_key: eui-70b3d57ed0052b40
+  name: My first DUST Soil Moisture device
+  description: The device is located near the right side of the oak tree where the small patch of moss is located.

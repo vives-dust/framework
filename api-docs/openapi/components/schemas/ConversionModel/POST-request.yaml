@@ -1,0 +1,38 @@
+type: object
+properties:
+  name:
+    description: A descriptive name for the ConversionModel
+    type: string
+  description:
+    description: A descriptive text that serves the purpose of further clarifying important details about the ConversionModel
+    type: string
+  input_unit:
+    description: The input unit of the values, can be an empty string if raw values
+    type: string
+  output_unit:
+    description: The output unit of the values
+    type: string
+  samples:
+    description: A list of mappings between an input value and a certain output value
+    type: array
+    minItems: 2
+    items:
+      type: object
+      description: A single mapping that correlates an input value to an output value
+      properties:
+        input_value:
+          description: An input value that is directly received from the datasource
+          type: integer
+        output_value:
+          description: An output value that correlates to the input value in a specific manner
+          type: integer
+      required:
+        - input_value
+        - output_value
+required:
+  - id
+  - name
+  - description
+  - input_unit
+  - output_unit
+  - samples
