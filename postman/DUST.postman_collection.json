@@ -1,0 +1,1591 @@
+{
+	"info": {
+		"_postman_id": "b1e136c3-5cc0-4d7e-8f86-bd2737dc211c",
+		"name": "DUST",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13699836"
+	},
+	"item": [
+		{
+			"name": "One Time Run",
+			"item": [
+				{
+					"name": "SensorTypes",
+					"item": [
+						{
+							"name": "Create a Temperature Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636dec5dd73da24da581d973\",\r\n    \"type\": \"temperature\",\r\n    \"name\": \"Temperature sensor\",\r\n    \"description\": \"Simple celcius temperature sensor.\",\r\n    \"unit\": \"°C\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Battery Voltage Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636dec5dd73da24da581d972\",\r\n    \"type\": \"temperature\",\r\n    \"name\": \"Temperature sensor\",\r\n    \"description\": \"Simple celcius temperature sensor.\",\r\n    \"unit\": \"°C\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Soil Moisture Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df2cce89936aad2253d90\",\r\n    \"type\": \"soil-moisture\",\r\n    \"name\": \"Capacitive soil moisture sensor\",\r\n    \"description\": \"Capacitive soil moisture sensor created wrapped around tubing.\",\r\n    \"unit\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a LoRaWAN Gateway Counter sensor",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636e1500781a6756233fcd04\",\r\n    \"type\": \"lorawan-gateways\",\r\n    \"name\": \"LoRAWAN gateways counter sensor\",\r\n    \"description\": \"The number of gateways the LoRaWAN message was received on.\",\r\n    \"unit\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Rain Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df2cce12336aad2253d70\",\r\n    \"type\": \"rain\",\r\n    \"name\": \"Rain sensor\",\r\n    \"description\": \"A rain sensor that measures the current rain\",\r\n    \"unit\": \"mm\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Wind Speed Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636e1596381a6845593fcd45\",\r\n    \"type\": \"wind-speed\",\r\n    \"name\": \"Wind speed sensor\",\r\n    \"description\": \"A wind speed sensor that measures the velocity of the wind.\",\r\n    \"unit\": \"km/h\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Wind Gust Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"666a1547381e6884775fcd50\",\r\n    \"type\": \"wind-gust\",\r\n    \"name\": \"Wind gust sensor\",\r\n    \"description\": \"A wind gust sensor that measures the sudden, short burst of wind speed.\",\r\n    \"unit\": \"km/h\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Wind Direction Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636e1854961a6854592fcd77\",\r\n    \"type\": \"wind-direction\",\r\n    \"name\": \"Wind direction sensor\",\r\n    \"description\": \"A wind direction sensor that measures the angle of the wind.\",\r\n    \"unit\": \"°\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Solar Radiation Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"685e1991961c6842069fcd40\",\r\n    \"type\": \"solar-radiation\",\r\n    \"name\": \"Solar radiation sensor\",\r\n    \"description\": \"A solar radiation sensor that measures the solar resource or electromagnetic radiation emitted by the sun.\",\r\n    \"unit\": \"W/m²\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Humidity Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"420e1991302c6847529fab84\",\r\n    \"type\": \"humidity\",\r\n    \"name\": \"Humidity sensor\",\r\n    \"description\": \"A humidity sensor that measures the concentration of water vapor present in the air.\",\r\n    \"unit\": \"%\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Dew Point Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"852e1991302b8975249fab32\",\r\n    \"type\": \"dew-point\",\r\n    \"name\": \"Dew point sensor\",\r\n    \"description\": \"A dew point sensor that measures the temperature to which air must be cooled to become saturated with water vapor, assuming constant air pressure and water content.\",\r\n    \"unit\": \"°C\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Daily Rain Accumulation Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"777e1884502b8974349fab45\",\r\n    \"type\": \"daily-rain-accumulation\",\r\n    \"name\": \"Daily rain accumulation sensor\",\r\n    \"description\": \"A daily rain accumulation sensor that measures the total rain that fell during a given period of time.\",\r\n    \"unit\": \"mm\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Pressure Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"774e4555102e7854349fac44\",\r\n    \"type\": \"pressure\",\r\n    \"name\": \"Pressure sensor\",\r\n    \"description\": \"A pressure sensor that measures the atmospheric air pressure, or barometric pressure.\",\r\n    \"unit\": \"hPa\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create an UV Index Sensor Type",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"774e7412102e7845969fac78\",\r\n    \"type\": \"uv-index\",\r\n    \"name\": \"UV index sensor\",\r\n    \"description\": \"An UV index sensor that measures the level of solar power on a scale of 0 to 11+.\",\r\n    \"unit\": \"\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/sensortypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"sensortypes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DeviceTypes",
+					"item": [
+						{
+							"name": "Create a DUST prototype v4 device",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"devicetype_dust-soil-v4\", jsonData.type);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636deca1d73da24da581d975\",\r\n    \"type\": \"dust-soil-v4\",\r\n    \"name\": \"DUST Soil Device Prototype v4\",\r\n    \"description\": \"Contains 1 internal temperature sensor, a battery sensor and 4 soil moisture sensors. It also reports some LoRaWAN stats.\",\r\n    \"image_url\": \"https://via.placeholder.com/150\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicetypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicetypes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a Weatherstation device",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"devicetype_weatherstation\", jsonData.type);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"type\": \"weatherstation-garni-1025-arcus\",\r\n    \"name\": \"GARNI 1025 Arcus meteorological Wi-Fi station\",\r\n    \"description\": \"The GARNI 1025 Arcus meteorological Wi-Fi station with an integrated 7-in-1 sensor is equipped with high-precision Swiss SENSIRION sensors with the possibility of calibration of some measured quantities. The main unit has an easy-to-read inverse color VA display that shows measured quantities, weather forecast, date, time and many other values.\",\r\n    \"image_url\": \"https://www.garnitechnology.com/files/size/660-w_625-h_368-b_ffffff-d_1.webp\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicetypes",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicetypes"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DeviceSensors",
+					"item": [
+						{
+							"name": "Internal Temperature",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df35ce89936aad2253d92\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636dec5dd73da24da581d973\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"internalTemperature\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Battery Voltage",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df360e89936aad2253d94\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636decf7d73da24da581d977\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"battery\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Soil Moisture @ -10cm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df362e89936aad2253d96\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636df2cce89936aad2253d90\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"moistureLevel_1\"\r\n    },\r\n    \"meta\": {\r\n      \"depth\": -10\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Soil Moisture @ -20cm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df365e89936aad2253d98\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636df2cce89936aad2253d90\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"moistureLevel_2\"\r\n    },\r\n    \"meta\": {\r\n      \"depth\": -20\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Soil Moisture @ -45cm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df367e89936aad2253d9a\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636df2cce89936aad2253d90\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"moistureLevel_3\"\r\n    },\r\n    \"meta\": {\r\n      \"depth\": -45\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Soil Moisture @ -60cm",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636df36be89936aad2253d9c\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636df2cce89936aad2253d90\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"moistureLevel_4\"\r\n    },\r\n    \"meta\": {\r\n      \"depth\": -60\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "LoRaWAN gateways",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"636e166f781a6756233fcd08\",\r\n    \"devicetype_id\": \"636deca1d73da24da581d975\",\r\n    \"sensortype_id\": \"636e1500781a6756233fcd04\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"dust-sensor\",\r\n        \"tags\": {\r\n            \"devId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"gateways\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Internal Temperature - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637753665572980af554855f\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"636dec5dd73da24da581d973\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"temperature_c\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Rain Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637757abd7759ba010967a89\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"636df2cce12336aad2253d70\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"rain_mm\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wind Speed Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637757f334ee6300918bb3c1\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"636e1596381a6845593fcd45\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"windspeed_kmh\"\r\n    },\r\n    \"meta\": {}\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wind Gust Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"6377583baa21f4990ab0464b\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"666a1547381e6884775fcd50\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"windgust_kmh\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Wind Direction Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"63775876e0ac06dd09c453b6\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"636e1854961a6854592fcd77\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"winddirection_degrees\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Solar Radiation Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637758bf28a280ae40219c23\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"685e1991961c6842069fcd40\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"solarradiation_wm2\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Humidity Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"6377590ecf3f388d2fc8a6d0\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"420e1991302c6847529fab84\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"humidity_percent\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Dew Point Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"6377594e53b8dc7e8292f227\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"852e1991302b8975249fab32\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"dewpoint_c\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Daily Rain Accumulation Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637759777cb63486550534d5\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"777e1884502b8974349fab45\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"dailyrain_mm\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Pressure Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637759aec99a5e4ad9d514b7\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"774e4555102e7854349fac44\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"barometer_hpa\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UV Index Sensor - Weatherstation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\": \"637759ea17952ef9c39ac8be\",\r\n    \"devicetype_id\": \"635a7b85459684ee84a2d2c8\",\r\n    \"sensortype_id\": \"774e7412102e7845969fac78\",\r\n    \"data_source\": {\r\n        \"source\": \"influxdb\",\r\n        \"bucket\": \"dust\",\r\n        \"measurement\": \"weatherstation\",\r\n        \"tags\": {\r\n            \"stationId\": \"datasource_key\"\r\n        },\r\n        \"field\": \"uv_index\"\r\n    },\r\n    \"meta\": {}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devicesensors",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devicesensors"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Population",
+			"item": [
+				{
+					"name": "Trees",
+					"item": [
+						{
+							"name": "Create a 1st Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"tree_id_tree1\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Parking Beuk\",\r\n    \"description\": \"Kleine beuk aan de expressweg ingang van de parking van de campus.\",\r\n    \"location\": {\r\n        \"latitude\": 51.18644105219786,\r\n        \"longitude\": 3.2024999138892705\r\n    },\r\n    \"image_url\": \"https://neerlandstuin.nl/wp-content/uploads/2020/03/Depositphotos_13673263_s-2019.jpg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/trees",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"trees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a 2nd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"tree_id_tree2\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Parking Ingang Berk\",\r\n    \"description\": \"Kleine berk aan de ingang van de parking van de campus.\",\r\n    \"location\": {\r\n        \"latitude\": 51.18793055097202,\r\n        \"longitude\": 3.2014846977776346\r\n    },\r\n    \"image_url\": \"https://neerlandstuin.nl/wp-content/uploads/2020/03/Depositphotos_13673263_s-2019.jpg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/trees",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"trees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a 3rd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"tree_id_tree3\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Stuvo Boom 2.0\",\r\n    \"description\": \"Grote mooie boom aan het stuvo gebouw\",\r\n    \"location\": {\r\n        \"latitude\": 51.187016011159244,\r\n        \"longitude\": 3.2050647762164557\r\n    },\r\n    \"image_url\": \"https://neerlandstuin.nl/wp-content/uploads/2020/03/Depositphotos_13673263_s-2019.jpg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/trees",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"trees"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create a 4th Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = JSON.parse(responseBody);\r",
+											"postman.setEnvironmentVariable(\"tree_id_tree4\", jsonData.id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Crown Nieuwe Boom\",\r\n    \"description\": \"Nieuwe boom in het midden van de crown\",\r\n    \"location\": {\r\n        \"latitude\": 51.187775046869824,\r\n        \"longitude\": 3.2048153308937914\r\n    },\r\n    \"image_url\": \"https://neerlandstuin.nl/wp-content/uploads/2020/03/Depositphotos_13673263_s-2019.jpg\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/trees",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"trees"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Devices",
+					"item": [
+						{
+							"name": "Create DUST v4 device for 1st Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A first prototype device\",\r\n    \"description\": \"This device monitors one of the VIVES Campus Xaverianenstraat trees.\",\r\n    \"devicetype\": \"{{devicetype_dust-soil-v4}}\",\r\n    \"tree_id\": \"{{tree_id_tree1}}\",\r\n    \"datasource_key\": \"eui-70b3d57ed004bbb6\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create DUST v4 device for 2nd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A second prototype device\",\r\n    \"description\": \"This device monitors one of the VIVES Campus Xaverianenstraat trees.\",\r\n    \"devicetype\": \"{{devicetype_dust-soil-v4}}\",\r\n    \"tree_id\": \"{{tree_id_tree2}}\",\r\n    \"datasource_key\": \"eui-70b3d57ed005235e\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create DUST v4 device for 3rd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A third prototype device\",\r\n    \"description\": \"This device monitors one of the VIVES Campus Xaverianenstraat trees.\",\r\n    \"devicetype\": \"{{devicetype_dust-soil-v4}}\",\r\n    \"tree_id\": \"{{tree_id_tree3}}\",\r\n    \"datasource_key\": \"eui-70b3d57ed0052b40\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create DUST v4 device for 4th Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A fourth prototype device\",\r\n    \"description\": \"This device monitors one of the VIVES Campus Xaverianenstraat trees.\",\r\n    \"devicetype\": \"{{devicetype_dust-soil-v4}}\",\r\n    \"tree_id\": \"{{tree_id_tree4}}\",\r\n    \"datasource_key\": \"eui-70b3d57ed0052364\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Weatherstation for 1st Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A first weatherstation from Jonas\",\r\n    \"description\": \"This device monitors Parking Beuk.\",\r\n    \"devicetype\": \"{{devicetype_weatherstation}}\",\r\n    \"tree_id\": \"{{tree_id_tree1}}\",\r\n    \"datasource_key\": \"LANNOOSTATION666\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Weatherstation for 2nd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A first weatherstation from Sille\",\r\n    \"description\": \"This device monitors Parking Ingang Berk.\",\r\n    \"devicetype\": \"{{devicetype_weatherstation}}\",\r\n    \"tree_id\": \"{{tree_id_tree2}}\",\r\n    \"datasource_key\": \"Oostkamp\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Weatherstation for 3rd Tree",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A first weatherstation from Nico\",\r\n    \"description\": \"This device monitors Stuvo Boom.\",\r\n    \"devicetype\": \"{{devicetype_weatherstation}}\",\r\n    \"tree_id\": \"{{tree_id_tree3}}\",\r\n    \"datasource_key\": \"garni_nico\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/devices",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"devices"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sensors",
+					"item": [],
+					"description": "# Sensors\n\nSensors are created automatically when a device is created."
+				},
+				{
+					"name": "ConversionModels",
+					"item": [
+						{
+							"name": "Create a ConversionModel",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"A first weatherstation from Nico\",\r\n    \"description\": \"This device monitors Stuvo Boom.\",\r\n    \"devicetype\": \"{{devicetype_weatherstation}}\",\r\n    \"tree_id\": \"{{tree_id_tree3}}\",\r\n    \"datasource_key\": \"garni_nico\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/conversionmodels",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"conversionmodels"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Regular users",
+					"item": [
+						{
+							"name": "Create a regular user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"noah@dust.be\",\r\n    \"password\": \"verysecret7\",\r\n    \"name\": \"Noah Debaere\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/users",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create 2nd regular user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"bregt@dust.be\",\r\n    \"password\": \"RoeselareRocks\",\r\n    \"name\": \"Bregt Roobroeck\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{host}}:{{port}}/users",
+									"protocol": "http",
+									"host": [
+										"{{host}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
