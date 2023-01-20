@@ -1,0 +1,26 @@
+type: object
+description: A User is a person or entity with authorized access
+properties:
+  email:
+    description: An email identifies an email box to which messages are delivered
+    type: string
+  name:
+    description: A descriptive name for the User, can be compared to an *username*
+    type: string
+  password:
+    description: A password that will be used to authenticate the user
+    type: string
+  permissions:
+    description: A listing of all the permissions an authenticated User has
+    type: array
+    items:
+      type: string
+      enum:
+        - admin
+        - user
+        - guest
+required:
+  - email
+  - name
+  - password
+  - permissions

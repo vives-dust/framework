@@ -1,27 +1,21 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { SensorSchemas } from '../../validation/sensor';
-import { debug, fastJoin, iff, iffElse, isProvider } from 'feathers-hooks-common';
+import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
-
-// const dispatch = (message: string) => {
-//   return (context : HookContext) => { return debug(message)(context); };
-// };
 
 export default {
   before: {
     all: [],
     find: [],
     get: [
-      // dispatch('Very nice')
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */ ],
         [ /* hooks for internal requests */ ],
       ),
     ],
-    create: [ generate_nanoid, SensorMiddleware.id_conversion],
+    create: [ generate_nanoid, SensorMiddleware.id_conversion], // ToDo: add input validation
     update: [],
     patch: [],
     remove: []

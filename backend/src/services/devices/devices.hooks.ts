@@ -1,4 +1,3 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { debug, fastJoin, iff, iffElse, isProvider } from 'feathers-hooks-common';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as DevicesMiddleware from './devices.middleware';

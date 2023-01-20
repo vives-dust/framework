@@ -1,0 +1,26 @@
+get:
+  tags:
+    - ConversionModels
+  summary: Get a single ConversionModel
+  operationId: GetSingleConversionModel
+  security: []
+  parameters: 
+    - in: path
+      name: id
+      description: The unique identifier of the ConversionModel
+      required: true
+      schema:
+        type: string
+      example: "97Zm9yLCJi5F9aOzAotvo"
+  responses:
+    '200':
+      description: A JSON object containing the details of a single ConversionModel
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/ConversionModel/GET.yaml
+          example:
+            $ref: ../components/responses/ConversionModel/GET.yaml
+    '404':
+      description: ConversionModel not found.
