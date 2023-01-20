@@ -8,7 +8,7 @@ import { AuthenticationSchemas } from '../../validation/authentication';
 
 export default {
   before: {
-    all: [debug('Hitting /AUTH')],
+    all: [],
     find: [],     // Disabled out-of-the-box
     get: [],      // Disabled out-of-the-box
     create: [

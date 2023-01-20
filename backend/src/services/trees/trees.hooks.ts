@@ -12,7 +12,6 @@ export default {
     find: [],
     get: [],
     create: [
-      ...require_admin,
       iffElse(isProvider('external'),
         [ /* hooks for external requests (rest/socketio/...) */
           generate_nanoid, 

@@ -1,4 +1,4 @@
-import { HookContext, HooksObject } from '@feathersjs/feathers';
+import { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import validate from 'feathers-validate-joi';
 import { MeasurementSchemas } from '../../validation/measurement';
@@ -18,7 +18,7 @@ const joiOptions = {
 export default {
   before: {
     all: [],
-    find: [ validate.form(MeasurementSchemas.find, joiOptions) ],
+    find: [ disallow('external'), validate.form(MeasurementSchemas.find, joiOptions) ],
     get: [ disallow() ],
     create: [ disallow() ],
     update: [ disallow() ],

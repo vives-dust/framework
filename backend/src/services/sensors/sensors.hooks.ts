@@ -4,7 +4,6 @@ import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
-import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
@@ -17,7 +16,6 @@ export default {
       ),
     ],
     create: [
-      ...require_admin,
       generate_nanoid,
       Validation.input(SensorSchemas._create)
     ],

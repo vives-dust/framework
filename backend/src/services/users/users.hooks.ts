@@ -3,7 +3,7 @@ import * as local from '@feathersjs/authentication-local';
 import { UserSchemas } from '../../validation/user';
 import * as UserMiddleware from './users.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-import { disallow, iffElse, isProvider, debug, iff } from 'feathers-hooks-common';
+import { disallow, iffElse, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { if_admin_else, require_admin } from '../../hooks/authorization';
 // Don't remove this comment. It's needed to format import lines nicely.
@@ -13,7 +13,7 @@ const { hashPassword, protect } = local.hooks;
 
 export default {
   before: {
-    all: [ debug('Hitting USERS') ],
+    all: [ ],
     find: [
       authenticate('jwt'),
       ...require_admin,      // Throws error if not. Do note that find(byemail) for auth seems to skip this.

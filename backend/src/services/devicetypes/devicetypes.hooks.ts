@@ -1,6 +1,5 @@
 import { DeviceTypeSchemas } from '../../validation/device_type';
 import * as Validation from '../../hooks/validation';
-import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
@@ -8,7 +7,6 @@ export default {
     find: [],
     get: [],
     create: [
-      ...require_admin,
       Validation.input(DeviceTypeSchemas._create)
     ],
     update: [],
