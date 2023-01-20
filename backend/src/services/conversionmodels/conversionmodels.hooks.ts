@@ -1,14 +1,23 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
 import * as Validation from '../../hooks/validation';
 import { generate_nanoid } from '../../hooks/nanoid';
 import { ConversionModelSchemas } from '../../validation/conversionmodel';
+import { iffElse, isProvider } from 'feathers-hooks-common';
+import * as ConversionModelsMiddleware from './conversionmodels.middleware';
 
 export default {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ generate_nanoid, Validation.input(ConversionModelSchemas._create) ],
+    create: [
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          generate_nanoid, 
+          Validation.input(ConversionModelSchemas._create)
+        ],
+        [ /* hooks for internal requests */ ],
+      ),
+    ],
     update: [],
     patch: [],
     remove: []
@@ -18,7 +27,15 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [
+      iffElse(isProvider('external'),
+        [ /* hooks for external requests (rest/socketio/...) */
+          ConversionModelsMiddleware.sanitize_create_conversionmodel, 
+          Validation.dispatch(ConversionModelSchemas._created)
+        ],
+        [ /* hooks for internal requests */ ],
+      ),
+    ],
     update: [],
     patch: [],
     remove: []

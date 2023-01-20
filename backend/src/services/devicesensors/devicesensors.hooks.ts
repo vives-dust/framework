@@ -1,4 +1,3 @@
-import { HooksObject } from '@feathersjs/feathers';
 import { DeviceSensorSchemas } from '../../validation/device_sensor';
 import * as Validation from '../../hooks/validation';
 
@@ -7,7 +6,9 @@ export default {
     all: [],
     find: [],
     get: [],
-    create: [ Validation.input(DeviceSensorSchemas._create) ],
+    create: [
+      Validation.input(DeviceSensorSchemas._create)
+    ],
     update: [],
     patch: [],
     remove: []
