@@ -6,6 +6,8 @@ export default function (app: Application): void {
   const config = app.get('mongodb');    // Get config object by key
   const connection = `mongodb://${config.host}:${config.port}/${config.database}`;
   
+  mongoose.set('strictQuery', true)
+
   mongoose.connect(connection, {
     authSource: "admin",
     user: config.root_username,
