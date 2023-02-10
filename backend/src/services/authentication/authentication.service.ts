@@ -15,7 +15,7 @@ declare module '../../declarations' {
 
 export class CustomAuthenticationService extends AuthenticationService {
 
-  constructor(app: Application, configKey?: string, options?: {}) {
+  constructor(app: Application, configKey?: string, options?: object) {
     super(app, configKey, options);
   }
 
