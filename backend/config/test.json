@@ -3,7 +3,7 @@
     "mongodb": {
         "host": "MONGODB_HOST",
         "port": "MONGODB_PORT",
-        "database": "MONGODB_DATABASE",
+        "database": "MONGODB_DATABASE_TEST",
         "root_username": "MONGODB_ROOT_USERNAME",
         "root_password": "MONGODB_ROOT_PASSWORD"
     }
