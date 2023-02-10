@@ -1,8 +1,8 @@
 // Application hooks that run for every service
 // Don't remove this comment. It's needed to format import lines nicely.
 
-import { disallow, iff } from "feathers-hooks-common";
-import { require_admin } from "./hooks/authorization";
+import { disallow, iff } from 'feathers-hooks-common';
+import { require_admin } from './hooks/authorization';
 import * as feathersAuthentication from '@feathersjs/authentication';
 const { authenticate } = feathersAuthentication.hooks;
 

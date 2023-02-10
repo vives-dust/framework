@@ -7,15 +7,15 @@ export default function (app: Application): void {
   const connection = `mongodb://${config.host}:${config.port}/${config.database}`;
   
   mongoose.connect(connection, {
-    authSource: "admin",
+    authSource: 'admin',
     user: config.root_username,
     pass: config.root_password
   })
-  .catch(err => {
-    console.log("Failed to connect to mongodb")
-    logger.error(err);
-    process.exit(1);
-  });
+    .catch(err => {
+      console.log('Failed to connect to mongodb');
+      logger.error(err);
+      process.exit(1);
+    });
 
   app.set('mongooseClient', mongoose);
 }

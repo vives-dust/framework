@@ -27,7 +27,7 @@ export class Measurements implements ServiceMethods<Measurement> {
   async find (params?: Params): Promise<Measurement[]> {
     const queryApi = this.app.get('influxQueryAPI');
 
-    let influxQueryParams = {
+    const influxQueryParams = {
       bucket: params?.query?.bucket || this.app.get('influxdb').bucket,
       measurement: params?.query?.measurement || 'dust-sensor',
       tags: (params?.query?.tags || undefined),
@@ -39,16 +39,16 @@ export class Measurements implements ServiceMethods<Measurement> {
       every: params?.query?.every,
       aliases: (params?.query?.aliases || undefined),
       pruneTags: params?.query?.pruneTags,
-    }
+    };
 
-    let fluxQuery: ParameterizedQuery = QueryBuilder.build_query(influxQueryParams);
+    const fluxQuery: ParameterizedQuery = QueryBuilder.build_query(influxQueryParams);
     // console.log(fluxQuery);
 
     return new Promise((resolve) => {
-      let results : Measurement[] = [];
+      const results : Measurement[] = [];
       queryApi.queryRows(fluxQuery, {
         next(row: string[], tableMeta: FluxTableMetaData) {
-          let influxObject = tableMeta.toObject(row);
+          const influxObject = tableMeta.toObject(row);
 
           // Delete some influxdb specific meta data
           delete influxObject.table;
@@ -57,7 +57,7 @@ export class Measurements implements ServiceMethods<Measurement> {
           results.push(influxObject);
         },
         error(error: Error) {
-          console.log("Error")
+          console.log('Error');
           console.error(error);
         },
         complete() {

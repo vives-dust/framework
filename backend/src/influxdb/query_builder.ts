@@ -39,17 +39,17 @@ const QueryHelper = {
 
   drop_columns(columns: string[]) : ParameterizedQuery {
     const columnsToDrop = columns.concat();
-    return flux`|> drop(columns: ${columnsToDrop})`
+    return flux`|> drop(columns: ${columnsToDrop})`;
   },
 
   range_expression(start: string, stop?: string) : ParameterizedQuery {
     const startExpr = fluxExpression(start);
     const stopExpr = fluxExpression(stop || 'now()');
-    return flux`|> range(start: ${startExpr}, stop: ${stopExpr} )`
+    return flux`|> range(start: ${startExpr}, stop: ${stopExpr} )`;
   },
 
   aggregate_expression(every: string) : ParameterizedQuery {
-    return flux`|> aggregateWindow(every: ${fluxExpression(every)}, fn: mean, createEmpty: false )`
+    return flux`|> aggregateWindow(every: ${fluxExpression(every)}, fn: mean, createEmpty: false )`;
   },
 
   last_expression() : ParameterizedQuery {
@@ -80,9 +80,9 @@ export const QueryBuilder = {
 
   build_query: (params: InfluxDBQueryParams) => {
     const timing = (periods as any)[Period[params.period || Period.last]];
-    let start = (params.period || !params.start) ? timing.start : params.start;
+    const start = (params.period || !params.start) ? timing.start : params.start;
 
-    let every = params.every ? params.every : timing.every;
+    const every = params.every ? params.every : timing.every;
 
     return flux`from(bucket:"${params.bucket}") 
       ${QueryHelper.range_expression(start, params.stop)}
