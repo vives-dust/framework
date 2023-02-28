@@ -1,17 +1,10 @@
 get:
   tags:
     - Sensors
-  summary: Get a single Sensor details
-  operationId: GetSingleSensor
+  summary: Get all Sensors
+  operationId: GetSensors
   security: []
   parameters:
-    - in: path
-      name: id
-      description: The unique id of the sensor
-      required: true
-      schema:
-        type: string
-      example: lM3dbKeqP-vyvprK7PrNf
     - in: query
       name: period
       description: The period of time to take samples into account. Each period has a predefined start time and every duration.

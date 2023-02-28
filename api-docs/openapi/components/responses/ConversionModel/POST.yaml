@@ -1,0 +1,14 @@
+id: 97Zm9yLCJi5F9aOzAotvo
+name: DUST Soil Device v4.0 Moisture Model
+description: This moisture model maps the raw values from a sensor to the appropriate percentages in the soil. This model works for the DUST Soil Devices of the fourth generation.
+input_unit: ""
+output_unit: "%"
+samples:
+- input_value: 0
+  output_value: 0
+- input_value: 10000
+  output_value: 20
+- input_value: 35000
+  output_value: 50
+- input_value: 65535
+  output_value: 100

@@ -1,20 +1,20 @@
 get:
   tags:
     - Trees
-  summary: Get the details of a single tree
+  summary: Get a single Tree
   operationId: GetTree
   security: []
   parameters: 
     - in: path
       name: id
-      description: The unique id of the tree
+      description: The unique id of the Tree
       required: true
       schema:
         type: string
       example: "LTFeni8ygg7gaMUSCL8yY"
   responses:
     '200':
-      description: A JSON object containing the details of a single tree
+      description: A JSON object containing the details of a single Tree
       content:
         application/json:
           schema:
@@ -34,7 +34,7 @@ get:
 #   parameters: 
 #     - in: path
 #       name: id
-#       description: The unique id of the tree
+#       description: The unique id of the Tree
 #       required: true
 #       schema:
 #         type: string
