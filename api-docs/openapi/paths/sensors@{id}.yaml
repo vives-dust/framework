@@ -1,8 +1,8 @@
 get:
   tags:
     - Sensors
-  summary: Get the Sensor details.
-  operationId: GetSensor
+  summary: Get a single Sensor details
+  operationId: GetSingleSensor
   security: []
   parameters:
     - in: path

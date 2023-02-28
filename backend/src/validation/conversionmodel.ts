@@ -1,13 +1,11 @@
 import Joi from 'joi';
 import { NanoIdSchema } from './partials/nano_id';
-import { MongoObjectIdSchema } from './partials/mongo_object_id';
 import { ConversionSampleSchema } from './partials/conversion_sample';
 import { UnitSchema } from './partials/unit';
 
 // Management Schema's
 
-const ConversionModelCreateSchema = Joi.object().keys({
-  _id: MongoObjectIdSchema,
+const ConversionModelBaseSchema = Joi.object().keys({
   id: NanoIdSchema.required(),
   name: Joi.string().required(),
   description: Joi.string().required(),
@@ -18,6 +16,6 @@ const ConversionModelCreateSchema = Joi.object().keys({
   
 export const ConversionModelSchemas = {
 
-  _create: ConversionModelCreateSchema,
-
+  _create: ConversionModelBaseSchema,          // User input
+  _created: ConversionModelBaseSchema,         // Output result
 };

@@ -1,0 +1,92 @@
+get:
+  tags:
+    - Sensors
+  summary: Get all Sensors
+  operationId: GetSensors
+  security: []
+  parameters:
+    - in: query
+      name: period
+      description: The period of time to take samples into account. Each period has a predefined start time and every duration.
+      schema:
+        type: string
+        enum:
+          - 1h
+          - 24h
+          - 7d
+          - 31d
+          - 1y
+          - all
+          - last
+        example: 1h
+    - in: query
+      name: every
+      description: Duration between samples. This takes precedence over default period duration.
+      schema:
+        type: string
+        enum:
+          - 1m
+          - 5m
+          - 30m
+          - 2h
+          - 24h
+        example: 5m
+    - in: query
+      name: start
+      description: The start time for samples to be taken into account
+      schema:
+        oneOf:
+          - title: Relative start time
+            type: string
+            description: A relative negative duration
+            enum:
+              - -1h
+              - -24h
+              - -7d
+              - -31d
+              - -1y
+          - title: Absolute datetime
+            type: string
+            description: An absolute datetime from which to take samples into account
+        example: 2019-10-10T07:20:50.52Z
+    - in: query
+      name: stop
+      description: The stop time for samples to be taken into account
+      schema:
+        oneOf:
+          - title: Relative stop time
+            type: string
+            description: A relative negative duration
+            enum:
+              - -1h
+              - -24h
+              - -7d
+              - -31d
+              - -1y
+          - title: Absolute datetime
+            type: string
+            description: An absolute datetime to which to take samples into account
+        example: 2019-10-10T07:20:50.52Z
+  responses:
+    '200':
+      description: A JSON object containing the details of a single sensor
+      content:
+        application/json:
+          schema:
+            type: object
+            $ref: ../components/schemas/Sensor/GET.yaml
+          examples:
+            default:
+              summary: Last Value - Default
+              description: The last value of a sensor is returned by default
+              $ref: ../components/responses/Sensor/GET-default.yaml
+            period:
+              summary: Selecting a period (period=1h)
+              description: This is the response when adding the period parameter (1h)
+              $ref: ../components/responses/Sensor/GET-period-1h.yaml
+            start-stop:
+              summary: Start-Stop Example (start=-7d)
+              description: This is the response when adding a start and stop parameter (-7d).
+              $ref: ../components/responses/Sensor/GET-startstop-7d.yaml
+    '404':
+      description: Sensor not found

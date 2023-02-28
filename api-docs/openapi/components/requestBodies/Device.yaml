@@ -1,2 +1,5 @@
-tree: SWxleYvqhkdieKCR-_WZa
-type: dust-soil-device
+name: "A third prototype device"
+description: "This device monitors one of the VIVES Campus Xaverianenstraat trees."
+devicetype: "dust-soil-v4"
+tree_id: "SWxleYvqhkdieKCR-_WZa"
+datasource_key: "eui-70b3d57ed0052b40"

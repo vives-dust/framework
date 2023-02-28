@@ -17,7 +17,7 @@ import services from './services';
 import appHooks from './app.hooks';
 import channels from './channels';
 import { HookContext as FeathersHookContext } from '@feathersjs/feathers';
-import authentication from './authentication';
+import authentication from './services/authentication/authentication.service';
 import mongoose from './mongoose';
 import influxdb from './influxdb';
 // Don't remove this comment. It's needed to format import lines nicely.

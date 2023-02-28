@@ -29,7 +29,8 @@ post:
     - SoilModels
   summary: Create a new soil model
   operationId: CreateSoilModel
-  security: []
+  security:
+    - jwt: []
   parameters: 
     - in: path
       name: id
