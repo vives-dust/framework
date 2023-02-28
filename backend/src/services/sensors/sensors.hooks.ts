@@ -1,27 +1,19 @@
-import { default as feathers, HookContext } from '@feathersjs/feathers';
 import { SensorSchemas } from '../../validation/sensor';
-import { debug, fastJoin, iff, iffElse, isProvider } from 'feathers-hooks-common';
+import { iff, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
 
-// const dispatch = (message: string) => {
-//   return (context : HookContext) => { return debug(message)(context); };
-// };
-
 export default {
   before: {
     all: [],
     find: [],
-    get: [
-      // dispatch('Very nice')
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */ ],
-        [ /* hooks for internal requests */ ],
-      ),
+    get: [],
+    create: [
+      generate_nanoid,
+      Validation.input(SensorSchemas._create)
     ],
-    create: [ generate_nanoid, Validation.input(SensorSchemas._create) ],
     update: [],
     patch: [],
     remove: []
@@ -32,26 +24,21 @@ export default {
     find: [
       set_resource_url,
       SensorMiddleware.populate_last_value,
+      SensorMiddleware.join_conversion_model_if_present,
+      SensorMiddleware.join_sensor_type,
+      SensorMiddleware.convert_values_by_conversion_model,
     ],
     get: [
       set_resource_url,
       SensorMiddleware.populate_last_value,
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
-          SensorMiddleware.populate_values,
-
-          // Only convert values if conversion model id is present
-          iff(
-            (context : HookContext) => context.result.meta.conversion_model_id,
-            fastJoin(SensorMiddleware.sensor_resolvers, { conversion_model: true }),
-            SensorMiddleware.convert_values,
-          ),
-          
-          SensorMiddleware.sanitize_get_sensor,
-          Validation.dispatch(SensorSchemas._get)
-        ],
-        [ /* hooks for internal requests */ ],
+      iff(isProvider('external'),
+        SensorMiddleware.join_device_with_tree,
+        SensorMiddleware.join_sensor_type,
+        SensorMiddleware.populate_values,
+        SensorMiddleware.join_conversion_model_if_present,
+        SensorMiddleware.convert_values_by_conversion_model,
+        SensorMiddleware.sanitize_get_sensor,
+        Validation.dispatch(SensorSchemas._get),
       ),
     ],
     create: [],
