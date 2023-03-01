@@ -18,14 +18,16 @@
 docker-compose -f docker-compose.dev.yml up --build
 ```
 
-3. Create influxdb database
+3. Configure InfluxDB
 
-For v1.x
+Navigate to [http://localhost:8086/](http://localhost:8086/). Pick a username and password which you later need to place inside the `.env` file. Fill in the rest of the information as stated below:
 
-```bash
-docker-compose exec influxdb influx
-create database "dust-staging"
-```
+* `Initial Organization Name`: `dust`
+* `Initial Bucket Name`: `dust`
+
+Next navigate to `Data => API Tokens` and copy the API token for dust to the `.env` file.
+
+Restart the docker containers.
 
 ### Services
 
