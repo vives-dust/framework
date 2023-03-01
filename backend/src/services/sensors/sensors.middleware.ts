@@ -1,4 +1,4 @@
-import { default as HookContext } from '@feathersjs/feathers';
+import { HookContext } from '@feathersjs/feathers';
 import { fastJoin } from 'feathers-hooks-common';
 import { ValueMapper } from '../conversionmodels/converters/value_mapper';
 
