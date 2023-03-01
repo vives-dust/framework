@@ -1,10 +1,9 @@
 import { TreeSchemas } from '../../validation/tree';
 import * as TreeMiddleware from './trees.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
+import { fastJoin, iff, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { set_resource_url } from '../../hooks/resource_url';
-import { require_admin } from '../../hooks/authorization';
 
 export default {
   before: {
@@ -12,12 +11,9 @@ export default {
     find: [],
     get: [],
     create: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          generate_nanoid, 
-          Validation.input(TreeSchemas._create),
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        generate_nanoid, 
+        Validation.input(TreeSchemas._create),
       ),
     ],
     update: [],
@@ -29,35 +25,26 @@ export default {
     all: [],
     find: [
       set_resource_url,
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          TreeMiddleware.sanitize_find_trees,
-          Validation.dispatch(TreeSchemas._find)
-        ],
-        [ /* hooks for internal requests */ ],
+      iff(isProvider('external'),
+        TreeMiddleware.sanitize_find_trees,
+        Validation.dispatch(TreeSchemas._find),
       ),
     ],
     get: [
       set_resource_url,
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          // 2x fastJoin because sensors depends on id's of devices and
-          // we do not want nested objects (which we would get with single fastJoin)
-          fastJoin(TreeMiddleware.tree_resolvers, { devices: true }),
-          fastJoin(TreeMiddleware.tree_resolvers, { sensors_and_their_types: { types: true, device: true } }),
-          TreeMiddleware.sanitize_get_tree,
-          Validation.dispatch(TreeSchemas._get)
-        ],
-        [ /* hooks for internal requests */ ],
+      iff(isProvider('external'),
+        // 2x fastJoin because sensors depends on id's of devices and
+        // we do not want nested objects (which we would get with single fastJoin)
+        fastJoin(TreeMiddleware.tree_resolvers, { devices: true }),       // TODO - Refactor to middleware
+        fastJoin(TreeMiddleware.tree_resolvers, { sensors_and_their_types: { types: true, device: true } }),       // TODO - Refactor to middleware
+        TreeMiddleware.sanitize_get_tree,
+        Validation.dispatch(TreeSchemas._get),
       ),
     ],
     create: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          TreeMiddleware.sanitize_created_tree,
-          Validation.dispatch(TreeSchemas._created)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        TreeMiddleware.sanitize_created_tree,
+        Validation.dispatch(TreeSchemas._created),
       ),
     ],
     update: [],

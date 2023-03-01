@@ -1,5 +1,5 @@
 import { SensorSchemas } from '../../validation/sensor';
-import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
+import { disallow, fastJoin, iff, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
@@ -9,16 +9,15 @@ export default {
   before: {
     all: [],
     find: [],
-    get: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */ ],
-        [ /* hooks for internal requests */ ],
-      ),
+    get: [],
+    create: [
+      disallow('external'),
+      generate_nanoid,
+      Validation.input(SensorSchemas._create),
     ],
-    create: [ generate_nanoid, SensorMiddleware.id_conversion], // ToDo: add input validation
-    update: [],
-    patch: [],
-    remove: []
+    update: [ disallow('external') ],
+    patch: [ disallow('external') ],
+    remove: [ disallow('external') ]
   },
 
   after: {
@@ -30,17 +29,16 @@ export default {
     get: [
       set_resource_url,
       SensorMiddleware.populate_last_value,
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
-          SensorMiddleware.populate_values,
-          SensorMiddleware.sanitize_get_sensor,
-          Validation.dispatch(SensorSchemas._get)
-        ],
-        [ /* hooks for internal requests */ ],
+      iff(isProvider('external'),
+        fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),   // TODO - Move to middleware
+        SensorMiddleware.populate_values,
+        SensorMiddleware.sanitize_get_sensor,
+        Validation.dispatch(SensorSchemas._get),
       ),
     ],
-    create: [],
+    create: [
+      // TODO - Validate outgoing data
+    ],
     update: [],
     patch: [],
     remove: []
