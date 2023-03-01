@@ -3,7 +3,7 @@ import * as local from '@feathersjs/authentication-local';
 import { UserSchemas } from '../../validation/user';
 import * as UserMiddleware from './users.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
-import { disallow, iffElse, isProvider } from 'feathers-hooks-common';
+import { disallow, iff, isProvider } from 'feathers-hooks-common';
 import * as Validation from '../../hooks/validation';
 import { if_admin_else, require_admin } from '../../hooks/authorization';
 // Don't remove this comment. It's needed to format import lines nicely.
@@ -24,32 +24,26 @@ export default {
     ],
     create: [
       hashPassword('password'),
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          generate_nanoid, 
-          Validation.input(UserSchemas._create),
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        generate_nanoid, 
+        Validation.input(UserSchemas._create),
       ),
     ],
     update: [ disallow('external') ],       // We don't support PUT (replacing entity)
     patch: [
       authenticate('jwt'),
       UserMiddleware.protect_user_details,      // Only admin can access other user's details
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          if_admin_else([
-            Validation.input(UserSchemas._patch_with_permissions)
-          ], [
-            Validation.input(UserSchemas._patch)
-          ])
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        if_admin_else([
+          Validation.input(UserSchemas._patch_with_permissions),
+        ], [
+          Validation.input(UserSchemas._patch),
+        ]),
       ),
     ],
     remove: [
       authenticate('jwt'),
-      ...require_admin
+      ...require_admin,
     ]
   },
 
@@ -61,31 +55,22 @@ export default {
     ],
     find: [],   //TODO: Sanitize and validate
     get: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          UserMiddleware.sanitize_user_details,
-          Validation.dispatch(UserSchemas._get)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        UserMiddleware.sanitize_user_details,
+        Validation.dispatch(UserSchemas._get),
       ),
     ],
     create: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          UserMiddleware.sanitize_user_details,
-          Validation.dispatch(UserSchemas._created)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        UserMiddleware.sanitize_user_details,
+        Validation.dispatch(UserSchemas._created),
       ),
     ],
     update: [],
     patch: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          UserMiddleware.sanitize_user_details,
-          Validation.dispatch(UserSchemas._patched)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        UserMiddleware.sanitize_user_details,
+        Validation.dispatch(UserSchemas._patched),
       ),
     ],
     remove: []
