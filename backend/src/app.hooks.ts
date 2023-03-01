@@ -27,6 +27,8 @@ export default {
       iff(  // For the moment we only allow user details to be patched
         context => (context.path === 'users'),
         authenticate('jwt'),
+      ).else(
+        disallow('external')
       ),
     ],
     remove: [ disallow('external') ]
