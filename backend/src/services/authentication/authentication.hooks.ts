@@ -3,7 +3,7 @@
 
 import * as AuthenticationMiddleware from './authentication.middleware';
 import * as Validation from '../../hooks/validation';
-import { iffElse, isProvider,debug } from 'feathers-hooks-common';
+import { iff, isProvider } from 'feathers-hooks-common';
 import { AuthenticationSchemas } from '../../validation/authentication';
 
 export default {
@@ -12,13 +12,10 @@ export default {
     find: [],     // Disabled out-of-the-box
     get: [],      // Disabled out-of-the-box
     create: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          // Called when requesting JWT token
-          Validation.input(AuthenticationSchemas._create),
-          AuthenticationMiddleware.force_mongo_id_usage,
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        // Called when requesting JWT token
+        Validation.input(AuthenticationSchemas._create),
+        AuthenticationMiddleware.force_mongo_id_usage,
       ),
     ],
     update: [],     // Disabled out-of-the-box
@@ -37,23 +34,17 @@ export default {
     find: [],
     get: [],
     create: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          AuthenticationMiddleware.sanitize_authentication_reply,
-          Validation.dispatch(AuthenticationSchemas._created)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        AuthenticationMiddleware.sanitize_authentication_reply,
+        Validation.dispatch(AuthenticationSchemas._created),
       ),
     ],
     update: [],
     patch: [],
     remove: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          AuthenticationMiddleware.sanitize_authentication_reply,
-          Validation.dispatch(AuthenticationSchemas._removed)
-        ],
-        [ /* hooks for internal requests */ ]
+      iff(isProvider('external'),
+        AuthenticationMiddleware.sanitize_authentication_reply,
+        Validation.dispatch(AuthenticationSchemas._removed),
       ),
     ]
   },

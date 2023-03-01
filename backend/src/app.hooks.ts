@@ -13,7 +13,7 @@ export default {
     find: [],
     get: [],
     create: [
-      iff(
+      iff(       // If not authenticating or registering user, require admin
         context => !(
           context.path === 'authentication'      // Get auth token
           || context.path === 'users'            // Register user
