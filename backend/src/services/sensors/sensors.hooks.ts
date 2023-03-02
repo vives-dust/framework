@@ -1,5 +1,5 @@
 import { SensorSchemas } from '../../validation/sensor';
-import { iff, isProvider } from 'feathers-hooks-common';
+import { disallow, fastJoin, iff, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
@@ -11,12 +11,13 @@ export default {
     find: [],
     get: [],
     create: [
+      disallow('external'),
       generate_nanoid,
-      Validation.input(SensorSchemas._create)
+      Validation.input(SensorSchemas._create),
     ],
-    update: [],
-    patch: [],
-    remove: []
+    update: [ disallow('external') ],
+    patch: [ disallow('external') ],
+    remove: [ disallow('external') ]
   },
 
   after: {
@@ -32,16 +33,15 @@ export default {
       set_resource_url,
       SensorMiddleware.populate_last_value,
       iff(isProvider('external'),
-        SensorMiddleware.join_device_with_tree,
-        SensorMiddleware.join_sensor_type,
+        fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),   // TODO - Move to middleware
         SensorMiddleware.populate_values,
-        SensorMiddleware.join_conversion_model_if_present,
-        SensorMiddleware.convert_values_by_conversion_model,
         SensorMiddleware.sanitize_get_sensor,
         Validation.dispatch(SensorSchemas._get),
       ),
     ],
-    create: [],
+    create: [
+      // TODO - Validate outgoing data
+    ],
     update: [],
     patch: [],
     remove: []
