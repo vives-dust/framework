@@ -1,5 +1,6 @@
 import { DeviceSensorSchemas } from '../../validation/device_sensor';
 import * as Validation from '../../hooks/validation';
+import * as DeviceSensorsMiddleware from './devicesensors.middleware';
 
 export default {
   before: {
@@ -7,7 +8,7 @@ export default {
     find: [],
     get: [],
     create: [
-      Validation.input(DeviceSensorSchemas._create)
+      Validation.input(DeviceSensorSchemas._create),
     ],
     update: [],
     patch: [],
@@ -16,9 +17,15 @@ export default {
 
   after: {
     all: [],
-    find: [],
-    get: [],
-    create: [],
+    find: [
+      DeviceSensorsMiddleware.join_devicesensor_with_sensor_type,
+    ],
+    get: [
+      DeviceSensorsMiddleware.join_devicesensor_with_sensor_type,
+    ],
+    create: [
+      // TODO - Validate output !
+    ],
     update: [],
     patch: [],
     remove: []

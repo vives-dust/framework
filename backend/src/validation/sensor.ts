@@ -35,7 +35,6 @@ const SensorDetailsWithValuesSchema = SensorDetailsSchema.keys({
 // Management Schema's
 
 const SensorCreateSchema = Joi.object().keys({
-  _id: MongoObjectIdSchema,
   id: NanoIdSchema.required(),
   sensortype_id: MongoObjectIdSchema.required(),
   name: Joi.string().required(),
