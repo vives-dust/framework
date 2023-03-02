@@ -13,7 +13,7 @@ export default {
     find: [],
     get: [],
     create: [
-      iff(
+      iff(       // If not authenticating or registering user, require admin
         context => !(
           context.path === 'authentication'      // Get auth token
           || context.path === 'users'            // Register user
@@ -23,7 +23,14 @@ export default {
       ),
     ],
     update: [ disallow('external') ],
-    patch: [ disallow('external') ],
+    patch: [
+      iff(  // For the moment we only allow user details to be patched
+        context => (context.path === 'users'),
+        authenticate('jwt'),
+      ).else(
+        disallow('external')
+      ),
+    ],
     remove: [ disallow('external') ]
   },
 
