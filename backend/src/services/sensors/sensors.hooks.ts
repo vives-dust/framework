@@ -1,5 +1,5 @@
 import { SensorSchemas } from '../../validation/sensor';
-import { fastJoin, iffElse, isProvider } from 'feathers-hooks-common';
+import { iff, isProvider } from 'feathers-hooks-common';
 import * as SensorMiddleware from './sensors.middleware';
 import { generate_nanoid } from '../../hooks/nanoid';
 import * as Validation from '../../hooks/validation';
@@ -9,12 +9,7 @@ export default {
   before: {
     all: [],
     find: [],
-    get: [
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */ ],
-        [ /* hooks for internal requests */ ],
-      ),
-    ],
+    get: [],
     create: [
       generate_nanoid,
       Validation.input(SensorSchemas._create)
@@ -29,18 +24,21 @@ export default {
     find: [
       set_resource_url,
       SensorMiddleware.populate_last_value,
+      SensorMiddleware.join_conversion_model_if_present,
+      SensorMiddleware.join_sensor_type,
+      SensorMiddleware.convert_values_by_conversion_model,
     ],
     get: [
       set_resource_url,
       SensorMiddleware.populate_last_value,
-      iffElse(isProvider('external'),
-        [ /* hooks for external requests (rest/socketio/...) */
-          fastJoin(SensorMiddleware.sensor_resolvers, { device_and_tree: { tree: true } , sensor_type: true }),
-          SensorMiddleware.populate_values,
-          SensorMiddleware.sanitize_get_sensor,
-          Validation.dispatch(SensorSchemas._get)
-        ],
-        [ /* hooks for internal requests */ ],
+      iff(isProvider('external'),
+        SensorMiddleware.join_device_with_tree,
+        SensorMiddleware.join_sensor_type,
+        SensorMiddleware.populate_values,
+        SensorMiddleware.join_conversion_model_if_present,
+        SensorMiddleware.convert_values_by_conversion_model,
+        SensorMiddleware.sanitize_get_sensor,
+        Validation.dispatch(SensorSchemas._get),
       ),
     ],
     create: [],
