@@ -12,7 +12,7 @@ export default function (app: Application): Model<any> {
 
   const schema = new Schema({
 
-    type: { type: String, required: true },
+    type: { type: String, required: true },         // TODO - Make unique
     name: { type: String, required: true },
     description: { type: String, required: true },
     image_url: { type: String, required: true },
