@@ -1,0 +1,19 @@
+{
+  "host": "localhost",
+  "port": 3030,
+  "public": "./public/",
+  "origins": [
+    "http://localhost:3030"
+  ],
+  "paginate": {
+    "default": 10,
+    "max": 50
+  },
+  "mongodb_custom": {
+    "host": "localhost",
+    "port": 27017,
+    "database": "test",
+    "root_username": "root",
+    "root_password": "root"
+  }
+}
