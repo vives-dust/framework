@@ -1,23 +1,9 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
-import { hooks as schemaHooks } from '@feathersjs/schema'
-
-import {
-  sensorTypesDataValidator,
-  sensorTypesPatchValidator,
-  sensorTypesQueryValidator,
-  sensorTypesResolver,
-  sensorTypesExternalResolver,
-  sensorTypesDataResolver,
-  sensorTypesPatchResolver,
-  sensorTypesQueryResolver
-} from './sensortypes.schema'
-
 import type { Application } from '../../declarations'
 import { SensorTypesService, getOptions } from './sensortypes.class'
 import { sensorTypesPath, sensorTypesMethods } from './sensortypes.shared'
-import { inject_nano_id } from '../../hooks/inject-nanoid'
-import { set_timestamps } from '../../hooks/timestamps'
+import hooks from './sensortypes.hooks'
 
 export * from './sensortypes.class'
 export * from './sensortypes.schema'
@@ -32,40 +18,7 @@ export const sensorTypes = (app: Application) => {
     events: []
   })
   // Initialize hooks
-  app.service(sensorTypesPath).hooks({
-    around: {
-      all: [
-        schemaHooks.resolveExternal(sensorTypesExternalResolver),
-        schemaHooks.resolveResult(sensorTypesResolver)
-      ]
-    },
-    before: {
-      all: [
-        schemaHooks.validateQuery(sensorTypesQueryValidator),
-        schemaHooks.resolveQuery(sensorTypesQueryResolver)
-      ],
-      find: [],
-      get: [],
-      create: [
-        schemaHooks.validateData(sensorTypesDataValidator),
-        inject_nano_id,
-        set_timestamps,
-        schemaHooks.resolveData(sensorTypesDataResolver)
-      ],
-      patch: [
-        schemaHooks.validateData(sensorTypesPatchValidator),
-        set_timestamps,
-        schemaHooks.resolveData(sensorTypesPatchResolver)
-      ],
-      remove: []
-    },
-    after: {
-      all: []
-    },
-    error: {
-      all: []
-    }
-  })
+  app.service(sensorTypesPath).hooks(hooks)
 }
 
 // Add this service to the service type index
