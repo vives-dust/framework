@@ -41,7 +41,7 @@ export const sensorTypesPatchValidator = getValidator(sensorTypesPatchSchema, da
 export const sensorTypesPatchResolver = resolve<SensorTypes, HookContext>({})
 
 // Schema for allowed query properties
-export const sensorTypesQueryProperties = Type.Pick(sensorTypesSchema, ['_id', 'name'])
+export const sensorTypesQueryProperties = Type.Pick(sensorTypesSchema, ['_id', 'type'])
 export const sensorTypesQuerySchema = Type.Intersect(
   [
     querySyntax(sensorTypesQueryProperties),

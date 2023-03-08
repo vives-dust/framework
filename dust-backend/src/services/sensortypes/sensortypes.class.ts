@@ -21,6 +21,12 @@ export class SensorTypesService<ServiceParams extends Params = SensorTypesParams
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {
     paginate: app.get('paginate'),
-    Model: app.get('mongodbClient').then((db) => db.collection('sensortypes'))
+    Model: app
+      .get('mongodbClient')
+      .then((db) => db.collection('sensortypes'))
+      .then((collection) => {
+        collection.createIndex({ type: 1 }, { unique: true })
+        return collection
+      })
   }
 }
