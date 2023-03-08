@@ -1,18 +1,18 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import { resolve } from '@feathersjs/schema'
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
-import { ObjectIdSchema } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
+import { NanoIdSchema } from '../../typebox-types/nano_id'
 
 // Main data model schema
 export const sensorTypesSchema = Type.Object(
   {
-    _id: ObjectIdSchema(),
+    _id: NanoIdSchema,
     name: Type.String(),
-    type: Type.RegEx(/^[a-z0-9,-]*$/),
+    type: Type.RegEx(/^[a-z0-9-]*$/),
     unit: Type.String(),
     description: Type.String(),
   },

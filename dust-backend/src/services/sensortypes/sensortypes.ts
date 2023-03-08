@@ -16,6 +16,7 @@ import {
 import type { Application } from '../../declarations'
 import { SensorTypesService, getOptions } from './sensortypes.class'
 import { sensorTypesPath, sensorTypesMethods } from './sensortypes.shared'
+import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 export * from './sensortypes.class'
 export * from './sensortypes.schema'
@@ -46,6 +47,7 @@ export const sensorTypes = (app: Application) => {
       get: [],
       create: [
         schemaHooks.validateData(sensorTypesDataValidator),
+        inject_nano_id,
         schemaHooks.resolveData(sensorTypesDataResolver)
       ],
       patch: [
