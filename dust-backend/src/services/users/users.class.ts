@@ -4,18 +4,18 @@ import { MongoDBService } from '@feathersjs/mongodb'
 import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mongodb'
 
 import type { Application } from '../../declarations'
-import type { SensorTypes, SensorTypesData, SensorTypesPatch, SensorTypesQuery } from './sensortypes.schema'
+import type { User, UserData, UserPatch, UserQuery } from './users.schema'
 
-export type { SensorTypes, SensorTypesData, SensorTypesPatch, SensorTypesQuery }
+export type { User, UserData, UserPatch, UserQuery }
 
-export interface SensorTypesParams extends MongoDBAdapterParams<SensorTypesQuery> {}
+export interface UserParams extends MongoDBAdapterParams<UserQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class SensorTypesService<ServiceParams extends Params = SensorTypesParams> extends MongoDBService<
-  SensorTypes,
-  SensorTypesData,
-  SensorTypesParams,
-  SensorTypesPatch
+export class UserService<ServiceParams extends Params = UserParams> extends MongoDBService<
+  User,
+  UserData,
+  UserParams,
+  UserPatch
 > {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
@@ -23,10 +23,10 @@ export const getOptions = (app: Application): MongoDBAdapterOptions => {
     paginate: app.get('paginate'),
     Model: app
       .get('mongodbClient')
-      .then((db) => db.collection('sensortypes'))
-      // Index types and make unique
+      .then((db) => db.collection('users'))
+      // Index emails and make unique
       .then((collection) => {
-        collection.createIndex({ type: 1 }, { unique: true })
+        collection.createIndex({ email: 1 }, { unique: true })
         return collection
       })
   }

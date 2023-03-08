@@ -15,5 +15,24 @@
     "database": "test",
     "root_username": "root",
     "root_password": "root"
+  },
+  "authentication": {
+    "entity": "user",
+    "service": "users",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "usernameField": "email",
+      "passwordField": "password"
+    }
   }
 }

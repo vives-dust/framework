@@ -4,14 +4,17 @@
     "__format": "number"
   },
   "host": "HOSTNAME",
-  "authentication": {
-    "secret": "FEATHERS_SECRET"
-  },
   "mongodb_custom": {
     "host": "MONGODB_HOST",
     "port": "MONGODB_PORT",
     "database": "MONGODB_DATABASE",
     "root_username": "MONGODB_ROOT_USERNAME",
     "root_password": "MONGODB_ROOT_PASSWORD"
+  },
+  "authentication": {
+    "secret": "BACKEND_AUTH_SECRET",
+    "jwtOptions": {
+      "audience": "BACKEND_DOMAIN"
+    }
   }
 }
