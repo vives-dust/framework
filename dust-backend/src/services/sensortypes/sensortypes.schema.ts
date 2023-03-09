@@ -15,6 +15,8 @@ export const sensorTypesSchema = Type.Object(
     type: Type.RegEx(/^[a-z0-9-]*$/),
     unit: Type.String(),
     description: Type.String(),
+    createdAt: Type.String({ format: 'date-time' }),
+    updatedAt: Type.String({ format: 'date-time' }),
   },
   { $id: 'SensorTypes', additionalProperties: false }
 )
@@ -30,15 +32,21 @@ export const sensorTypesDataSchema = Type.Pick(sensorTypesSchema, ['name', 'type
 })
 export type SensorTypesData = Static<typeof sensorTypesDataSchema>
 export const sensorTypesDataValidator = getValidator(sensorTypesDataSchema, dataValidator)
-export const sensorTypesDataResolver = resolve<SensorTypes, HookContext>({})
+export const sensorTypesDataResolver = resolve<SensorTypes, HookContext>({
+  // TODO - Can we generate nano id here? Can't seem to get it to work
+  createdAt: async () => (new Date()).toISOString(),
+  updatedAt: async () => (new Date()).toISOString(),
+})
 
 // Schema for updating existing entries
-export const sensorTypesPatchSchema = Type.Partial(sensorTypesSchema, {
+export const sensorTypesPatchSchema = Type.Partial(Type.Omit(sensorTypesSchema, ['createdAt', 'updatedAt']), {
   $id: 'SensorTypesPatch'
 })
 export type SensorTypesPatch = Static<typeof sensorTypesPatchSchema>
 export const sensorTypesPatchValidator = getValidator(sensorTypesPatchSchema, dataValidator)
-export const sensorTypesPatchResolver = resolve<SensorTypes, HookContext>({})
+export const sensorTypesPatchResolver = resolve<SensorTypes, HookContext>({
+  updatedAt: async () => (new Date()).toISOString(),
+})
 
 // Schema for allowed query properties
 export const sensorTypesQueryProperties = Type.Pick(sensorTypesSchema, ['_id', 'type'])

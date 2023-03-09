@@ -1,9 +1,9 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import { resolve } from '@feathersjs/schema'
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
-import { ObjectIdSchema } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 import { passwordHash } from '@feathersjs/authentication-local'
+import { NanoIdSchema } from '../../typebox-types/nano_id'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
@@ -11,9 +11,12 @@ import { dataValidator, queryValidator } from '../../validators'
 // Main data model schema
 export const userSchema = Type.Object(
   {
-    _id: ObjectIdSchema(),
-    email: Type.String(),
-    password: Type.Optional(Type.String())
+    _id: NanoIdSchema,
+    email: Type.String({ format: 'email' }),
+    password: Type.String(),
+    name: Type.String(),
+    createdAt: Type.String({ format: 'date-time' }),
+    updatedAt: Type.String({ format: 'date-time' }),
   },
   { $id: 'User', additionalProperties: false }
 )
@@ -27,23 +30,27 @@ export const userExternalResolver = resolve<User, HookContext>({
 })
 
 // Schema for creating new entries
-export const userDataSchema = Type.Pick(userSchema, ['email', 'password'], {
+export const userDataSchema = Type.Pick(userSchema, ['email', 'password', 'name'], {
   $id: 'UserData'
 })
 export type UserData = Static<typeof userDataSchema>
 export const userDataValidator = getValidator(userDataSchema, dataValidator)
 export const userDataResolver = resolve<User, HookContext>({
-  password: passwordHash({ strategy: 'local' })
+  // TODO - Can we generate nano id here? Can't seem to get it to work
+  password: passwordHash({ strategy: 'local' }),
+  createdAt: async () => (new Date()).toISOString(),
+  updatedAt: async () => (new Date()).toISOString(),
 })
 
 // Schema for updating existing entries
-export const userPatchSchema = Type.Partial(userSchema, {
+export const userPatchSchema = Type.Partial(Type.Omit(userSchema, ['createdAt', 'updatedAt']), {
   $id: 'UserPatch'
 })
 export type UserPatch = Static<typeof userPatchSchema>
 export const userPatchValidator = getValidator(userPatchSchema, dataValidator)
 export const userPatchResolver = resolve<User, HookContext>({
-  password: passwordHash({ strategy: 'local' })
+  password: passwordHash({ strategy: 'local' }),
+  updatedAt: async () => (new Date()).toISOString(),
 })
 
 // Schema for allowed query properties

@@ -58,6 +58,8 @@
     "@feathersjs/socketio": "^5.0.0",
     "@feathersjs/transport-commons": "^5.0.0",
     "@feathersjs/typebox": "^5.0.0",
+    "feathers-hooks-common": "^7.0.1",
+    "feathers-permissions": "^2.1.4",
     "mongodb": "^5.1.0",
     "nanoid": "^3.0.0",
     "winston": "^3.8.2"

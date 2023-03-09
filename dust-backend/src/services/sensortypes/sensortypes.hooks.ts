@@ -12,7 +12,6 @@ import {
 } from './sensortypes.schema'
 
 import { inject_nano_id } from '../../hooks/inject-nanoid'
-import { set_timestamps } from '../../hooks/timestamps'
 
 export default {
   around: {
@@ -31,12 +30,10 @@ export default {
     create: [
       schemaHooks.validateData(sensorTypesDataValidator),
       inject_nano_id,
-      set_timestamps,
       schemaHooks.resolveData(sensorTypesDataResolver)
     ],
     patch: [
       schemaHooks.validateData(sensorTypesPatchValidator),
-      set_timestamps,
       schemaHooks.resolveData(sensorTypesPatchResolver)
     ],
     remove: []
