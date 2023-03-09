@@ -1,6 +1,6 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
 import { resolve } from '@feathersjs/schema'
-import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
+import { Type, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 import { passwordHash } from '@feathersjs/authentication-local'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
@@ -15,6 +15,7 @@ export const userSchema = Type.Object(
     email: Type.String({ format: 'email' }),
     password: Type.String(),
     name: Type.String(),
+    permissions: Type.Array(StringEnum(['user', 'admin'])),
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },
@@ -40,6 +41,7 @@ export const userDataResolver = resolve<User, HookContext>({
   password: passwordHash({ strategy: 'local' }),
   createdAt: async () => (new Date()).toISOString(),
   updatedAt: async () => (new Date()).toISOString(),
+  permissions: async () => ['user'],
 })
 
 // Schema for updating existing entries
