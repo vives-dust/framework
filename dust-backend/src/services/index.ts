@@ -1,3 +1,4 @@
+import { measurements } from './measurements/measurements'
 import { sensors } from './sensors/sensors'
 import { devices } from './devices/devices'
 import { trees } from './trees/trees'
@@ -9,6 +10,7 @@ import { sensorTypes } from './sensortypes/sensortypes'
 import type { Application } from '../declarations'
 
 export const services = (app: Application) => {
+  app.configure(measurements)
   app.configure(sensors)
   app.configure(devices)
   app.configure(trees)

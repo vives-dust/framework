@@ -7,6 +7,7 @@ import socketio from '@feathersjs/socketio'
 import { configurationValidator } from './configuration'
 import type { Application } from './declarations'
 import { mongodb } from './mongodb'
+import { influxdb } from './influxdb'
 import { authentication } from './authentication'
 import { services } from './services/index'
 import { channels } from './channels'
@@ -35,6 +36,7 @@ app.configure(
 )
 app.configure(channels)
 app.configure(mongodb)
+app.configure(influxdb)
 app.configure(authentication)
 app.configure(services)
 

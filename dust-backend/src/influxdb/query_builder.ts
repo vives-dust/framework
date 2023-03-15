@@ -18,9 +18,7 @@ const periods = {
   'last': { start: '0', every: undefined as any }
 };
 
-// Some helper stuff
-const key_values = Object.values(Period) as string[];   // First half = labels, second half = numerical value
-export const valid_periods = key_values.slice(0, key_values.length/2);
+export const valid_periods : string[] = Object.keys(periods);;
 
 const QueryHelper = {
 

@@ -8,7 +8,7 @@ declare module './declarations' {
   }
 }
 
-export const mongodb = (app: Application) => {
+export const influxdb = (app: Application) => {
   const connectionParams = app.get('influxdb');
 
   const url = `http://${connectionParams.host}:${connectionParams.port}`;
