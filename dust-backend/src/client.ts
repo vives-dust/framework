@@ -4,6 +4,9 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { treesClient } from './services/trees/trees.shared'
+export type { Trees, TreesData, TreesQuery, TreesPatch } from './services/trees/trees.shared'
+
 import { deviceSensorsClient } from './services/devicesensors/devicesensors.shared'
 export type {
   DeviceSensors,
@@ -61,5 +64,6 @@ export const createClient = <Configuration = any>(
   client.configure(userClient)
   client.configure(deviceTypesClient)
   client.configure(deviceSensorsClient)
+  client.configure(treesClient)
   return client
 }
