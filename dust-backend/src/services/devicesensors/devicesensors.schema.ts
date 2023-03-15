@@ -1,6 +1,6 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve } from '@feathersjs/schema'
-import { Type, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
+import { resolve, virtual } from '@feathersjs/schema'
+import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import type { Static } from '@feathersjs/typebox'
 
@@ -28,7 +28,16 @@ export const deviceSensorsSchema = Type.Object(
 )
 export type DeviceSensors = Static<typeof deviceSensorsSchema>
 export const deviceSensorsValidator = getValidator(deviceSensorsSchema, dataValidator)
-export const deviceSensorsResolver = resolve<DeviceSensors, HookContext>({})
+export const deviceSensorsResolver = resolve<DeviceSensors, HookContext>({
+  devicetype: virtual(async (devicesensor, context) => {
+    // Populate the devicetype associated with this devicesensor
+    return context.app.service('devicetypes').get(devicesensor.devicetype_id)
+  }),
+  sensortype: virtual(async (devicesensor, context) => {
+    // Populate the sensortype associated with this devicesensor
+    return context.app.service('sensortypes').get(devicesensor.sensortype_id)
+  })
+})
 
 export const deviceSensorsExternalResolver = resolve<DeviceSensors, HookContext>({})
 
