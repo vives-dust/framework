@@ -37,5 +37,12 @@
   },
   "application": {
     "domain": "http://localhost:3030"
+  },
+  "influxdb": {
+    "host": "localhost",
+    "port": "8086",
+    "bucket": "dust",
+    "org": "dust",
+    "token": "please_insert_your_token_here"
   }
 }

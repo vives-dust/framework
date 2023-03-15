@@ -19,5 +19,12 @@
   },
   "application": {
     "domain": "BACKEND_API_URL"
+  },
+  "influxdb": {
+    "host": "INFLUXDB_HOST",
+    "port": "INFLUXDB_PORT",
+    "bucket": "INFLUXDB_BUCKET",
+    "org": "INFLUXDB_ORG",
+    "token": "INFLUXDB_TOKEN"
   }
 }

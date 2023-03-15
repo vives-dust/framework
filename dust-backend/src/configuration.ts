@@ -24,6 +24,15 @@ export const configurationSchema = Type.Intersect([
       domain: Type.String(),
     }),
   }),
+  Type.Object({
+    influxdb: Type.Object({
+      host: Type.String(),
+      port: Type.Union([Type.String(), Type.Number()]),
+      bucket: Type.String(),
+      org: Type.String(),
+      token: Type.String(),
+    })
+  }),
 ])
 
 export type ApplicationConfiguration = Static<typeof configurationSchema>
