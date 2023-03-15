@@ -25,7 +25,7 @@ export const devicesSchema = Type.Object(
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
     // Auto-generated virtual fields
-    device_url: Type.String(),
+    device_url: Type.String({ format: 'uri' }),
     // Associated Data
     tree: Type.Ref(treesSchema),
     devicetype: Type.Ref(deviceTypesSchema),

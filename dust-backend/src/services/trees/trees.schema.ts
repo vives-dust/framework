@@ -20,7 +20,7 @@ export const treesSchema = Type.Object(
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
     // Auto-generated virtual fields
-    tree_url: Type.String(),
+    tree_url: Type.String({ format: 'uri' }),
   },
   { $id: 'Trees', additionalProperties: false }
 )
