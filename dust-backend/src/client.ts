@@ -4,6 +4,14 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { deviceSensorsClient } from './services/devicesensors/devicesensors.shared'
+export type {
+  DeviceSensors,
+  DeviceSensorsData,
+  DeviceSensorsQuery,
+  DeviceSensorsPatch
+} from './services/devicesensors/devicesensors.shared'
+
 import { deviceTypesClient } from './services/devicetypes/devicetypes.shared'
 export type {
   DeviceTypes,
@@ -52,5 +60,6 @@ export const createClient = <Configuration = any>(
   client.configure(sensorTypesClient)
   client.configure(userClient)
   client.configure(deviceTypesClient)
+  client.configure(deviceSensorsClient)
   return client
 }
