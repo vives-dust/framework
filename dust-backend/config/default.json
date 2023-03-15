@@ -34,5 +34,8 @@
       "usernameField": "email",
       "passwordField": "password"
     }
+  },
+  "application": {
+    "domain": "http://localhost:3030"
   }
 }

@@ -16,5 +16,8 @@
     "jwtOptions": {
       "audience": "BACKEND_DOMAIN"
     }
+  },
+  "application": {
+    "domain": "BACKEND_API_URL"
   }
 }

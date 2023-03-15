@@ -1,5 +1,5 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve } from '@feathersjs/schema'
+import { resolve, virtual } from '@feathersjs/schema'
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import type { Static } from '@feathersjs/typebox'
@@ -16,16 +16,21 @@ export const treesSchema = Type.Object(
     description: Type.String(),
     location: LocationSchema,
     image_url: Type.String(),
+    // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
-    // Generated Fields
+    // Auto-generated virtual fields
     tree_url: Type.String(),
   },
   { $id: 'Trees', additionalProperties: false }
 )
 export type Trees = Static<typeof treesSchema>
 export const treesValidator = getValidator(treesSchema, dataValidator)
-export const treesResolver = resolve<Trees, HookContext>({})
+export const treesResolver = resolve<Trees, HookContext>({
+  tree_url: virtual(async (tree, context) => {
+    return `${context.app.get('application').domain}/${context.path}/${tree._id}`
+  })
+})
 
 export const treesExternalResolver = resolve<Trees, HookContext>({})
 

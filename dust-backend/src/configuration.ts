@@ -19,6 +19,11 @@ export const configurationSchema = Type.Intersect([
       root_password: Type.String(),
     })
   }),
+  Type.Object({
+    application: Type.Object({
+      domain: Type.String(),
+    }),
+  }),
 ])
 
 export type ApplicationConfiguration = Static<typeof configurationSchema>
