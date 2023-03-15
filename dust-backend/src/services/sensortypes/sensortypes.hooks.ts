@@ -1,4 +1,5 @@
 import { hooks as schemaHooks } from '@feathersjs/schema'
+import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
   sensorTypesDataValidator,
@@ -10,8 +11,6 @@ import {
   sensorTypesPatchResolver,
   sensorTypesQueryResolver
 } from './sensortypes.schema'
-
-import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 export default {
   around: {

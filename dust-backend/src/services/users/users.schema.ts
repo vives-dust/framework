@@ -15,7 +15,8 @@ export const userSchema = Type.Object(
     email: Type.String({ format: 'email' }),
     password: Type.String(),
     name: Type.String(),
-    permissions: Type.Array(StringEnum(['user', 'admin'])),
+    // TODO - Later we should replace role with permissions like can:create, can:update, ....
+    role: StringEnum(['user', 'admin']),
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },
@@ -41,7 +42,7 @@ export const userDataResolver = resolve<User, HookContext>({
   password: passwordHash({ strategy: 'local' }),
   createdAt: async () => (new Date()).toISOString(),
   updatedAt: async () => (new Date()).toISOString(),
-  permissions: async () => ['user'],
+  role: async () => 'user',
 })
 
 // Schema for updating existing entries
