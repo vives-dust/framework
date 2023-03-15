@@ -19,8 +19,10 @@ export const deviceSensorsSchema = Type.Object(
     sensortype_id: NanoIdSchema,
     data_source: DataSourceSpecSchema,
     meta: MetaSchema,
+    // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
+    // Associated Data
     devicetype: Type.Ref(deviceTypesSchema),
     sensortype: Type.Ref(sensorTypesSchema),
   },
