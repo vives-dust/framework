@@ -29,7 +29,11 @@ export type ConversionModel = Static<typeof conversionModelSchema>
 export const conversionModelValidator = getValidator(conversionModelSchema, dataValidator)
 export const conversionModelResolver = resolve<ConversionModel, HookContext>({})
 
-export const conversionModelExternalResolver = resolve<ConversionModel, HookContext>({})
+// Sanitize data for external use
+export const conversionModelExternalResolver = resolve<ConversionModel, HookContext>({
+  createdAt: async () => undefined,
+  updatedAt: async () => undefined,
+})
 
 // Schema for creating new entries
 export const conversionModelDataSchema = Type.Pick(conversionModelSchema,
