@@ -2,38 +2,38 @@ import { hooks as schemaHooks } from '@feathersjs/schema'
 import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
-  conversionModelsDataValidator,
-  conversionModelsPatchValidator,
-  conversionModelsQueryValidator,
-  conversionModelsResolver,
-  conversionModelsExternalResolver,
-  conversionModelsDataResolver,
-  conversionModelsPatchResolver,
-  conversionModelsQueryResolver
+  conversionModelDataValidator,
+  conversionModelPatchValidator,
+  conversionModelQueryValidator,
+  conversionModelResolver,
+  conversionModelExternalResolver,
+  conversionModelDataResolver,
+  conversionModelPatchResolver,
+  conversionModelQueryResolver
 } from './conversionmodels.schema'
 
 export default {
   around: {
     all: [
-      schemaHooks.resolveExternal(conversionModelsExternalResolver),
-      schemaHooks.resolveResult(conversionModelsResolver)
+      schemaHooks.resolveExternal(conversionModelExternalResolver),
+      schemaHooks.resolveResult(conversionModelResolver)
     ]
   },
   before: {
     all: [
-      schemaHooks.validateQuery(conversionModelsQueryValidator),
-      schemaHooks.resolveQuery(conversionModelsQueryResolver)
+      schemaHooks.validateQuery(conversionModelQueryValidator),
+      schemaHooks.resolveQuery(conversionModelQueryResolver)
     ],
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(conversionModelsDataValidator),
+      schemaHooks.validateData(conversionModelDataValidator),
       inject_nano_id,
-      schemaHooks.resolveData(conversionModelsDataResolver)
+      schemaHooks.resolveData(conversionModelDataResolver)
     ],
     patch: [
-      schemaHooks.validateData(conversionModelsPatchValidator),
-      schemaHooks.resolveData(conversionModelsPatchResolver)
+      schemaHooks.validateData(conversionModelPatchValidator),
+      schemaHooks.resolveData(conversionModelPatchResolver)
     ],
     remove: []
   },

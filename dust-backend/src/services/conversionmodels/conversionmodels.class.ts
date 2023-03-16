@@ -5,25 +5,20 @@ import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mo
 
 import type { Application } from '../../declarations'
 import type {
-  ConversionModels,
-  ConversionModelsData,
-  ConversionModelsPatch,
-  ConversionModelsQuery
+  ConversionModel,
+  ConversionModelData,
+  ConversionModelPatch,
+  ConversionModelQuery
 } from './conversionmodels.schema'
 
-export type { ConversionModels, ConversionModelsData, ConversionModelsPatch, ConversionModelsQuery }
+export type { ConversionModel, ConversionModelData, ConversionModelPatch, ConversionModelQuery }
 
-export interface ConversionModelsParams extends MongoDBAdapterParams<ConversionModelsQuery> {}
+export interface ConversionModelParams extends MongoDBAdapterParams<ConversionModelQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class ConversionModelsService<
-  ServiceParams extends Params = ConversionModelsParams
-> extends MongoDBService<
-  ConversionModels,
-  ConversionModelsData,
-  ConversionModelsParams,
-  ConversionModelsPatch
-> {}
+export class ConversionModelService<
+  ServiceParams extends Params = ConversionModelParams
+> extends MongoDBService<ConversionModel, ConversionModelData, ConversionModelParams, ConversionModelPatch> {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {

@@ -8,7 +8,7 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 
 // Main data model schema
-export const conversionModelsSchema = Type.Object(
+export const conversionModelSchema = Type.Object(
   {
     _id: NanoIdSchema,
     name: Type.String(),
@@ -23,45 +23,45 @@ export const conversionModelsSchema = Type.Object(
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },
-  { $id: 'ConversionModels', additionalProperties: false }
+  { $id: 'ConversionModel', additionalProperties: false }
 )
-export type ConversionModels = Static<typeof conversionModelsSchema>
-export const conversionModelsValidator = getValidator(conversionModelsSchema, dataValidator)
-export const conversionModelsResolver = resolve<ConversionModels, HookContext>({})
+export type ConversionModel = Static<typeof conversionModelSchema>
+export const conversionModelValidator = getValidator(conversionModelSchema, dataValidator)
+export const conversionModelResolver = resolve<ConversionModel, HookContext>({})
 
-export const conversionModelsExternalResolver = resolve<ConversionModels, HookContext>({})
+export const conversionModelExternalResolver = resolve<ConversionModel, HookContext>({})
 
 // Schema for creating new entries
-export const conversionModelsDataSchema = Type.Pick(conversionModelsSchema,
+export const conversionModelDataSchema = Type.Pick(conversionModelSchema,
   ['name', 'description', 'input_unit', 'output_unit', 'samples'], {
-  $id: 'ConversionModelsData'
+  $id: 'ConversionModelData'
 })
-export type ConversionModelsData = Static<typeof conversionModelsDataSchema>
-export const conversionModelsDataValidator = getValidator(conversionModelsDataSchema, dataValidator)
-export const conversionModelsDataResolver = resolve<ConversionModels, HookContext>({
+export type ConversionModelData = Static<typeof conversionModelDataSchema>
+export const conversionModelDataValidator = getValidator(conversionModelDataSchema, dataValidator)
+export const conversionModelDataResolver = resolve<ConversionModel, HookContext>({
   // TODO - Can we generate nano id here? Can't seem to get it to work
   createdAt: async () => (new Date()).toISOString(),
   updatedAt: async () => (new Date()).toISOString(),
 })
 
 // Schema for updating existing entries
-export const conversionModelsPatchSchema = Type.Partial(Type.Omit(conversionModelsSchema, ['createdAt', 'updatedAt']), {
-  $id: 'ConversionModelsPatch'
+export const conversionModelPatchSchema = Type.Partial(Type.Omit(conversionModelSchema, ['createdAt', 'updatedAt']), {
+  $id: 'ConversionModelPatch'
 })
-export type ConversionModelsPatch = Static<typeof conversionModelsPatchSchema>
-export const conversionModelsPatchValidator = getValidator(conversionModelsPatchSchema, dataValidator)
-export const conversionModelsPatchResolver = resolve<ConversionModels, HookContext>({})
+export type ConversionModelPatch = Static<typeof conversionModelPatchSchema>
+export const conversionModelPatchValidator = getValidator(conversionModelPatchSchema, dataValidator)
+export const conversionModelPatchResolver = resolve<ConversionModel, HookContext>({})
 
 // Schema for allowed query properties
-export const conversionModelsQueryProperties = Type.Pick(conversionModelsSchema, ['_id'])
-export const conversionModelsQuerySchema = Type.Intersect(
+export const conversionModelQueryProperties = Type.Pick(conversionModelSchema, ['_id'])
+export const conversionModelQuerySchema = Type.Intersect(
   [
-    querySyntax(conversionModelsQueryProperties),
+    querySyntax(conversionModelQueryProperties),
     // Add additional query properties here
     Type.Object({}, { additionalProperties: false })
   ],
   { additionalProperties: false }
 )
-export type ConversionModelsQuery = Static<typeof conversionModelsQuerySchema>
-export const conversionModelsQueryValidator = getValidator(conversionModelsQuerySchema, queryValidator)
-export const conversionModelsQueryResolver = resolve<ConversionModelsQuery, HookContext>({})
+export type ConversionModelQuery = Static<typeof conversionModelQuerySchema>
+export const conversionModelQueryValidator = getValidator(conversionModelQuerySchema, queryValidator)
+export const conversionModelQueryResolver = resolve<ConversionModelQuery, HookContext>({})
