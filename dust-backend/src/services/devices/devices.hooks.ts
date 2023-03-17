@@ -1,27 +1,26 @@
 import { HookContext } from '@feathersjs/feathers';
 import { hooks as schemaHooks } from '@feathersjs/schema'
-import { debug } from 'feathers-hooks-common';
-import { inject_nano_id } from '../../hooks/inject-nanoid'
+import { debug, disallow } from 'feathers-hooks-common';
 
 import {
   deviceDataValidator,
+  nanoIdDataResolver,
+  timestampsDataResolver,
   devicePatchValidator,
   deviceQueryValidator,
-  deviceResolver,
+  deviceResultResolver,
   deviceExternalResolver,
-  deviceTypeResolver,
-  deviceTreeResolver,
-  deviceDataResolver,
-  devicePatchResolver,
-  deviceQueryResolver,
-  deviceTypeResultResolver
+  deviceTypeGenericResolver,
+  treeGenericResolver,
+  deviceTypeIdDataResolver,
+  deviceQueryResolver
 } from './devices.schema'
 
 export default {
   around: {
     all: [
       schemaHooks.resolveExternal(deviceExternalResolver), 
-      schemaHooks.resolveResult(deviceTypeResultResolver, deviceResolver)
+      schemaHooks.resolveResult(deviceTypeGenericResolver, deviceResultResolver)
     ]
   },
   before: {
@@ -32,15 +31,21 @@ export default {
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(deviceDataValidator), 
-      inject_nano_id,
-      // Resolvers are run in sequence
-      schemaHooks.resolveData(deviceTypeResolver, deviceTreeResolver, deviceDataResolver),
-      // debug('Is the device resolved run here ?'),
+      schemaHooks.validateData(deviceDataValidator),        // 1. Validate the data coming from the user
+      schemaHooks.resolveData(
+        nanoIdDataResolver,             // 2. Inject a NanoID as _id
+        deviceTypeGenericResolver,      // 3. Populate DeviceType association based on the user provided name
+        treeGenericResolver,            // 4. Populate Tree association
+        deviceTypeIdDataResolver,       // 5. Set the DeviceType ID based on the populated association
+        timestampsDataResolver          // 6. Set timestamps
+      ), 
+      // 7. resolveResult providers are run next
+      // 8. resolveExternal providers are run next
     ],
     patch: [
-      schemaHooks.validateData(devicePatchValidator), 
-      schemaHooks.resolveData(devicePatchResolver)
+      disallow('external'),       // TODO - Fix the patching of external devices
+      // schemaHooks.validateData(devicePatchValidator), 
+      // schemaHooks.resolveData(devicePatchResolver)
     ],
     remove: []
   },
