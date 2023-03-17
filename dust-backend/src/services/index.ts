@@ -1,5 +1,6 @@
 import { measurements } from './measurements/measurements'
 import { sensors } from './sensors/sensors'
+import { conversionModel } from './conversionmodels/conversionmodels'
 import { devices } from './devices/devices'
 import { trees } from './trees/trees'
 import { deviceSensors } from './devicesensors/devicesensors'
@@ -12,6 +13,7 @@ import type { Application } from '../declarations'
 export const services = (app: Application) => {
   app.configure(measurements)
   app.configure(sensors)
+  app.configure(conversionModel)
   app.configure(devices)
   app.configure(trees)
   app.configure(deviceSensors)

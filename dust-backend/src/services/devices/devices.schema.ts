@@ -57,7 +57,11 @@ export const devicesDataSchema = Type.Pick(devicesSchema,
 })
 export type DevicesData = Static<typeof devicesDataSchema>
 export const devicesDataValidator = getValidator(devicesDataSchema, dataValidator)
-export const devicesDataResolver = resolve<Devices, HookContext>({})
+export const devicesDataResolver = resolve<Devices, HookContext>({
+  // TODO - Can we generate nano id here? Can't seem to get it to work
+  createdAt: async () => (new Date()).toISOString(),
+  updatedAt: async () => (new Date()).toISOString(),
+})
 
 // Schema for updating existing entries
 export const devicesPatchSchema = Type.Partial(Type.Omit(devicesSchema, ['createdAt', 'updatedAt']), {

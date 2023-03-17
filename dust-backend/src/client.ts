@@ -12,6 +12,13 @@ export type {
 
 import { sensorsClient } from './services/sensors/sensors.shared'
 export type { Sensors, SensorsData, SensorsQuery, SensorsPatch } from './services/sensors/sensors.shared'
+import { conversionModelClient } from './services/conversionmodels/conversionmodels.shared'
+export type {
+  ConversionModel,
+  ConversionModelData,
+  ConversionModelQuery,
+  ConversionModelPatch
+} from './services/conversionmodels/conversionmodels.shared'
 
 import { devicesClient } from './services/devices/devices.shared'
 export type { Devices, DevicesData, DevicesQuery, DevicesPatch } from './services/devices/devices.shared'
@@ -80,5 +87,6 @@ export const createClient = <Configuration = any>(
   client.configure(devicesClient)
   client.configure(sensorsClient)
   client.configure(measurementsClient)
+  client.configure(conversionModelClient)
   return client
 }
