@@ -8,21 +8,21 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 
 // Main data model schema
-export const measurementsSchema = Type.Object(
+export const measurementSchema = Type.Object(
   {
     value: Type.Number(),
     time: Type.String({ format: 'date-time' }),
   },
-  { $id: 'Measurements', additionalProperties: false }
+  { $id: 'Measurement', additionalProperties: false }
 )
-export type Measurements = Static<typeof measurementsSchema>
-export const measurementsValidator = getValidator(measurementsSchema, dataValidator)
-export const measurementsResolver = resolve<Measurements, HookContext>({})
+export type Measurement = Static<typeof measurementSchema>
+export const measurementValidator = getValidator(measurementSchema, dataValidator)
+export const measurementResolver = resolve<Measurement, HookContext>({})
 
-export const measurementsExternalResolver = resolve<Measurements, HookContext>({})
+export const measurementExternalResolver = resolve<Measurement, HookContext>({})
 
 // Schema for allowed query properties
-export const measurementsQueryProperties = Type.Object(
+export const measurementQueryProperties = Type.Object(
   {
     // TODO - Should probable be revised.
     // For the moment not a problem since it's only for internal use
@@ -41,14 +41,14 @@ export const measurementsQueryProperties = Type.Object(
   },
   { $id: 'MeasurementsQueryProperties', additionalProperties: false }
 )
-export const measurementsQuerySchema = Type.Intersect(
+export const measurementQuerySchema = Type.Intersect(
   [
-    querySyntax(measurementsQueryProperties),
+    querySyntax(measurementQueryProperties),
     // Add additional query properties here
     Type.Object({}, { additionalProperties: false })
   ],
   { additionalProperties: false }
 )
-export type MeasurementsQuery = Static<typeof measurementsQuerySchema>
-export const measurementsQueryValidator = getValidator(measurementsQuerySchema, queryValidator)
-export const measurementsQueryResolver = resolve<MeasurementsQuery, HookContext>({})
+export type MeasurementQuery = Static<typeof measurementQuerySchema>
+export const measurementQueryValidator = getValidator(measurementQuerySchema, queryValidator)
+export const measurementQueryResolver = resolve<MeasurementQuery, HookContext>({})

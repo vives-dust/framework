@@ -4,18 +4,18 @@ import { MongoDBService } from '@feathersjs/mongodb'
 import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mongodb'
 
 import type { Application } from '../../declarations'
-import type { Trees, TreesData, TreesPatch, TreesQuery } from './trees.schema'
+import type { Tree, TreeData, TreePatch, TreeQuery } from './trees.schema'
 
-export type { Trees, TreesData, TreesPatch, TreesQuery }
+export type { Tree, TreeData, TreePatch, TreeQuery }
 
-export interface TreesParams extends MongoDBAdapterParams<TreesQuery> {}
+export interface TreeParams extends MongoDBAdapterParams<TreeQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class TreesService<ServiceParams extends Params = TreesParams> extends MongoDBService<
-  Trees,
-  TreesData,
-  TreesParams,
-  TreesPatch
+export class TreeService<ServiceParams extends Params = TreeParams> extends MongoDBService<
+  Tree,
+  TreeData,
+  TreeParams,
+  TreePatch
 > {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {

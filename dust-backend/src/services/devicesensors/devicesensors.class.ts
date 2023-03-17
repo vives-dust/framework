@@ -5,29 +5,27 @@ import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mo
 
 import type { Application } from '../../declarations'
 import type {
-  DeviceSensors,
-  DeviceSensorsData,
-  DeviceSensorsPatch,
-  DeviceSensorsQuery
+  DeviceSensor,
+  DeviceSensorData,
+  DeviceSensorPatch,
+  DeviceSensorQuery
 } from './devicesensors.schema'
 
-export type { DeviceSensors, DeviceSensorsData, DeviceSensorsPatch, DeviceSensorsQuery }
+export type { DeviceSensor, DeviceSensorData, DeviceSensorPatch, DeviceSensorQuery }
 
-export interface DeviceSensorsParams extends MongoDBAdapterParams<DeviceSensorsQuery> {}
+export interface DeviceSensorParams extends MongoDBAdapterParams<DeviceSensorQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class DeviceSensorsService<ServiceParams extends Params = DeviceSensorsParams> extends MongoDBService<
-  DeviceSensors,
-  DeviceSensorsData,
-  DeviceSensorsParams,
-  DeviceSensorsPatch
+export class DeviceSensorService<ServiceParams extends Params = DeviceSensorParams> extends MongoDBService<
+  DeviceSensor,
+  DeviceSensorData,
+  DeviceSensorParams,
+  DeviceSensorPatch
 > {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
   return {
     paginate: app.get('paginate'),
-    Model: app
-    .get('mongodbClient')
-    .then((db) => db.collection('devicesensors'))
+    Model: app.get('mongodbClient').then((db) => db.collection('devicesensors'))
   }
 }

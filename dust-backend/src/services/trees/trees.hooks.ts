@@ -2,38 +2,38 @@ import { hooks as schemaHooks } from '@feathersjs/schema'
 import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
-  treesDataValidator,
-  treesPatchValidator,
-  treesQueryValidator,
-  treesResolver,
-  treesExternalResolver,
-  treesDataResolver,
-  treesPatchResolver,
-  treesQueryResolver
+  treeDataValidator,
+  treePatchValidator,
+  treeQueryValidator,
+  treeResolver,
+  treeExternalResolver,
+  treeDataResolver,
+  treePatchResolver,
+  treeQueryResolver
 } from './trees.schema'
 
 export default {
   around: {
     all: [
-      schemaHooks.resolveExternal(treesExternalResolver),
-      schemaHooks.resolveResult(treesResolver)
+      schemaHooks.resolveExternal(treeExternalResolver),
+      schemaHooks.resolveResult(treeResolver)
     ]
   },
   before: {
     all: [
-      schemaHooks.validateQuery(treesQueryValidator),
-      schemaHooks.resolveQuery(treesQueryResolver)
+      schemaHooks.validateQuery(treeQueryValidator),
+      schemaHooks.resolveQuery(treeQueryResolver)
     ],
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(treesDataValidator),
+      schemaHooks.validateData(treeDataValidator),
       inject_nano_id,
-      schemaHooks.resolveData(treesDataResolver)
+      schemaHooks.resolveData(treeDataResolver)
     ],
     patch: [
-      schemaHooks.validateData(treesPatchValidator),
-      schemaHooks.resolveData(treesPatchResolver)
+      schemaHooks.validateData(treePatchValidator),
+      schemaHooks.resolveData(treePatchResolver)
     ],
     remove: []
   },

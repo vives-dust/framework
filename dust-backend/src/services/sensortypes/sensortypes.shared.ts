@@ -2,35 +2,35 @@
 import type { Params } from '@feathersjs/feathers'
 import type { ClientApplication } from '../../client'
 import type {
-  SensorTypes,
-  SensorTypesData,
-  SensorTypesPatch,
-  SensorTypesQuery,
-  SensorTypesService
+  SensorType,
+  SensorTypeData,
+  SensorTypePatch,
+  SensorTypeQuery,
+  SensorTypeService
 } from './sensortypes.class'
 
-export type { SensorTypes, SensorTypesData, SensorTypesPatch, SensorTypesQuery }
+export type { SensorType, SensorTypeData, SensorTypePatch, SensorTypeQuery }
 
-export type SensorTypesClientService = Pick<
-  SensorTypesService<Params<SensorTypesQuery>>,
-  (typeof sensorTypesMethods)[number]
+export type SensorTypeClientService = Pick<
+  SensorTypeService<Params<SensorTypeQuery>>,
+  (typeof sensorTypeMethods)[number]
 >
 
-export const sensorTypesPath = 'sensortypes'
+export const sensorTypePath = 'sensortypes'
 
-export const sensorTypesMethods = ['find', 'get', 'create', 'patch', 'remove'] as const
+export const sensorTypeMethods = ['find', 'get', 'create', 'patch', 'remove'] as const
 
-export const sensorTypesClient = (client: ClientApplication) => {
+export const sensorTypeClient = (client: ClientApplication) => {
   const connection = client.get('connection')
 
-  client.use(sensorTypesPath, connection.service(sensorTypesPath), {
-    methods: sensorTypesMethods
+  client.use(sensorTypePath, connection.service(sensorTypePath), {
+    methods: sensorTypeMethods
   })
 }
 
 // Add this service to the client service type index
 declare module '../../client' {
   interface ServiceTypes {
-    [sensorTypesPath]: SensorTypesClientService
+    [sensorTypePath]: SensorTypeClientService
   }
 }

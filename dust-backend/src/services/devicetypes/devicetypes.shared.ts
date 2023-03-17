@@ -2,35 +2,35 @@
 import type { Params } from '@feathersjs/feathers'
 import type { ClientApplication } from '../../client'
 import type {
-  DeviceTypes,
-  DeviceTypesData,
-  DeviceTypesPatch,
-  DeviceTypesQuery,
-  DeviceTypesService
+  DeviceType,
+  DeviceTypeData,
+  DeviceTypePatch,
+  DeviceTypeQuery,
+  DeviceTypeService
 } from './devicetypes.class'
 
-export type { DeviceTypes, DeviceTypesData, DeviceTypesPatch, DeviceTypesQuery }
+export type { DeviceType, DeviceTypeData, DeviceTypePatch, DeviceTypeQuery }
 
-export type DeviceTypesClientService = Pick<
-  DeviceTypesService<Params<DeviceTypesQuery>>,
-  (typeof deviceTypesMethods)[number]
+export type DeviceTypeClientService = Pick<
+  DeviceTypeService<Params<DeviceTypeQuery>>,
+  (typeof deviceTypeMethods)[number]
 >
 
-export const deviceTypesPath = 'devicetypes'
+export const deviceTypePath = 'devicetypes'
 
-export const deviceTypesMethods = ['find', 'get', 'create', 'patch', 'remove'] as const
+export const deviceTypeMethods = ['find', 'get', 'create', 'patch', 'remove'] as const
 
-export const deviceTypesClient = (client: ClientApplication) => {
+export const deviceTypeClient = (client: ClientApplication) => {
   const connection = client.get('connection')
 
-  client.use(deviceTypesPath, connection.service(deviceTypesPath), {
-    methods: deviceTypesMethods
+  client.use(deviceTypePath, connection.service(deviceTypePath), {
+    methods: deviceTypeMethods
   })
 }
 
 // Add this service to the client service type index
 declare module '../../client' {
   interface ServiceTypes {
-    [deviceTypesPath]: DeviceTypesClientService
+    [deviceTypePath]: DeviceTypeClientService
   }
 }

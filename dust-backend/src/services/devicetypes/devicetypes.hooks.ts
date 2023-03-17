@@ -2,38 +2,38 @@ import { hooks as schemaHooks } from '@feathersjs/schema'
 import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
-  deviceTypesDataValidator,
-  deviceTypesPatchValidator,
-  deviceTypesQueryValidator,
-  deviceTypesResolver,
-  deviceTypesExternalResolver,
-  deviceTypesDataResolver,
-  deviceTypesPatchResolver,
-  deviceTypesQueryResolver
+  deviceTypeDataValidator,
+  deviceTypePatchValidator,
+  deviceTypeQueryValidator,
+  deviceTypeResolver,
+  deviceTypeExternalResolver,
+  deviceTypeDataResolver,
+  deviceTypePatchResolver,
+  deviceTypeQueryResolver
 } from './devicetypes.schema'
 
 export default {
   around: {
     all: [
-      schemaHooks.resolveExternal(deviceTypesExternalResolver),
-      schemaHooks.resolveResult(deviceTypesResolver)
+      schemaHooks.resolveExternal(deviceTypeExternalResolver),
+      schemaHooks.resolveResult(deviceTypeResolver)
     ]
   },
   before: {
     all: [
-      schemaHooks.validateQuery(deviceTypesQueryValidator),
-      schemaHooks.resolveQuery(deviceTypesQueryResolver)
+      schemaHooks.validateQuery(deviceTypeQueryValidator),
+      schemaHooks.resolveQuery(deviceTypeQueryResolver)
     ],
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(deviceTypesDataValidator),
+      schemaHooks.validateData(deviceTypeDataValidator),
       inject_nano_id,
-      schemaHooks.resolveData(deviceTypesDataResolver)
+      schemaHooks.resolveData(deviceTypeDataResolver)
     ],
     patch: [
-      schemaHooks.validateData(deviceTypesPatchValidator),
-      schemaHooks.resolveData(deviceTypesPatchResolver)
+      schemaHooks.validateData(deviceTypePatchValidator),
+      schemaHooks.resolveData(deviceTypePatchResolver)
     ],
     remove: []
   },

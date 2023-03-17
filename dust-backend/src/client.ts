@@ -4,14 +4,36 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
-import { measurementsClient } from './services/measurements/measurements.shared'
+import { sensorClient } from './services/sensors/sensors.shared'
+export type { Sensor, SensorData, SensorQuery, SensorPatch } from './services/sensors/sensors.shared'
+
+import { measurementClient } from './services/measurements/measurements.shared'
 export type {
-  Measurements,
-  MeasurementsQuery,
+  Measurement,
+  MeasurementData,
+  MeasurementQuery,
+  MeasurementPatch
 } from './services/measurements/measurements.shared'
 
-import { sensorsClient } from './services/sensors/sensors.shared'
-export type { Sensors, SensorsData, SensorsQuery, SensorsPatch } from './services/sensors/sensors.shared'
+import { deviceTypeClient } from './services/devicetypes/devicetypes.shared'
+export type {
+  DeviceType,
+  DeviceTypeData,
+  DeviceTypeQuery,
+  DeviceTypePatch
+} from './services/devicetypes/devicetypes.shared'
+
+import { deviceSensorClient } from './services/devicesensors/devicesensors.shared'
+export type {
+  DeviceSensor,
+  DeviceSensorData,
+  DeviceSensorQuery,
+  DeviceSensorPatch
+} from './services/devicesensors/devicesensors.shared'
+
+import { deviceClient } from './services/devices/devices.shared'
+export type { Device, DeviceData, DeviceQuery, DevicePatch } from './services/devices/devices.shared'
+
 import { conversionModelClient } from './services/conversionmodels/conversionmodels.shared'
 export type {
   ConversionModel,
@@ -20,37 +42,18 @@ export type {
   ConversionModelPatch
 } from './services/conversionmodels/conversionmodels.shared'
 
-import { devicesClient } from './services/devices/devices.shared'
-export type { Devices, DevicesData, DevicesQuery, DevicesPatch } from './services/devices/devices.shared'
-
-import { treesClient } from './services/trees/trees.shared'
-export type { Trees, TreesData, TreesQuery, TreesPatch } from './services/trees/trees.shared'
-
-import { deviceSensorsClient } from './services/devicesensors/devicesensors.shared'
-export type {
-  DeviceSensors,
-  DeviceSensorsData,
-  DeviceSensorsQuery,
-  DeviceSensorsPatch
-} from './services/devicesensors/devicesensors.shared'
-
-import { deviceTypesClient } from './services/devicetypes/devicetypes.shared'
-export type {
-  DeviceTypes,
-  DeviceTypesData,
-  DeviceTypesQuery,
-  DeviceTypesPatch
-} from './services/devicetypes/devicetypes.shared'
+import { treeClient } from './services/trees/trees.shared'
+export type { Tree, TreeData, TreeQuery, TreePatch } from './services/trees/trees.shared'
 
 import { userClient } from './services/users/users.shared'
 export type { User, UserData, UserQuery, UserPatch } from './services/users/users.shared'
 
-import { sensorTypesClient } from './services/sensortypes/sensortypes.shared'
+import { sensorTypeClient } from './services/sensortypes/sensortypes.shared'
 export type {
-  SensorTypes,
-  SensorTypesData,
-  SensorTypesQuery,
-  SensorTypesPatch
+  SensorType,
+  SensorTypeData,
+  SensorTypeQuery,
+  SensorTypePatch
 } from './services/sensortypes/sensortypes.shared'
 
 export interface Configuration {
@@ -79,14 +82,14 @@ export const createClient = <Configuration = any>(
   client.configure(authenticationClient(authenticationOptions))
   client.set('connection', connection)
 
-  client.configure(sensorTypesClient)
   client.configure(userClient)
-  client.configure(deviceTypesClient)
-  client.configure(deviceSensorsClient)
-  client.configure(treesClient)
-  client.configure(devicesClient)
-  client.configure(sensorsClient)
-  client.configure(measurementsClient)
+  client.configure(treeClient)
   client.configure(conversionModelClient)
+  client.configure(deviceClient)
+  client.configure(deviceSensorClient)
+  client.configure(deviceTypeClient)
+  client.configure(measurementClient)
+  client.configure(sensorClient)
+  client.configure(sensorTypeClient)
   return client
 }

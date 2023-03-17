@@ -4,18 +4,18 @@ import { MongoDBService } from '@feathersjs/mongodb'
 import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mongodb'
 
 import type { Application } from '../../declarations'
-import type { DeviceTypes, DeviceTypesData, DeviceTypesPatch, DeviceTypesQuery } from './devicetypes.schema'
+import type { DeviceType, DeviceTypeData, DeviceTypePatch, DeviceTypeQuery } from './devicetypes.schema'
 
-export type { DeviceTypes, DeviceTypesData, DeviceTypesPatch, DeviceTypesQuery }
+export type { DeviceType, DeviceTypeData, DeviceTypePatch, DeviceTypeQuery }
 
-export interface DeviceTypesParams extends MongoDBAdapterParams<DeviceTypesQuery> {}
+export interface DeviceTypeParams extends MongoDBAdapterParams<DeviceTypeQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class DeviceTypesService<ServiceParams extends Params = DeviceTypesParams> extends MongoDBService<
-  DeviceTypes,
-  DeviceTypesData,
-  DeviceTypesParams,
-  DeviceTypesPatch
+export class DeviceTypeService<ServiceParams extends Params = DeviceTypeParams> extends MongoDBService<
+  DeviceType,
+  DeviceTypeData,
+  DeviceTypeParams,
+  DeviceTypePatch
 > {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {

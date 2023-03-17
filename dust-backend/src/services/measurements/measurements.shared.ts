@@ -2,33 +2,33 @@
 import type { Params } from '@feathersjs/feathers'
 import type { ClientApplication } from '../../client'
 import type {
-  Measurements,
-  MeasurementsQuery,
-  MeasurementsService
+  Measurement,
+  MeasurementQuery,
+  MeasurementService
 } from './measurements.class'
 
-export type { Measurements, MeasurementsQuery }
+export type { Measurement, MeasurementQuery }
 
-export type MeasurementsClientService = Pick<
-  MeasurementsService<Params<MeasurementsQuery>>,
-  (typeof measurementsMethods)[number]
+export type MeasurementClientService = Pick<
+  MeasurementService<Params<MeasurementQuery>>,
+  (typeof measurementMethods)[number]
 >
 
-export const measurementsPath = 'measurements'
+export const measurementPath = 'measurements'
 
-export const measurementsMethods = ['find'] as const
+export const measurementMethods = ['find'] as const
 
-export const measurementsClient = (client: ClientApplication) => {
+export const measurementClient = (client: ClientApplication) => {
   const connection = client.get('connection')
 
-  client.use(measurementsPath, connection.service(measurementsPath), {
-    methods: measurementsMethods
+  client.use(measurementPath, connection.service(measurementPath), {
+    methods: measurementMethods
   })
 }
 
 // Add this service to the client service type index
 declare module '../../client' {
   interface ServiceTypes {
-    [measurementsPath]: MeasurementsClientService
+    [measurementPath]: MeasurementClientService
   }
 }

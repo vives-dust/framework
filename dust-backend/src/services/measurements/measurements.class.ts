@@ -5,25 +5,25 @@ import { FluxTableMetaData, ParameterizedQuery } from '@influxdata/influxdb-clie
 import type { Application } from '../../declarations'
 import { InfluxDBQueryParams, Period, QueryBuilder } from '../../influxdb/query_builder'
 import type {
-  Measurements,
-  MeasurementsQuery
+  Measurement,
+  MeasurementQuery
 } from './measurements.schema'
 
-export type { Measurements, MeasurementsQuery }
+export type { Measurement, MeasurementQuery }
 
-export interface MeasurementsServiceOptions {
+export interface MeasurementServiceOptions {
   app: Application
 }
 
-export interface MeasurementsParams extends Params<MeasurementsQuery> {}
+export interface MeasurementParams extends Params<MeasurementQuery> {}
 
 // This is a skeleton for a custom service class. Remove or add the methods you need here
-export class MeasurementsService<ServiceParams extends MeasurementsParams = MeasurementsParams>
-  implements ServiceInterface<Measurements, undefined, ServiceParams, undefined>
+export class MeasurementService<ServiceParams extends MeasurementParams = MeasurementParams>
+  implements ServiceInterface<Measurement, undefined, ServiceParams, undefined>
 {
-  constructor(public options: MeasurementsServiceOptions) {}
+  constructor(public options: MeasurementServiceOptions) {}
 
-  async find(_params?: ServiceParams): Promise<Measurements[]> {
+  async find(_params?: ServiceParams): Promise<Measurement[]> {
     const queryApi = this.options.app.get('influxQueryAPI');
 
     let influxQueryParams = {
@@ -44,7 +44,7 @@ export class MeasurementsService<ServiceParams extends MeasurementsParams = Meas
     // console.log(fluxQuery);
 
     return new Promise((resolve) => {
-      let results : Measurements[] = [];
+      let results : Measurement[] = [];
       queryApi.queryRows(fluxQuery, {
         next(row: string[], tableMeta: FluxTableMetaData) {
           let influxObject = tableMeta.toObject(row);
@@ -53,7 +53,7 @@ export class MeasurementsService<ServiceParams extends MeasurementsParams = Meas
           delete influxObject.table;
           delete influxObject.result;
 
-          results.push(influxObject as Measurements);
+          results.push(influxObject as Measurement);
         },
         error(error: Error) {
           console.log("Error")
@@ -65,7 +65,6 @@ export class MeasurementsService<ServiceParams extends MeasurementsParams = Meas
       });
     });
   }
-
 }
 
 export const getOptions = (app: Application) => {

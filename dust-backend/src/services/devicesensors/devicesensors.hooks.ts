@@ -2,38 +2,38 @@ import { hooks as schemaHooks } from '@feathersjs/schema'
 import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
-  deviceSensorsDataValidator,
-  deviceSensorsPatchValidator,
-  deviceSensorsQueryValidator,
-  deviceSensorsResolver,
-  deviceSensorsExternalResolver,
-  deviceSensorsDataResolver,
-  deviceSensorsPatchResolver,
-  deviceSensorsQueryResolver
+  deviceSensorDataValidator,
+  deviceSensorPatchValidator,
+  deviceSensorQueryValidator,
+  deviceSensorResolver,
+  deviceSensorExternalResolver,
+  deviceSensorDataResolver,
+  deviceSensorPatchResolver,
+  deviceSensorQueryResolver
 } from './devicesensors.schema'
 
 export default {
   around: {
     all: [
-      schemaHooks.resolveExternal(deviceSensorsExternalResolver),
-      schemaHooks.resolveResult(deviceSensorsResolver)
+      schemaHooks.resolveExternal(deviceSensorExternalResolver),
+      schemaHooks.resolveResult(deviceSensorResolver)
     ]
   },
   before: {
     all: [
-      schemaHooks.validateQuery(deviceSensorsQueryValidator),
-      schemaHooks.resolveQuery(deviceSensorsQueryResolver)
+      schemaHooks.validateQuery(deviceSensorQueryValidator),
+      schemaHooks.resolveQuery(deviceSensorQueryResolver)
     ],
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(deviceSensorsDataValidator),
+      schemaHooks.validateData(deviceSensorDataValidator),
       inject_nano_id,
-      schemaHooks.resolveData(deviceSensorsDataResolver)
+      schemaHooks.resolveData(deviceSensorDataResolver)
     ],
     patch: [
-      schemaHooks.validateData(deviceSensorsPatchValidator),
-      schemaHooks.resolveData(deviceSensorsPatchResolver)
+      schemaHooks.validateData(deviceSensorPatchValidator),
+      schemaHooks.resolveData(deviceSensorPatchResolver)
     ],
     remove: []
   },

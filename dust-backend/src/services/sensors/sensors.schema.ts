@@ -6,13 +6,13 @@ import type { Static } from '@feathersjs/typebox'
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
-import { devicesSchema } from '../devices/devices.schema'
-import { sensorTypesSchema } from '../sensortypes/sensortypes.schema'
+import { deviceSchema } from '../devices/devices.schema'
+import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
 import { MetaSchema } from '../../typebox-types/meta'
 import { DataSourceSchema } from '../../typebox-types/datasource_spec'
 
 // Main data model schema
-export const sensorsSchema = Type.Object(
+export const sensorSchema = Type.Object(
   {
     _id: NanoIdSchema,
     name: Type.String(),
@@ -26,14 +26,14 @@ export const sensorsSchema = Type.Object(
     // Auto-generated virtual fields
     sensor_url: Type.String({ format: 'uri' }),
     // Associated Data
-    device: Type.Ref(devicesSchema),
-    sensortype: Type.Ref(sensorTypesSchema),
+    device: Type.Ref(deviceSchema),
+    sensortype: Type.Ref(sensorTypeSchema),
   },
-  { $id: 'Sensors', additionalProperties: false }
+  { $id: 'Sensor', additionalProperties: false }
 )
-export type Sensors = Static<typeof sensorsSchema>
-export const sensorsValidator = getValidator(sensorsSchema, dataValidator)
-export const sensorsResolver = resolve<Sensors, HookContext>({
+export type Sensor = Static<typeof sensorSchema>
+export const sensorValidator = getValidator(sensorSchema, dataValidator)
+export const sensorResolver = resolve<Sensor, HookContext>({
   device: virtual(async (sensor, context) => {
     // Populate the device associated with this sensor
     return context.app.service('devices').get(sensor.device_id)
@@ -47,38 +47,38 @@ export const sensorsResolver = resolve<Sensors, HookContext>({
   })
 })
 
-export const sensorsExternalResolver = resolve<Sensors, HookContext>({})
+export const sensorExternalResolver = resolve<Sensor, HookContext>({})
 
 // Schema for creating new entries
-export const sensorsDataSchema = Type.Pick(sensorsSchema, ['sensortype_id', 'name', 'meta', 'data_source', 'device_id'], {
-  $id: 'SensorsData'
+export const sensorDataSchema = Type.Pick(sensorSchema, ['sensortype_id', 'name', 'meta', 'data_source', 'device_id'], {
+  $id: 'SensorData'
 })
-export type SensorsData = Static<typeof sensorsDataSchema>
-export const sensorsDataValidator = getValidator(sensorsDataSchema, dataValidator)
-export const sensorsDataResolver = resolve<Sensors, HookContext>({
+export type SensorData = Static<typeof sensorDataSchema>
+export const sensorDataValidator = getValidator(sensorDataSchema, dataValidator)
+export const sensorDataResolver = resolve<Sensor, HookContext>({
   // TODO - Can we generate nano id here? Can't seem to get it to work
   createdAt: async () => (new Date()).toISOString(),
   updatedAt: async () => (new Date()).toISOString(),
 })
 
 // Schema for updating existing entries
-export const sensorsPatchSchema = Type.Partial(Type.Omit(sensorsSchema, ['createdAt', 'updatedAt']), {
-  $id: 'SensorsPatch'
+export const sensorPatchSchema = Type.Partial(Type.Omit(sensorSchema, ['createdAt', 'updatedAt']), {
+  $id: 'sensorPatch'
 })
-export type SensorsPatch = Static<typeof sensorsPatchSchema>
-export const sensorsPatchValidator = getValidator(sensorsPatchSchema, dataValidator)
-export const sensorsPatchResolver = resolve<Sensors, HookContext>({})
+export type SensorPatch = Static<typeof sensorPatchSchema>
+export const sensorPatchValidator = getValidator(sensorPatchSchema, dataValidator)
+export const sensorPatchResolver = resolve<Sensor, HookContext>({})
 
 // Schema for allowed query properties
-export const sensorsQueryProperties = Type.Pick(sensorsSchema, ['_id'])
-export const sensorsQuerySchema = Type.Intersect(
+export const sensorQueryProperties = Type.Pick(sensorSchema, ['_id'])
+export const sensorQuerySchema = Type.Intersect(
   [
-    querySyntax(sensorsQueryProperties),
+    querySyntax(sensorQueryProperties),
     // Add additional query properties here
     Type.Object({}, { additionalProperties: false })
   ],
   { additionalProperties: false }
 )
-export type SensorsQuery = Static<typeof sensorsQuerySchema>
-export const sensorsQueryValidator = getValidator(sensorsQuerySchema, queryValidator)
-export const sensorsQueryResolver = resolve<SensorsQuery, HookContext>({})
+export type SensorQuery = Static<typeof sensorQuerySchema>
+export const sensorQueryValidator = getValidator(sensorQuerySchema, queryValidator)
+export const sensorQueryResolver = resolve<SensorQuery, HookContext>({})

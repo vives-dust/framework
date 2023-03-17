@@ -54,7 +54,9 @@ export const conversionModelPatchSchema = Type.Partial(Type.Omit(conversionModel
 })
 export type ConversionModelPatch = Static<typeof conversionModelPatchSchema>
 export const conversionModelPatchValidator = getValidator(conversionModelPatchSchema, dataValidator)
-export const conversionModelPatchResolver = resolve<ConversionModel, HookContext>({})
+export const conversionModelPatchResolver = resolve<ConversionModel, HookContext>({
+  updatedAt: async () => (new Date()).toISOString(),
+})
 
 // Schema for allowed query properties
 export const conversionModelQueryProperties = Type.Pick(conversionModelSchema, ['_id'])

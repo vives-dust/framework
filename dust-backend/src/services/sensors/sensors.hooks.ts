@@ -2,37 +2,37 @@ import { hooks as schemaHooks } from '@feathersjs/schema'
 import { inject_nano_id } from '../../hooks/inject-nanoid'
 
 import {
-  sensorsDataValidator,
-  sensorsPatchValidator,
-  sensorsQueryValidator,
-  sensorsResolver,
-  sensorsExternalResolver,
-  sensorsDataResolver,
-  sensorsPatchResolver,
-  sensorsQueryResolver
+  sensorDataValidator,
+  sensorPatchValidator,
+  sensorQueryValidator,
+  sensorResolver,
+  sensorExternalResolver,
+  sensorDataResolver,
+  sensorPatchResolver,
+  sensorQueryResolver
 } from './sensors.schema'
 
 export default {
   around: {
     all: [
-      schemaHooks.resolveExternal(sensorsExternalResolver),
-      schemaHooks.resolveResult(sensorsResolver)
+      schemaHooks.resolveExternal(sensorExternalResolver),
+      schemaHooks.resolveResult(sensorResolver)
     ]
   },
   before: {
     all: [
-      schemaHooks.validateQuery(sensorsQueryValidator),
-      schemaHooks.resolveQuery(sensorsQueryResolver)
+      schemaHooks.validateQuery(sensorQueryValidator),
+      schemaHooks.resolveQuery(sensorQueryResolver)
     ],
     find: [],
     get: [],
     create: [
-      schemaHooks.validateData(sensorsDataValidator),
+      schemaHooks.validateData(sensorDataValidator),
       inject_nano_id,
-      schemaHooks.resolveData(sensorsDataResolver)],
+      schemaHooks.resolveData(sensorDataResolver)],
     patch: [
-      schemaHooks.validateData(sensorsPatchValidator),
-      schemaHooks.resolveData(sensorsPatchResolver)
+      schemaHooks.validateData(sensorPatchValidator),
+      schemaHooks.resolveData(sensorPatchResolver)
     ],
     remove: []
   },

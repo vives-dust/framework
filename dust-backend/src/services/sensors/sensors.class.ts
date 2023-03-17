@@ -4,18 +4,18 @@ import { MongoDBService } from '@feathersjs/mongodb'
 import type { MongoDBAdapterParams, MongoDBAdapterOptions } from '@feathersjs/mongodb'
 
 import type { Application } from '../../declarations'
-import type { Sensors, SensorsData, SensorsPatch, SensorsQuery } from './sensors.schema'
+import type { Sensor, SensorData, SensorPatch, SensorQuery } from './sensors.schema'
 
-export type { Sensors, SensorsData, SensorsPatch, SensorsQuery }
+export type { Sensor, SensorData, SensorPatch, SensorQuery }
 
-export interface SensorsParams extends MongoDBAdapterParams<SensorsQuery> {}
+export interface SensorParams extends MongoDBAdapterParams<SensorQuery> {}
 
 // By default calls the standard MongoDB adapter service methods but can be customized with your own functionality.
-export class SensorsService<ServiceParams extends Params = SensorsParams> extends MongoDBService<
-  Sensors,
-  SensorsData,
-  SensorsParams,
-  SensorsPatch
+export class SensorService<ServiceParams extends Params = SensorParams> extends MongoDBService<
+  Sensor,
+  SensorData,
+  SensorParams,
+  SensorPatch
 > {}
 
 export const getOptions = (app: Application): MongoDBAdapterOptions => {
