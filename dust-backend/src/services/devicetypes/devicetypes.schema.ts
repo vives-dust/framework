@@ -15,6 +15,7 @@ export const deviceTypesSchema = Type.Object(
     type: Type.RegEx(/^[a-z0-9-]*$/),
     description: Type.String(),
     image_url: Type.String(),
+    // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },

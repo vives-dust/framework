@@ -15,6 +15,7 @@ export const sensorTypesSchema = Type.Object(
     type: Type.RegEx(/^[a-z0-9-]*$/),
     unit: Type.String(),
     description: Type.String(),
+    // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },

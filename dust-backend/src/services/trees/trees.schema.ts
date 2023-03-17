@@ -32,7 +32,10 @@ export const treesResolver = resolve<Trees, HookContext>({
   })
 })
 
-export const treesExternalResolver = resolve<Trees, HookContext>({})
+export const treesExternalResolver = resolve<Trees, HookContext>({
+  createdAt: async () => undefined,
+  updatedAt: async () => undefined,
+})
 
 // Schema for creating new entries
 export const treesDataSchema = Type.Pick(treesSchema, ['name', 'description', 'location', 'image_url'], {

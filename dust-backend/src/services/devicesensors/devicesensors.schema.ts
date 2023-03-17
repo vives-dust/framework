@@ -38,7 +38,7 @@ export const deviceSensorsResolver = resolve<DeviceSensors, HookContext>({
   sensortype: virtual(async (devicesensor, context) => {
     // Populate the sensortype associated with this devicesensor
     return context.app.service('sensortypes').get(devicesensor.sensortype_id)
-  })
+  }),
 })
 
 export const deviceSensorsExternalResolver = resolve<DeviceSensors, HookContext>({})

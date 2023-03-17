@@ -17,6 +17,7 @@ export const userSchema = Type.Object(
     name: Type.String(),
     // TODO - Later we should replace role with permissions like can:create, can:update, ....
     role: StringEnum(['user', 'admin']),
+    // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
   },
@@ -26,9 +27,12 @@ export type User = Static<typeof userSchema>
 export const userValidator = getValidator(userSchema, dataValidator)
 export const userResolver = resolve<User, HookContext>({})
 
+// Sanitize data for external use
 export const userExternalResolver = resolve<User, HookContext>({
   // The password should never be visible externally
-  password: async () => undefined
+  password: async () => undefined,
+  createdAt: async () => undefined,
+  updatedAt: async () => undefined,
 })
 
 // Schema for creating new entries
