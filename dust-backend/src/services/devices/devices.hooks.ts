@@ -13,14 +13,18 @@ import {
   deviceTypeGenericResolver,
   treeGenericResolver,
   deviceTypeIdDataResolver,
-  deviceQueryResolver
+  deviceQueryResolver,
+  deviceBeforeCreateCleanupDataResolver
 } from './devices.schema'
 
 export default {
   around: {
     all: [
       schemaHooks.resolveExternal(deviceExternalResolver), 
-      schemaHooks.resolveResult(deviceTypeGenericResolver, deviceResultResolver)
+      schemaHooks.resolveResult(
+        deviceTypeGenericResolver,    // Need the deviceType for returning the "devicetype" user friendly field
+        deviceResultResolver
+      ),
     ]
   },
   before: {
@@ -39,8 +43,9 @@ export default {
         deviceTypeIdDataResolver,       // 5. Set the DeviceType ID based on the populated association
         timestampsDataResolver          // 6. Set timestamps
       ), 
-      // 7. resolveResult providers are run next
-      // 8. resolveExternal providers are run next
+      schemaHooks.resolveData(deviceBeforeCreateCleanupDataResolver), // 7. Cleanup the data before storing it in the database
+      // 8. resolveResult providers are run next
+      // 9. resolveExternal providers are run next
     ],
     patch: [
       disallow('external'),       // TODO - Fix the patching of external devices

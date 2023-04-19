@@ -10,7 +10,7 @@ import { deviceTypeSchema } from '../devicetypes/devicetypes.schema'
 import { nanoid } from 'nanoid/async';
 
 // Main data model schema
-// This basically contains all possible fields that can are available on the model
+// This basically contains all possible fields that are available on the model
 export const deviceSchema = Type.Object(
   {
     // Database fields
@@ -116,6 +116,13 @@ export const nanoIdDataResolver = resolve<Device, HookContext>({
 // Set the devicetype_id based on the populated _devicetype association
 export const deviceTypeIdDataResolver = resolve<Device, HookContext>({
   devicetype_id: async (value, device, context) => device._devicetype._id,
+});
+
+// Setup a clean version of the device that is to be stored in the database
+export const deviceBeforeCreateCleanupDataResolver = resolve<Device, HookContext>({
+  devicetype: async () => undefined,
+  _devicetype: async () => undefined,
+  _tree: async () => undefined,
 });
 
 
