@@ -14,31 +14,35 @@ import { DataSourceSchema } from '../../typebox-types/datasource_spec'
 // Main data model schema
 export const sensorSchema = Type.Object(
   {
+    // Database fields
     _id: NanoIdSchema,
     name: Type.String(),
     device_id: NanoIdSchema,
     sensortype_id: NanoIdSchema,
     meta: MetaSchema,
     data_source: DataSourceSchema,
-    // Auto-generated fields
+
+    // Auto-generated fields (also stored in database)
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
-    // Auto-generated virtual fields
-    sensor_url: Type.String({ format: 'uri' }),
+
     // Associated Data
-    device: Type.Ref(deviceSchema),
-    sensortype: Type.Ref(sensorTypeSchema),
+    _device: Type.Ref(deviceSchema),
+    _sensortype: Type.Ref(sensorTypeSchema),
+
+    // Computed properties
+    sensor_url: Type.String({ format: 'uri' }),
   },
   { $id: 'Sensor', additionalProperties: false }
 )
 export type Sensor = Static<typeof sensorSchema>
 export const sensorValidator = getValidator(sensorSchema, dataValidator)
 export const sensorResolver = resolve<Sensor, HookContext>({
-  device: virtual(async (sensor, context) => {
+  _device: virtual(async (sensor, context) => {
     // Populate the device associated with this sensor
     return context.app.service('devices').get(sensor.device_id)
   }),
-  sensortype: virtual(async (sensor, context) => {
+  _sensortype: virtual(async (sensor, context) => {
     // Populate the sensortype associated with this sensor
     return context.app.service('sensortypes').get(sensor.sensortype_id)
   }),

@@ -8,6 +8,7 @@ import { dataValidator, queryValidator } from '../../validators'
 import { treeSchema } from '../trees/trees.schema'
 import { deviceTypeSchema } from '../devicetypes/devicetypes.schema'
 import { nanoid } from 'nanoid/async';
+import { deviceSensorSchema } from '../devicesensors/devicesensors.schema';
 
 // Main data model schema
 // This basically contains all possible fields that are available on the model
@@ -29,6 +30,7 @@ export const deviceSchema = Type.Object(
     // Associated Data
     _tree: Type.Ref(treeSchema),
     _devicetype: Type.Ref(deviceTypeSchema),
+    _devicesensors: Type.Array(Type.Ref(deviceSensorSchema)),
 
     // Computed properties
     device_url: Type.String({ format: 'uri' }),     // A url to the details route of this device
@@ -150,6 +152,14 @@ export const treeGenericResolver = resolve<Device, HookContext>({
   }),
 });
 
+// Populate a list of devicesensors that belong to this specific device.
+export const deviceSensorsGenericResolver = resolve<Device, HookContext>({
+  _devicesensors: virtual(async (device, context) => {
+    const result = await context.app.service('devicesensors').find({ query: { devicetype_id: device.devicetype_id } });   // TODO Can't seem to disable pagination
+    //if (result.total == 0) throw new Error('Device sensors not found');    // TODO - Custom error handling
+    return result.data;
+  }),
+});
 
 
 //////////////////////////////////////////////////////////////////////////////
