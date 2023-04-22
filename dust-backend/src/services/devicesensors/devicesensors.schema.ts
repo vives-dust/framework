@@ -19,23 +19,25 @@ export const deviceSensorSchema = Type.Object(
     sensortype_id: NanoIdSchema,
     data_source: DataSourceSpecSchema,
     meta: MetaSchema,
+
     // Auto-generated fields
     createdAt: Type.String({ format: 'date-time' }),
     updatedAt: Type.String({ format: 'date-time' }),
+
     // Associated Data
-    devicetype: Type.Ref(deviceTypeSchema),
-    sensortype: Type.Ref(sensorTypeSchema),
+    _devicetype: Type.Ref(deviceTypeSchema),
+    _sensortype: Type.Ref(sensorTypeSchema),
   },
   { $id: 'DeviceSensor', additionalProperties: false }
 )
 export type DeviceSensor = Static<typeof deviceSensorSchema>
 export const deviceSensorValidator = getValidator(deviceSensorSchema, dataValidator)
 export const deviceSensorResolver = resolve<DeviceSensor, HookContext>({
-  devicetype: virtual(async (devicesensor, context) => {
+  _devicetype: virtual(async (devicesensor, context) => {
     // Populate the devicetype associated with this devicesensor
     return context.app.service('devicetypes').get(devicesensor.devicetype_id)
   }),
-  sensortype: virtual(async (devicesensor, context) => {
+  _sensortype: virtual(async (devicesensor, context) => {
     // Populate the sensortype associated with this devicesensor
     return context.app.service('sensortypes').get(devicesensor.sensortype_id)
   }),
