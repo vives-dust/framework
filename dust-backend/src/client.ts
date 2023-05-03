@@ -4,24 +4,13 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
-import { sensorClient } from './services/sensors/sensors.shared'
-export type { Sensor, SensorData, SensorQuery, SensorPatch } from './services/sensors/sensors.shared'
-
-import { measurementClient } from './services/measurements/measurements.shared'
+import { conversionModelClient } from './services/conversionmodels/conversionmodels.shared'
 export type {
-  Measurement,
-  MeasurementData,
-  MeasurementQuery,
-  MeasurementPatch
-} from './services/measurements/measurements.shared'
-
-import { deviceTypeClient } from './services/devicetypes/devicetypes.shared'
-export type {
-  DeviceType,
-  DeviceTypeData,
-  DeviceTypeQuery,
-  DeviceTypePatch
-} from './services/devicetypes/devicetypes.shared'
+  ConversionModel,
+  ConversionModelData,
+  ConversionModelQuery,
+  ConversionModelPatch
+} from './services/conversionmodels/conversionmodels.shared'
 
 import { deviceSensorClient } from './services/devicesensors/devicesensors.shared'
 export type {
@@ -31,22 +20,13 @@ export type {
   DeviceSensorPatch
 } from './services/devicesensors/devicesensors.shared'
 
-import { deviceClient } from './services/devices/devices.shared'
-export type { Device, DeviceData, DeviceQuery, DevicePatch } from './services/devices/devices.shared'
-
-import { conversionModelClient } from './services/conversionmodels/conversionmodels.shared'
+import { deviceTypeClient } from './services/devicetypes/devicetypes.shared'
 export type {
-  ConversionModel,
-  ConversionModelData,
-  ConversionModelQuery,
-  ConversionModelPatch
-} from './services/conversionmodels/conversionmodels.shared'
-
-import { treeClient } from './services/trees/trees.shared'
-export type { Tree, TreeData, TreeQuery, TreePatch } from './services/trees/trees.shared'
-
-import { userClient } from './services/users/users.shared'
-export type { User, UserData, UserQuery, UserPatch } from './services/users/users.shared'
+  DeviceType,
+  DeviceTypeData,
+  DeviceTypeQuery,
+  DeviceTypePatch
+} from './services/devicetypes/devicetypes.shared'
 
 import { sensorTypeClient } from './services/sensortypes/sensortypes.shared'
 export type {
@@ -82,14 +62,9 @@ export const createClient = <Configuration = any>(
   client.configure(authenticationClient(authenticationOptions))
   client.set('connection', connection)
 
-  client.configure(userClient)
-  client.configure(treeClient)
-  client.configure(conversionModelClient)
-  client.configure(deviceClient)
-  client.configure(deviceSensorClient)
-  client.configure(deviceTypeClient)
-  client.configure(measurementClient)
-  client.configure(sensorClient)
   client.configure(sensorTypeClient)
+  client.configure(deviceTypeClient)
+  client.configure(deviceSensorClient)
+  client.configure(conversionModelClient)
   return client
 }

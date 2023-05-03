@@ -6,12 +6,10 @@ import socketio from '@feathersjs/socketio'
 
 import { configurationValidator } from './configuration'
 import type { Application } from './declarations'
+import { logError } from './hooks/log-error'
 import { mongodb } from './mongodb'
-import { influxdb } from './influxdb'
-import { authentication } from './authentication'
 import { services } from './services/index'
 import { channels } from './channels'
-import { hooks, setupTeardownHooks } from './app.hooks'
 
 const app: Application = koa(feathers())
 
@@ -36,13 +34,21 @@ app.configure(
 )
 app.configure(channels)
 app.configure(mongodb)
-app.configure(influxdb)
-app.configure(authentication)
 app.configure(services)
 
 // Register hooks that run on all service methods
-app.hooks(hooks)
+app.hooks({
+  around: {
+    all: [logError]
+  },
+  before: {},
+  after: {},
+  error: {}
+})
 // Register application setup and teardown hooks here
-app.hooks(setupTeardownHooks)
+app.hooks({
+  setup: [],
+  teardown: []
+})
 
 export { app }

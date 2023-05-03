@@ -1,9 +1,23 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
+import { hooks as schemaHooks } from '@feathersjs/schema'
+
+import {
+  sensorTypeDataValidator,
+  sensorTypePatchValidator,
+  sensorTypeQueryValidator,
+  sensorTypeResolver,
+  sensorTypeExternalResolver,
+  sensorTypeDataResolver,
+  sensorTypePatchResolver,
+  sensorTypeQueryResolver
+} from './sensortypes.schema'
+
 import type { Application } from '../../declarations'
 import { SensorTypeService, getOptions } from './sensortypes.class'
 import { sensorTypePath, sensorTypeMethods } from './sensortypes.shared'
-import hooks from './sensortypes.hooks'
+import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
+import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
 
 export * from './sensortypes.class'
 export * from './sensortypes.schema'
@@ -18,7 +32,41 @@ export const sensorType = (app: Application) => {
     events: []
   })
   // Initialize hooks
-  app.service(sensorTypePath).hooks(hooks)
+  app.service(sensorTypePath).hooks({
+    around: {
+      all: [
+        schemaHooks.resolveExternal(sensorTypeExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveResult(sensorTypeResolver)
+      ]
+    },
+    before: {
+      all: [
+        schemaHooks.validateQuery(sensorTypeQueryValidator),
+        schemaHooks.resolveQuery(sensorTypeQueryResolver),
+        schemaHooks.resolveData(    // Will only run for all methods that have DATA
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
+      ],
+      find: [],
+      get: [],
+      create: [
+        schemaHooks.validateData(sensorTypeDataValidator),
+        schemaHooks.resolveData(sensorTypeDataResolver)
+      ],
+      patch: [
+        schemaHooks.validateData(sensorTypePatchValidator),
+        schemaHooks.resolveData(sensorTypePatchResolver)
+      ],
+      remove: []
+    },
+    after: {
+      all: []
+    },
+    error: {
+      all: []
+    }
+  })
 }
 
 // Add this service to the service type index

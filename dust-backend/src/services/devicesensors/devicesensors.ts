@@ -1,9 +1,24 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
+import { hooks as schemaHooks } from '@feathersjs/schema'
+
+import {
+  deviceSensorDataValidator,
+  deviceSensorPatchValidator,
+  deviceSensorQueryValidator,
+  deviceSensorResolver,
+  deviceSensorExternalResolver,
+  deviceSensorDataResolver,
+  deviceSensorPatchResolver,
+  deviceSensorQueryResolver,
+  deviceSensorAssociatedTypesResolver
+} from './devicesensors.schema'
+
 import type { Application } from '../../declarations'
 import { DeviceSensorService, getOptions } from './devicesensors.class'
 import { deviceSensorPath, deviceSensorMethods } from './devicesensors.shared'
-import hooks from './devicesensors.hooks'
+import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
+import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
 
 export * from './devicesensors.class'
 export * from './devicesensors.schema'
@@ -18,7 +33,44 @@ export const deviceSensor = (app: Application) => {
     events: []
   })
   // Initialize hooks
-  app.service(deviceSensorPath).hooks(hooks)
+  app.service(deviceSensorPath).hooks({
+    around: {
+      all: [
+        schemaHooks.resolveExternal(deviceSensorExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveResult(deviceSensorResolver)
+      ],
+      get: [
+        schemaHooks.resolveResult(deviceSensorAssociatedTypesResolver)
+      ]
+    },
+    before: {
+      all: [
+        schemaHooks.validateQuery(deviceSensorQueryValidator),
+        schemaHooks.resolveQuery(deviceSensorQueryResolver),
+        schemaHooks.resolveData(    // Will only run for all methods that have DATA
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
+      ],
+      find: [],
+      get: [],
+      create: [
+        schemaHooks.validateData(deviceSensorDataValidator),
+        schemaHooks.resolveData(deviceSensorDataResolver)
+      ],
+      patch: [
+        schemaHooks.validateData(deviceSensorPatchValidator),
+        schemaHooks.resolveData(deviceSensorPatchResolver)
+      ],
+      remove: []
+    },
+    after: {
+      all: []
+    },
+    error: {
+      all: []
+    }
+  })
 }
 
 // Add this service to the service type index

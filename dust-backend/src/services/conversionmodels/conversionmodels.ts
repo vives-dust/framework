@@ -1,9 +1,23 @@
 // For more information about this file see https://dove.feathersjs.com/guides/cli/service.html
 
+import { hooks as schemaHooks } from '@feathersjs/schema'
+
+import {
+  conversionModelDataValidator,
+  conversionModelPatchValidator,
+  conversionModelQueryValidator,
+  conversionModelResolver,
+  conversionModelExternalResolver,
+  conversionModelDataResolver,
+  conversionModelPatchResolver,
+  conversionModelQueryResolver
+} from './conversionmodels.schema'
+
 import type { Application } from '../../declarations'
 import { ConversionModelService, getOptions } from './conversionmodels.class'
 import { conversionModelPath, conversionModelMethods } from './conversionmodels.shared'
-import hooks from './conversionmodels.hooks'
+import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
+import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
 
 export * from './conversionmodels.class'
 export * from './conversionmodels.schema'
@@ -18,7 +32,41 @@ export const conversionModel = (app: Application) => {
     events: []
   })
   // Initialize hooks
-  app.service(conversionModelPath).hooks(hooks)
+  app.service(conversionModelPath).hooks({
+    around: {
+      all: [
+        schemaHooks.resolveExternal(conversionModelExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveResult(conversionModelResolver)
+      ]
+    },
+    before: {
+      all: [
+        schemaHooks.validateQuery(conversionModelQueryValidator),
+        schemaHooks.resolveQuery(conversionModelQueryResolver),
+        schemaHooks.resolveData(    // Will only run for all methods that have DATA
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
+      ],
+      find: [],
+      get: [],
+      create: [
+        schemaHooks.validateData(conversionModelDataValidator),
+        schemaHooks.resolveData(conversionModelDataResolver)
+      ],
+      patch: [
+        schemaHooks.validateData(conversionModelPatchValidator),
+        schemaHooks.resolveData(conversionModelPatchResolver)
+      ],
+      remove: []
+    },
+    after: {
+      all: []
+    },
+    error: {
+      all: []
+    }
+  })
 }
 
 // Add this service to the service type index
