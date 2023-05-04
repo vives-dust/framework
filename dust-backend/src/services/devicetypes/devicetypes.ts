@@ -35,7 +35,10 @@ export const deviceType = (app: Application) => {
   app.service(deviceTypePath).hooks({
     around: {
       all: [
-        schemaHooks.resolveExternal(deviceTypeExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveExternal(
+          deviceTypeExternalResolver,
+          removeTimeStampsExternalResolver
+        ),
         schemaHooks.resolveResult(deviceTypeResolver)
       ]
     },

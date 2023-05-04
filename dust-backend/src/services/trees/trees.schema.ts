@@ -50,10 +50,10 @@ export const treeExternalResolver = resolve<Tree, HookContext>({})
 
 // Schema for creating new entries
 export const treeDataSchema = Type.Intersect([
-  Type.Partial(Type.Pick(treeSchema, ['_id'])),                         // Allow _id but don't require it
-  Type.Pick(treeSchema, ['name', 'description', 'location', 'image_url'])
-], {
-$id: 'TreeData'
+    Type.Partial(Type.Pick(treeSchema, ['_id'])),                         // Allow _id but don't require it
+    Type.Pick(treeSchema, ['name', 'description', 'location', 'image_url'])
+  ], {
+  $id: 'TreeData'
 })
 
 

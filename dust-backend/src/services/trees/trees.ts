@@ -36,7 +36,10 @@ export const tree = (app: Application) => {
   app.service(treePath).hooks({
     around: {
       all: [
-        schemaHooks.resolveExternal(treeExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveExternal(
+          treeExternalResolver,
+          removeTimeStampsExternalResolver
+        ),
         schemaHooks.resolveResult(
           treeResolver,
           setResourceUrlExternalResolver,

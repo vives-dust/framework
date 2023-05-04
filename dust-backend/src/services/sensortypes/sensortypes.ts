@@ -35,7 +35,10 @@ export const sensorType = (app: Application) => {
   app.service(sensorTypePath).hooks({
     around: {
       all: [
-        schemaHooks.resolveExternal(sensorTypeExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveExternal(
+          sensorTypeExternalResolver,
+          removeTimeStampsExternalResolver
+        ),
         schemaHooks.resolveResult(sensorTypeResolver)
       ]
     },

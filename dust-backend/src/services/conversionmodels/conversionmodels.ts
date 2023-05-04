@@ -35,7 +35,10 @@ export const conversionModel = (app: Application) => {
   app.service(conversionModelPath).hooks({
     around: {
       all: [
-        schemaHooks.resolveExternal(conversionModelExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveExternal(
+          conversionModelExternalResolver,
+          removeTimeStampsExternalResolver
+        ),
         schemaHooks.resolveResult(conversionModelResolver)
       ]
     },
