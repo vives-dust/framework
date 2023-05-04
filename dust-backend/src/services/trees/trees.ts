@@ -3,69 +3,69 @@
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  deviceSensorDataValidator,
-  deviceSensorPatchValidator,
-  deviceSensorQueryValidator,
-  deviceSensorResolver,
-  deviceSensorExternalResolver,
-  deviceSensorDataResolver,
-  deviceSensorPatchResolver,
-  deviceSensorQueryResolver,
-  deviceSensorAssociatedTypesResolver
-} from './devicesensors.schema'
+  treeDataValidator,
+  treePatchValidator,
+  treeQueryValidator,
+  treeResolver,
+  treeExternalResolver,
+  treeDataResolver,
+  treePatchResolver,
+  treeQueryResolver
+} from './trees.schema'
 
 import type { Application } from '../../declarations'
-import { DeviceSensorService, getOptions } from './devicesensors.class'
-import { deviceSensorPath, deviceSensorMethods } from './devicesensors.shared'
+import { TreeService, getOptions } from './trees.class'
+import { treePath, treeMethods } from './trees.shared'
 import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
 import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
+import { setResourceUrlExternalResolver } from '../../resolvers/result.resolvers'
 
-export * from './devicesensors.class'
-export * from './devicesensors.schema'
+export * from './trees.class'
+export * from './trees.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const deviceSensor = (app: Application) => {
+export const tree = (app: Application) => {
   // Register our service on the Feathers application
-  app.use(deviceSensorPath, new DeviceSensorService(getOptions(app)), {
+  app.use(treePath, new TreeService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: deviceSensorMethods,
+    methods: treeMethods,
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service(deviceSensorPath).hooks({
+  app.service(treePath).hooks({
     around: {
       all: [
-        schemaHooks.resolveExternal(deviceSensorExternalResolver, removeTimeStampsExternalResolver),
-        schemaHooks.resolveResult(deviceSensorResolver)
-      ],
-      get: [
-        schemaHooks.resolveResult(deviceSensorAssociatedTypesResolver)
+        schemaHooks.resolveExternal(treeExternalResolver, removeTimeStampsExternalResolver),
+        schemaHooks.resolveResult(
+          treeResolver,
+          setResourceUrlExternalResolver,
+        )
       ]
     },
     before: {
       all: [
-        schemaHooks.validateQuery(deviceSensorQueryValidator),
-        schemaHooks.resolveQuery(deviceSensorQueryResolver),
+        schemaHooks.validateQuery(treeQueryValidator),
+        schemaHooks.resolveQuery(treeQueryResolver),
       ],
       find: [],
       get: [],
       create: [
-        schemaHooks.validateData(deviceSensorDataValidator),
+        schemaHooks.validateData(treeDataValidator),
         // Can't run this in "all" hook since we first need to validate before injecting extra props
         schemaHooks.resolveData(
           nanoIdDataResolver,
           timestampsDataResolver,
         ),
-        schemaHooks.resolveData(deviceSensorDataResolver)
+        schemaHooks.resolveData(treeDataResolver)
       ],
       patch: [
-        schemaHooks.validateData(deviceSensorPatchValidator),
+        schemaHooks.validateData(treePatchValidator),
         // Can't run this in "all" hook since we first need to validate before injecting extra props
         schemaHooks.resolveData(
           timestampsDataResolver,
         ),
-        schemaHooks.resolveData(deviceSensorPatchResolver)
+        schemaHooks.resolveData(treePatchResolver)
       ],
       remove: []
     },
@@ -81,6 +81,6 @@ export const deviceSensor = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    [deviceSensorPath]: DeviceSensorService
+    [treePath]: TreeService
   }
 }

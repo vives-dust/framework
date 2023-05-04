@@ -66,7 +66,10 @@ export const conversionModelDataResolver = resolve<ConversionModel, HookContext>
 //////////////////////////////////////////////////////////
 
 // Schema for updating existing entries
-export const conversionModelPatchSchema = Type.Partial(conversionModelSchema, {     // No need to disallow _id here, it is ignored
+export const conversionModelPatchSchema = Type.Partial(
+  // Need to Pick here because otherwise we can inject createdAt, resource_url, ...
+  // No need to disallow _id here, it is ignored; but it makes API more user friendly
+  Type.Pick(conversionModelSchema, ['_id', 'name', 'description', 'input_unit', 'output_unit', 'samples']), {
   $id: 'ConversionModelPatch'
 })
 

@@ -63,7 +63,10 @@ export const deviceTypeDataResolver = resolve<DeviceType, HookContext>({})
 //////////////////////////////////////////////////////////
 
 // Schema for updating existing entries
-export const deviceTypePatchSchema = Type.Partial(deviceTypeSchema, {     // No need to disallow _id here, it is ignored
+export const deviceTypePatchSchema = Type.Partial(
+  // Need to Pick here because otherwise we can inject createdAt, resource_url, ...
+  // No need to disallow _id here, it is ignored; but it makes API more user friendly
+  Type.Pick(deviceTypeSchema, ['_id', 'name', 'type', 'description', 'image_url']), {
   $id: 'DeviceTypePatch'
 })
 

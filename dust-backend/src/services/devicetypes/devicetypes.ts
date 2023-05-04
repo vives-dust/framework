@@ -43,19 +43,24 @@ export const deviceType = (app: Application) => {
       all: [
         schemaHooks.validateQuery(deviceTypeQueryValidator),
         schemaHooks.resolveQuery(deviceTypeQueryResolver),
-        schemaHooks.resolveData(    // Will only run for all methods that have DATA
-          nanoIdDataResolver,
-          timestampsDataResolver,
-        ),
       ],
       find: [],
       get: [],
       create: [
         schemaHooks.validateData(deviceTypeDataValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(deviceTypeDataResolver)
       ],
       patch: [
         schemaHooks.validateData(deviceTypePatchValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(deviceTypePatchResolver)
       ],
       remove: []

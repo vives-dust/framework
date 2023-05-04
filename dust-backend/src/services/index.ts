@@ -1,3 +1,4 @@
+import { tree } from './trees/trees'
 import { conversionModel } from './conversionmodels/conversionmodels'
 import { deviceSensor } from './devicesensors/devicesensors'
 import { deviceType } from './devicetypes/devicetypes'
@@ -6,6 +7,7 @@ import { sensorType } from './sensortypes/sensortypes'
 import type { Application } from '../declarations'
 
 export const services = (app: Application) => {
+  app.configure(tree)
   app.configure(conversionModel)
   app.configure(deviceSensor)
   app.configure(deviceType)

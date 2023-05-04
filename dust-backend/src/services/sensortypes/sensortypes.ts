@@ -43,19 +43,24 @@ export const sensorType = (app: Application) => {
       all: [
         schemaHooks.validateQuery(sensorTypeQueryValidator),
         schemaHooks.resolveQuery(sensorTypeQueryResolver),
-        schemaHooks.resolveData(    // Will only run for all methods that have DATA
-          nanoIdDataResolver,
-          timestampsDataResolver,
-        ),
       ],
       find: [],
       get: [],
       create: [
         schemaHooks.validateData(sensorTypeDataValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(sensorTypeDataResolver)
       ],
       patch: [
         schemaHooks.validateData(sensorTypePatchValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(sensorTypePatchResolver)
       ],
       remove: []

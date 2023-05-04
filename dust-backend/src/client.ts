@@ -4,6 +4,9 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { treeClient } from './services/trees/trees.shared'
+export type { Tree, TreeData, TreeQuery, TreePatch } from './services/trees/trees.shared'
+
 import { conversionModelClient } from './services/conversionmodels/conversionmodels.shared'
 export type {
   ConversionModel,
@@ -66,5 +69,6 @@ export const createClient = <Configuration = any>(
   client.configure(deviceTypeClient)
   client.configure(deviceSensorClient)
   client.configure(conversionModelClient)
+  client.configure(treeClient)
   return client
 }

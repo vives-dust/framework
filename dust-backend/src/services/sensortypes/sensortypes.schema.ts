@@ -63,7 +63,10 @@ export const sensorTypeDataResolver = resolve<SensorType, HookContext>({})
 //////////////////////////////////////////////////////////
 
 // Schema for updating existing entries
-export const sensorTypePatchSchema = Type.Partial(sensorTypeSchema, {     // No need to disallow _id here, it is ignored
+export const sensorTypePatchSchema = Type.Partial(
+  // Need to Pick here because otherwise we can inject createdAt, resource_url, ...
+  // No need to disallow _id here, it is ignored; but it makes API more user friendly
+  Type.Pick(sensorTypeSchema, ['_id', 'name', 'type', 'unit', 'description']), {
   $id: 'SensorTypePatch'
 })
 

@@ -43,19 +43,24 @@ export const conversionModel = (app: Application) => {
       all: [
         schemaHooks.validateQuery(conversionModelQueryValidator),
         schemaHooks.resolveQuery(conversionModelQueryResolver),
-        schemaHooks.resolveData(    // Will only run for all methods that have DATA
-          nanoIdDataResolver,
-          timestampsDataResolver,
-        ),
       ],
       find: [],
       get: [],
       create: [
         schemaHooks.validateData(conversionModelDataValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          nanoIdDataResolver,
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(conversionModelDataResolver)
       ],
       patch: [
         schemaHooks.validateData(conversionModelPatchValidator),
+        // Can't run this in "all" hook since we first need to validate before injecting extra props
+        schemaHooks.resolveData(
+          timestampsDataResolver,
+        ),
         schemaHooks.resolveData(conversionModelPatchResolver)
       ],
       remove: []
