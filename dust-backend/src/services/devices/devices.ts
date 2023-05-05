@@ -25,7 +25,7 @@ import { removeTimeStampsExternalResolver } from '../../resolvers/external.resol
 import { setResourceUrlExternalResolver } from '../../resolvers/result.resolvers'
 import { HookContext } from '@feathersjs/feathers';
 
-// import { Sensor } from '../sensors/sensors.class';
+import { Sensor } from '../sensors/sensors.class';
 import { DeviceSensor } from '../devicesensors/devicesensors.class';
 
 export * from './devices.class'
@@ -100,28 +100,29 @@ export const device = (app: Application) => {
 }
 
 async function create_sensors_for_device(context : HookContext) {
-  // // We now need to build sensors based on these devicesensor "descriptions"
-  // const sensors: Array<Sensor> = context.data._devicesensors.map( (ds : DeviceSensor) => {
-  //   return {
-  //     name: ds._sensortype.name,
-  //     device_id: context.data._id.toString(),      // context.data contains the device for which we are creating sensors
-  //     sensortype_id: ds.sensortype_id.toString(),
-  //     meta: ds.meta,
-  //     data_source: {
-  //       source: ds.data_source.source,
-  //       bucket: ds.data_source.bucket,
-  //       measurement: ds.data_source.measurement,
-  //       // TODO - change any-type to correct type...
-  //       tags: Object.keys(ds.data_source.tags).reduce((newObj: any, tag) => { newObj[tag] = context.result.datasource_key; return newObj; }, {}),
-  //       field: ds.data_source.field
-  //     }
-  //   }
-  // });
+  console.log(context.data)
+  // We now need to build sensors based on these devicesensor "descriptions"
+  const sensors: Array<Sensor> = context.data._devicesensors.map( (ds : DeviceSensor) => {
+    return {
+      name: ds._sensortype.name,
+      device_id: context.data._id.toString(),      // context.data contains the device for which we are creating sensors
+      sensortype_id: ds.sensortype_id.toString(),
+      meta: ds.meta,
+      data_source: {
+        source: ds.data_source.source,
+        bucket: ds.data_source.bucket,
+        measurement: ds.data_source.measurement,
+        // TODO - change any-type to correct type...
+        tags: Object.keys(ds.data_source.tags).reduce((newObj: any, tag) => { newObj[tag] = context.result.datasource_key; return newObj; }, {}),
+        field: ds.data_source.field
+      }
+    }
+  });
 
-  // // Last we need to create all these new sensors
-  // await Promise.all(sensors.map(async (sensor : Sensor) => {
-  //   await context.app.service('sensors').create(sensor, context.params);      // Pass the params so the user details (role and such) are passed
-  // }));
+  // Last we need to create all these new sensors
+  await Promise.all(sensors.map(async (sensor : Sensor) => {
+    await context.app.service('sensors').create(sensor, context.params);      // Pass the params so the user details (role and such) are passed
+  }));
 
   return context;
 }

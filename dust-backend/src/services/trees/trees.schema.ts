@@ -56,8 +56,6 @@ export const treeDataSchema = Type.Intersect([
   $id: 'TreeData'
 })
 
-
-
 export type TreeData = Static<typeof treeDataSchema>
 export const treeDataValidator = getValidator(treeDataSchema, dataValidator)
 export const treeDataResolver = resolve<Tree, HookContext>({})

@@ -4,6 +4,9 @@ import type { TransportConnection, Application } from '@feathersjs/feathers'
 import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
+import { sensorClient } from './services/sensors/sensors.shared'
+export type { Sensor, SensorData, SensorQuery, SensorPatch } from './services/sensors/sensors.shared'
+
 import { deviceClient } from './services/devices/devices.shared'
 export type { Device, DeviceData, DeviceQuery, DevicePatch } from './services/devices/devices.shared'
 
@@ -74,5 +77,6 @@ export const createClient = <Configuration = any>(
   client.configure(conversionModelClient)
   client.configure(treeClient)
   client.configure(deviceClient)
+  client.configure(sensorClient)
   return client
 }

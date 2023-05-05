@@ -3,71 +3,74 @@
 import { hooks as schemaHooks } from '@feathersjs/schema'
 
 import {
-  deviceSensorDataValidator,
-  deviceSensorPatchValidator,
-  deviceSensorQueryValidator,
-  deviceSensorResolver,
-  deviceSensorExternalResolver,
-  deviceSensorDataResolver,
-  deviceSensorPatchResolver,
-  deviceSensorQueryResolver,
-} from './devicesensors.schema'
+  sensorDataValidator,
+  sensorPatchValidator,
+  sensorQueryValidator,
+  sensorResolver,
+  sensorExternalResolver,
+  sensorDataResolver,
+  sensorPatchResolver,
+  sensorQueryResolver,
+  sensorTypeGenericResolver
+} from './sensors.schema'
 
 import type { Application } from '../../declarations'
-import { DeviceSensorService, getOptions } from './devicesensors.class'
-import { deviceSensorPath, deviceSensorMethods } from './devicesensors.shared'
+import { SensorService, getOptions } from './sensors.class'
+import { sensorPath, sensorMethods } from './sensors.shared'
 import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
 import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
+import { setResourceUrlExternalResolver } from '../../resolvers/result.resolvers'
 
-export * from './devicesensors.class'
-export * from './devicesensors.schema'
+export * from './sensors.class'
+export * from './sensors.schema'
 
 // A configure function that registers the service and its hooks via `app.configure`
-export const deviceSensor = (app: Application) => {
+export const sensor = (app: Application) => {
   // Register our service on the Feathers application
-  app.use(deviceSensorPath, new DeviceSensorService(getOptions(app)), {
+  app.use(sensorPath, new SensorService(getOptions(app)), {
     // A list of all methods this service exposes externally
-    methods: deviceSensorMethods,
+    methods: sensorMethods,
     // You can add additional custom events to be sent to clients here
     events: []
   })
   // Initialize hooks
-  app.service(deviceSensorPath).hooks({
+  app.service(sensorPath).hooks({
     around: {
       all: [
         schemaHooks.resolveExternal(
-          deviceSensorExternalResolver,
-          removeTimeStampsExternalResolver
+          sensorExternalResolver,
+          removeTimeStampsExternalResolver,
         ),
         schemaHooks.resolveResult(
-          deviceSensorResolver
+          sensorTypeGenericResolver,        // Need to populate the _sensortype first
+          sensorResolver,
+          setResourceUrlExternalResolver,
         )
-      ],
-      get: []
+      ]
     },
     before: {
       all: [
-        schemaHooks.validateQuery(deviceSensorQueryValidator),
-        schemaHooks.resolveQuery(deviceSensorQueryResolver),
+        schemaHooks.validateQuery(sensorQueryValidator),
+        schemaHooks.resolveQuery(sensorQueryResolver)
       ],
       find: [],
       get: [],
       create: [
-        schemaHooks.validateData(deviceSensorDataValidator),
+        schemaHooks.validateData(sensorDataValidator),
         // Can't run this in "all" hook since we first need to validate before injecting extra props
         schemaHooks.resolveData(
           nanoIdDataResolver,
           timestampsDataResolver,
         ),
-        schemaHooks.resolveData(deviceSensorDataResolver)
+        schemaHooks.resolveData(sensorDataResolver)
       ],
       patch: [
-        schemaHooks.validateData(deviceSensorPatchValidator),
+        schemaHooks.validateData(sensorPatchValidator),
         // Can't run this in "all" hook since we first need to validate before injecting extra props
         schemaHooks.resolveData(
           timestampsDataResolver,
         ),
-        schemaHooks.resolveData(deviceSensorPatchResolver)
+        schemaHooks.resolveData(sensorPatchResolver)
       ],
       remove: []
     },
@@ -83,6 +86,6 @@ export const deviceSensor = (app: Application) => {
 // Add this service to the service type index
 declare module '../../declarations' {
   interface ServiceTypes {
-    [deviceSensorPath]: DeviceSensorService
+    [sensorPath]: SensorService
   }
 }
