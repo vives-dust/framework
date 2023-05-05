@@ -50,8 +50,19 @@ export const deviceValidator = getValidator(deviceSchema, dataValidator)
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
+export const deviceAssociationResolver = resolve<Device, HookContext>({
+  // Populate the _tree association using the tree_id field
+  _tree: virtual(async (device, context) => {
+     return ( device.tree_id ? context.app.service('trees').get(device.tree_id) : undefined);
+  }),
+});
+
 export const deviceResolver = resolve<Device, HookContext>({})
-export const deviceExternalResolver = resolve<Device, HookContext>({})
+
+export const deviceExternalResolver = resolve<Device, HookContext>({
+  _tree: async () => undefined,
+})
+
 
 
 //////////////////////////////////////////////////////////
@@ -67,13 +78,6 @@ export const deviceTypeGenericResolver = resolve<Device, HookContext>({
     const result = await context.app.service('devicetypes').find({ query: { type: context.data.devicetype } });   // TODO Can't seem to disable pagination
     if (result.total == 0) throw new Error('Device type not found');    // TODO - Custom error handling
     return result.data[0];
-  }),
-});
-
-// Populate the _tree association using the tree_id field
-export const treeGenericResolver = resolve<Device, HookContext>({
-  _tree: virtual(async (device, context) => {
-     return ( device.tree_id ? context.app.service('trees').get(device.tree_id) : undefined);
   }),
 });
 

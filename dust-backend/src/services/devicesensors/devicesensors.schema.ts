@@ -43,7 +43,8 @@ export const deviceSensorValidator = getValidator(deviceSensorSchema, dataValida
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
-export const deviceSensorResolver = resolve<DeviceSensor, HookContext>({
+
+export const deviceSensorAssociationResolver = resolve<DeviceSensor, HookContext>({
   // Populate the _devicetype and _sensortype fields associated with this devicesensor
   _devicetype: virtual(async (devicesensor, context) => {
     return context.app.service('devicetypes').get(devicesensor.devicetype_id)
@@ -52,6 +53,10 @@ export const deviceSensorResolver = resolve<DeviceSensor, HookContext>({
     return context.app.service('sensortypes').get(devicesensor.sensortype_id)
   }),
 })
+
+export const deviceSensorResolver = resolve<DeviceSensor, HookContext>({
+})
+
 export const deviceSensorExternalResolver = resolve<DeviceSensor, HookContext>({
   _devicetype: async () => undefined,
   _sensortype: async () => undefined,

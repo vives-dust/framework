@@ -12,7 +12,7 @@ import {
   devicePatchResolver,
   deviceQueryResolver,
   deviceTypeGenericResolver,
-  treeGenericResolver,
+  deviceAssociationResolver,
   deviceTypeIdResolver,
   deviceSensorsGenericResolver
 } from './devices.schema'
@@ -49,6 +49,7 @@ export const device = (app: Application) => {
           removeTimeStampsExternalResolver,
         ),
         schemaHooks.resolveResult(
+          deviceAssociationResolver,          // Populate the tree association
           deviceResolver,
           setResourceUrlExternalResolver,
         )
@@ -67,9 +68,7 @@ export const device = (app: Application) => {
         schemaHooks.resolveData(
           nanoIdDataResolver,
           timestampsDataResolver,
-          // Populate associations (this will make sure the ref id's to the associations exist)
           deviceTypeGenericResolver,      // Populate DeviceType association based on the user provided name
-          treeGenericResolver,            // Populate Tree association
           deviceTypeIdResolver,           // Set the DeviceType ID based on the populated association _devicetype
         ),
         schemaHooks.resolveData(deviceDataResolver)     // Cleanup the data before storing it in the database
@@ -79,8 +78,7 @@ export const device = (app: Application) => {
         // Can't run this in "all" hook since we first need to validate before injecting extra props
         schemaHooks.resolveData(
           timestampsDataResolver,
-          // Populate only tree for patch since we do not allow type to be changed (would require sensors to be deleted and recreated)
-          treeGenericResolver,            // Populate Tree association
+          // Don't populate device_type for patch since we do not allow type to be changed (would require sensors to be deleted and recreated)
         ),
         schemaHooks.resolveData(devicePatchResolver)
       ],

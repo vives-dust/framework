@@ -9,6 +9,7 @@ import { NanoIdSchema } from '../../typebox-types/nano_id'
 import { MetaSchema } from '../../typebox-types/meta'
 import { DataSourceSchema } from '../../typebox-types/datasource_spec'
 import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
+import { deviceSchema } from '../devices/devices.schema'
 
 // Main data model schema
 export const sensorSchema = Type.Object(
@@ -29,13 +30,17 @@ export const sensorSchema = Type.Object(
     resource_url: Type.String({ format: 'uri' }),
 
     // Associated Data
-    // _device: Type.Optional(Type.Ref(deviceSchema)),
+    _device: Type.Optional(Type.Ref(deviceSchema)),
     _sensortype: Type.Optional(Type.Ref(sensorTypeSchema)),
 
-    // Type, description and unit of sensor based on associated _sensortype
+    // type, description and unit of sensor based on associated _sensortype
     type: Type.Optional(Type.String()),
     description: Type.Optional(Type.String()),
     unit: Type.Optional(Type.String()),
+
+    // tree_id and tree_url are populated based on associated _device
+    tree_id: Type.Optional(NanoIdSchema),
+    tree_url: Type.Optional(Type.String({ format: 'uri' })),
 
   },
   { $id: 'Sensor', additionalProperties: false }
@@ -51,10 +56,23 @@ export const sensorValidator = getValidator(sensorSchema, dataValidator)
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
+export const sensorAssociationResolver = resolve<Sensor, HookContext>({
+  _sensortype: virtual(async (sensor, context) => {
+    // Populate the sensortype associated with this sensor
+    return context.app.service('sensortypes').get(sensor.sensortype_id)
+  }),
+  _device: virtual(async (sensor, context) => {
+    // Populate the _device associated with this sensor
+    return context.app.service('devices').get(sensor.device_id)
+  }),
+})
+
 export const sensorResolver = resolve<Sensor, HookContext>({
   type: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.type : undefined )),
   description: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.description  : undefined )),
   unit: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.unit  : undefined )),
+  tree_id: virtual(async (sensor, context) => (sensor._device ? sensor._device.tree_id  : undefined )),
+  tree_url: virtual(async (sensor, context) => (sensor._device && sensor._device._tree ? sensor._device._tree.resource_url  : undefined )),
 })
 
 export const sensorExternalResolver = resolve<Sensor, HookContext>({
@@ -62,15 +80,8 @@ export const sensorExternalResolver = resolve<Sensor, HookContext>({
   device_id: async () => undefined,
   sensortype_id: async () => undefined,
   data_source: async () => undefined,
+  _device: async () => undefined,
 })
-
-export const sensorTypeGenericResolver = resolve<Sensor, HookContext>({
-  _sensortype: virtual(async (sensor, context) => {
-    // Populate the sensortype associated with this sensor
-    return context.app.service('sensortypes').get(sensor.sensortype_id)
-  }),
-})
-
 
 
 //////////////////////////////////////////////////////////

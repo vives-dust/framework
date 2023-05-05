@@ -11,7 +11,7 @@ import {
   sensorDataResolver,
   sensorPatchResolver,
   sensorQueryResolver,
-  sensorTypeGenericResolver
+  sensorAssociationResolver,
 } from './sensors.schema'
 
 import type { Application } from '../../declarations'
@@ -42,7 +42,7 @@ export const sensor = (app: Application) => {
           removeTimeStampsExternalResolver,
         ),
         schemaHooks.resolveResult(
-          sensorTypeGenericResolver,        // Need to populate the _sensortype first
+          sensorAssociationResolver,        // Resolve _sensortype and _device associations first
           sensorResolver,
           setResourceUrlExternalResolver,
         )

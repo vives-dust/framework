@@ -11,6 +11,7 @@ import {
   deviceSensorDataResolver,
   deviceSensorPatchResolver,
   deviceSensorQueryResolver,
+  deviceSensorAssociationResolver,
 } from './devicesensors.schema'
 
 import type { Application } from '../../declarations'
@@ -40,6 +41,7 @@ export const deviceSensor = (app: Application) => {
           removeTimeStampsExternalResolver
         ),
         schemaHooks.resolveResult(
+          deviceSensorAssociationResolver,
           deviceSensorResolver
         )
       ],
