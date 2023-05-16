@@ -10,6 +10,7 @@ import { logError } from './hooks/log-error'
 import { mongodb } from './mongodb'
 import { services } from './services/index'
 import { channels } from './channels'
+import { influxdb } from './influxdb'
 
 const app: Application = koa(feathers())
 
@@ -34,6 +35,7 @@ app.configure(
 )
 app.configure(channels)
 app.configure(mongodb)
+app.configure(influxdb)
 app.configure(services)
 
 // Register hooks that run on all service methods
