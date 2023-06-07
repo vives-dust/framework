@@ -7,9 +7,10 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import { MetaSchema } from '../../typebox-types/meta'
-import { DataSourceSchema } from '../../typebox-types/datasource_spec'
 import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
 import { deviceSchema } from '../devices/devices.schema'
+import { measurementSchema } from '../measurements/measurements.schema'
+import { dataSourceSchema } from '../../typebox-types/datasource_spec'
 
 // Main data model schema
 export const sensorSchema = Type.Object(
@@ -20,7 +21,7 @@ export const sensorSchema = Type.Object(
     device_id: NanoIdSchema,
     sensortype_id: NanoIdSchema,
     meta: MetaSchema,
-    data_source: DataSourceSchema,
+    data_source: dataSourceSchema,        // TODO: Ref ?
 
     // Auto-generated fields (also stored in database)
     createdAt: Type.String({ format: 'date-time' }),
@@ -28,6 +29,9 @@ export const sensorSchema = Type.Object(
 
     // Computed properties
     resource_url: Type.String({ format: 'uri' }),
+
+    // Measurements
+    last_value: Type.Ref(measurementSchema),
 
     // Associated Data
     _device: Type.Optional(Type.Ref(deviceSchema)),
@@ -65,6 +69,31 @@ export const sensorAssociationResolver = resolve<Sensor, HookContext>({
     // Populate the _device associated with this sensor
     return context.app.service('devices').get(sensor.device_id)
   }),
+  last_value: virtual(async (sensor, context) => {
+    // Populate the last value of this sensor
+    const result = await context.app.service('measurements').find({
+      query: {
+        bucket: sensor.data_source.bucket,
+        measurement: sensor.data_source.measurement,
+        tags: sensor.data_source.tags,
+        drop: ['codingRate'],   // FIX: For duplicate series
+        fields: [ sensor.data_source.field ],
+        period: context.query?.period,
+        start: context.query?.start,
+        stop: context.query?.stop,
+        every: context.query?.every,
+        aliases: {
+          [sensor.data_source.field]: 'value',
+          '_time': 'time',
+        },
+        pruneTags: true,
+      }
+    });
+    
+    if (result.length == 0) throw new Error('Last value of measurement not found');    // TODO - Custom error handling
+    return result[0];
+  }),
+
 })
 
 export const sensorResolver = resolve<Sensor, HookContext>({

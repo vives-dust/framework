@@ -6,10 +6,10 @@ import type { Static } from '@feathersjs/typebox'
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
-import { DataSourceSpecSchema } from '../../typebox-types/datasource_spec'
 import { MetaSchema } from '../../typebox-types/meta'
 import { deviceTypeSchema } from '../devicetypes/devicetypes.schema'
 import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
+import { dataSourceSpecSchema } from '../../typebox-types/datasource_spec'
 
 // Main data model schema
 export const deviceSensorSchema = Type.Object(
@@ -18,8 +18,8 @@ export const deviceSensorSchema = Type.Object(
     _id: NanoIdSchema,
     devicetype_id: NanoIdSchema,
     sensortype_id: NanoIdSchema,
-    data_source: DataSourceSpecSchema,
-    meta: MetaSchema,
+    data_source: dataSourceSpecSchema,        // TODO: Ref ?
+    meta: MetaSchema,                         // TODO: Ref ?
 
     // Auto-generated fields (also stored in database)
     createdAt: Type.String({ format: 'date-time' }),

@@ -20,17 +20,17 @@ export const TagsSchema = Type.Object({
 
 // Spec is for SensorType where we define the binding between our models
 // and the data source representation. Example devId => datasource_key
-export const DataSourceSpecSchema = Type.Object({
+export const dataSourceSpecSchema = Type.Object({
   source: StringEnum(['influxdb']),
   bucket: StringEnum(['dust']),
-  measurement: StringEnum(['dust-sensor', 'weatherstation', 'weatherapi']),
+  measurement: StringEnum(['dust-sensor', 'weatherstation', 'weatherapi']),     // TODO: Import these
   tags: TagsSpecSchema,
   field: Type.String(),
 });
 
-// Normal is for Sensor where the key fields are filled with the actual data source value.
-export const DataSourceSchema = Type.Union([
-  DataSourceSpecSchema,
+// Plain schema is for Sensor where the key fields are filled with the actual data source value.
+export const dataSourceSchema = Type.Intersect([
+  dataSourceSpecSchema,
   Type.Object({
     tags: TagsSchema,       // We override the specs here
   })

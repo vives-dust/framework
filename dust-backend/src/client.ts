@@ -7,9 +7,7 @@ import type { AuthenticationClientOptions } from '@feathersjs/authentication-cli
 import { measurementClient } from './services/measurements/measurements.shared'
 export type {
   Measurement,
-  MeasurementData,
   MeasurementQuery,
-  MeasurementPatch
 } from './services/measurements/measurements.shared'
 
 import { sensorClient } from './services/sensors/sensors.shared'
