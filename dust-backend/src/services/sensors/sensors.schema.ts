@@ -10,6 +10,7 @@ import { MetaSchema } from '../../typebox-types/meta'
 import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
 import { measurementSchema } from '../measurements/measurements.schema'
 import { dataSourceSchema } from '../../typebox-types/datasource_spec'
+import { Query } from '@feathersjs/feathers'
 
 // Main data model schema
 export const sensorSchema = Type.Object(
@@ -31,6 +32,7 @@ export const sensorSchema = Type.Object(
 
     // Measurements
     last_value: Type.Ref(measurementSchema),
+    values: Type.Optional(Type.Array(Type.Ref(measurementSchema))),
 
     // Associated Data
     _sensortype: Type.Optional(Type.Ref(sensorTypeSchema)),
@@ -61,6 +63,28 @@ export const sensorValidator = getValidator(sensorSchema, dataValidator)
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
+// TODO: Refactor to utility / helper
+// TODO: Type for query
+// @context.query: Leave empty for just the last value
+const fetch_values = (sensor : Sensor, context : HookContext, query: Query) => context.app.service('measurements').find({
+  query: {
+    bucket: sensor.data_source.bucket,
+    measurement: sensor.data_source.measurement,
+    tags: sensor.data_source.tags,
+    drop: ['codingRate'],   // FIX: For duplicate series
+    fields: [ sensor.data_source.field ],
+    period: query?.period,
+    start: query?.start,
+    stop: query?.stop,
+    every: query?.every,
+    aliases: {
+      [sensor.data_source.field]: 'value',
+      '_time': 'time',
+    },
+    pruneTags: true,
+  }
+});
+
 export const sensorAssociationResolver = resolve<Sensor, HookContext>({
   _sensortype: virtual(async (sensor, context) => {
     // Populate the sensortype associated with this sensor
@@ -75,29 +99,20 @@ export const sensorAssociationResolver = resolve<Sensor, HookContext>({
   }),
   last_value: virtual(async (sensor, context) => {
     // Populate the last value of this sensor
-    const result = await context.app.service('measurements').find({
-      query: {
-        bucket: sensor.data_source.bucket,
-        measurement: sensor.data_source.measurement,
-        tags: sensor.data_source.tags,
-        drop: ['codingRate'],   // FIX: For duplicate series
-        fields: [ sensor.data_source.field ],
-        period: context.query?.period,
-        start: context.query?.start,
-        stop: context.query?.stop,
-        every: context.query?.every,
-        aliases: {
-          [sensor.data_source.field]: 'value',
-          '_time': 'time',
-        },
-        pruneTags: true,
-      }
-    });
+    const result = await fetch_values(sensor, context, {})
     
     if (result.length == 0) throw new Error('Last value of measurement not found');    // TODO - Custom error handling
     return result[0];
   }),
+})
 
+export const sensorValuesResolver = resolve<Sensor, HookContext>({
+  values: virtual(async (sensor, context) => {
+    if (!context.params.provider) return undefined;   // Don't populate when internal call
+
+    const result = await fetch_values(sensor, context, context.query)
+    return result;
+  }),
 })
 
 export const sensorResolver = resolve<Sensor, HookContext>({

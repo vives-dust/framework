@@ -12,6 +12,7 @@ import {
   sensorPatchResolver,
   sensorQueryResolver,
   sensorAssociationResolver,
+  sensorValuesResolver,
 } from './sensors.schema'
 
 import type { Application } from '../../declarations'
@@ -47,6 +48,11 @@ export const sensor = (app: Application) => {
           sensorResolver,
           setResourceUrlExternalResolver,
         )
+      ],
+      get: [
+        schemaHooks.resolveResult(
+          sensorValuesResolver
+        ),
       ]
     },
     before: {
