@@ -28,7 +28,7 @@ export const deviceSchema = Type.Object(
 
     // Associated Data
     _devicetype: Type.Optional(Type.Ref(deviceTypeSchema)),
-    _tree: Type.Optional(Type.Ref(treeSchema)),
+    // _tree: Type.Optional(Type.Ref(treeSchema)),
     _devicesensors: Type.Optional(Type.Array(Type.Ref(deviceSensorSchema))),
 
     // Computed properties
@@ -52,15 +52,15 @@ export const deviceValidator = getValidator(deviceSchema, dataValidator)
 
 export const deviceAssociationResolver = resolve<Device, HookContext>({
   // Populate the _tree association using the tree_id field
-  _tree: virtual(async (device, context) => {
-     return ( device.tree_id ? context.app.service('trees').get(device.tree_id) : undefined);
-  }),
+  // _tree: virtual(async (device, context) => {
+  //    return ( device.tree_id ? context.app.service('trees').get(device.tree_id) : undefined);
+  // }),
 });
 
 export const deviceResolver = resolve<Device, HookContext>({})
 
 export const deviceExternalResolver = resolve<Device, HookContext>({
-  _tree: async () => undefined,
+  tree_id: async () => undefined,
 })
 
 
@@ -114,7 +114,7 @@ export const deviceDataValidator = getValidator(deviceDataSchema, dataValidator)
 export const deviceDataResolver = resolve<Device, HookContext>({
   devicetype: async () => undefined,
   _devicetype: async () => undefined,
-  _tree: async () => undefined,
+  // _tree: async () => undefined,
 })
 
 
@@ -136,7 +136,7 @@ export const devicePatchValidator = getValidator(devicePatchSchema, dataValidato
 export const devicePatchResolver = resolve<Device, HookContext>({
   devicetype: async () => undefined,
   _devicetype: async () => undefined,
-  _tree: async () => undefined,
+  // _tree: async () => undefined,
 })
 
 
@@ -146,7 +146,7 @@ export const devicePatchResolver = resolve<Device, HookContext>({
 //////////////////////////////////////////////////////////
 
 // Schema for allowed query properties
-export const deviceQueryProperties = Type.Pick(deviceSchema, ['_id'])
+export const deviceQueryProperties = Type.Pick(deviceSchema, ['_id', 'tree_id', 'name'])
 export const deviceQuerySchema = Type.Intersect(
   [
     querySyntax(deviceQueryProperties),

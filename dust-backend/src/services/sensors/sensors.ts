@@ -20,6 +20,7 @@ import { sensorPath, sensorMethods } from './sensors.shared'
 import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
 import { removeTimeStampsExternalResolver } from '../../resolvers/external.resolvers'
 import { setResourceUrlExternalResolver } from '../../resolvers/result.resolvers'
+import { disallow } from 'feathers-hooks-common'
 
 export * from './sensors.class'
 export * from './sensors.schema'
@@ -53,7 +54,7 @@ export const sensor = (app: Application) => {
         schemaHooks.validateQuery(sensorQueryValidator),
         schemaHooks.resolveQuery(sensorQueryResolver)
       ],
-      find: [],
+      find: [ disallow('external') ],
       get: [],
       create: [
         schemaHooks.validateData(sensorDataValidator),

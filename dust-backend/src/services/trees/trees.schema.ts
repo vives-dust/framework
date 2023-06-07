@@ -1,5 +1,5 @@
 // // For more information about this file see https://dove.feathersjs.com/guides/cli/service.schemas.html
-import { resolve } from '@feathersjs/schema'
+import { resolve, virtual } from '@feathersjs/schema'
 import { Type, getValidator, querySyntax } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
 
@@ -7,6 +7,8 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import { LocationSchema } from '../../typebox-types/location'
+import { sensorSchema } from '../sensors/sensors.schema'
+import { deviceSchema } from '../devices/devices.schema'
 
 // Main data model schema
 export const treeSchema = Type.Object(
@@ -25,6 +27,10 @@ export const treeSchema = Type.Object(
     // Computed properties
     resource_url: Type.String({ format: 'uri' }),
 
+    // Associated Data
+    _devices: Type.Optional(Type.Array(Type.Ref(deviceSchema))),
+    _sensors: Type.Optional(Type.Array(Type.Ref(sensorSchema))),
+
   },
   { $id: 'Tree', additionalProperties: false }
 )
@@ -40,8 +46,29 @@ export const treeValidator = getValidator(treeSchema, dataValidator)
 //////////////////////////////////////////////////////////
 
 export const treeResolver = resolve<Tree, HookContext>({})
-export const treeExternalResolver = resolve<Tree, HookContext>({})
 
+export const treeDevicesResolver = resolve<Tree, HookContext>({
+  // Populate the _devices association using the tree_id field
+  _devices: virtual(async (tree, context) => {
+    const result = await context.app.service('devices').find({
+      query: {
+        tree_id: tree._id,
+        $select: ['_id', 'name']
+      }
+    });
+    return result.data;       // TODO Can't seem to disable pagination
+  }),
+});
+export const treeSensorsResolver = resolve<Tree, HookContext>({
+  // Populate the _sensors association based on the _devices
+  _sensors: virtual(async (tree, context) => {
+    const deviceIds = tree._devices?.map(d => d._id) || [];
+    const result = await context.app.service('sensors').find({ query: { device_id: { $in: deviceIds } } });
+    return result.data;      // TODO Can't seem to disable pagination
+  }),
+});
+
+export const treeExternalResolver = resolve<Tree, HookContext>({})
 
 
 //////////////////////////////////////////////////////////

@@ -34,7 +34,7 @@ export const sensorSchema = Type.Object(
     last_value: Type.Ref(measurementSchema),
 
     // Associated Data
-    _device: Type.Optional(Type.Ref(deviceSchema)),
+    // _device: Type.Optional(Type.Ref(deviceSchema)),
     _sensortype: Type.Optional(Type.Ref(sensorTypeSchema)),
 
     // type, description and unit of sensor based on associated _sensortype
@@ -65,10 +65,10 @@ export const sensorAssociationResolver = resolve<Sensor, HookContext>({
     // Populate the sensortype associated with this sensor
     return context.app.service('sensortypes').get(sensor.sensortype_id)
   }),
-  _device: virtual(async (sensor, context) => {
-    // Populate the _device associated with this sensor
-    return context.app.service('devices').get(sensor.device_id)
-  }),
+  // _device: virtual(async (sensor, context) => {
+  //   // Populate the _device associated with this sensor
+  //   return context.app.service('devices').get(sensor.device_id)
+  // }),
   last_value: virtual(async (sensor, context) => {
     // Populate the last value of this sensor
     const result = await context.app.service('measurements').find({
@@ -100,16 +100,16 @@ export const sensorResolver = resolve<Sensor, HookContext>({
   type: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.type : undefined )),
   description: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.description  : undefined )),
   unit: virtual(async (sensor, context) => (sensor._sensortype ? sensor._sensortype.unit  : undefined )),
-  tree_id: virtual(async (sensor, context) => (sensor._device ? sensor._device.tree_id  : undefined )),
-  tree_url: virtual(async (sensor, context) => (sensor._device && sensor._device._tree ? sensor._device._tree.resource_url  : undefined )),
+  // tree_id: virtual(async (sensor, context) => (sensor._device ? sensor._device.tree_id  : undefined )),
+  // tree_url: virtual(async (sensor, context) => (sensor._device && sensor._device._tree ? sensor._device._tree.resource_url  : undefined )),
 })
 
 export const sensorExternalResolver = resolve<Sensor, HookContext>({
   _sensortype: async () => undefined,
-  device_id: async () => undefined,
+  // device_id: async () => undefined,
   sensortype_id: async () => undefined,
   data_source: async () => undefined,
-  _device: async () => undefined,
+  // _device: async () => undefined,
 })
 
 
@@ -154,7 +154,7 @@ export const sensorPatchResolver = resolve<Sensor, HookContext>({})
 //////////////////////////////////////////////////////////
 
 // Schema for allowed query properties
-export const sensorQueryProperties = Type.Pick(sensorSchema, ['_id'])
+export const sensorQueryProperties = Type.Pick(sensorSchema, ['_id', 'device_id'])
 export const sensorQuerySchema = Type.Intersect(
   [
     querySyntax(sensorQueryProperties),

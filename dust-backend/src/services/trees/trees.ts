@@ -10,7 +10,9 @@ import {
   treeExternalResolver,
   treeDataResolver,
   treePatchResolver,
-  treeQueryResolver
+  treeQueryResolver,
+  treeDevicesResolver,
+  treeSensorsResolver
 } from './trees.schema'
 
 import type { Application } from '../../declarations'
@@ -43,6 +45,13 @@ export const tree = (app: Application) => {
         schemaHooks.resolveResult(
           treeResolver,
           setResourceUrlExternalResolver,
+        )
+      ],
+      get: [
+        // Here we provide listing of devices and sensors belonging to the tree
+        schemaHooks.resolveResult(
+          treeDevicesResolver,
+          treeSensorsResolver,
         )
       ]
     },
