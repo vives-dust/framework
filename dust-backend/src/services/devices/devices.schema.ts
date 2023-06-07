@@ -7,7 +7,6 @@ import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import { deviceTypeSchema } from '../devicetypes/devicetypes.schema'
-import { treeSchema } from '../trees/trees.schema'
 import { deviceSensorSchema } from '../devicesensors/devicesensors.schema'
 
 // Main data model schema
@@ -28,7 +27,6 @@ export const deviceSchema = Type.Object(
 
     // Associated Data
     _devicetype: Type.Optional(Type.Ref(deviceTypeSchema)),
-    // _tree: Type.Optional(Type.Ref(treeSchema)),
     _devicesensors: Type.Optional(Type.Array(Type.Ref(deviceSensorSchema))),
 
     // Computed properties
@@ -50,18 +48,9 @@ export const deviceValidator = getValidator(deviceSchema, dataValidator)
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
-export const deviceAssociationResolver = resolve<Device, HookContext>({
-  // Populate the _tree association using the tree_id field
-  // _tree: virtual(async (device, context) => {
-  //    return ( device.tree_id ? context.app.service('trees').get(device.tree_id) : undefined);
-  // }),
-});
-
 export const deviceResolver = resolve<Device, HookContext>({})
 
-export const deviceExternalResolver = resolve<Device, HookContext>({
-  tree_id: async () => undefined,
-})
+export const deviceExternalResolver = resolve<Device, HookContext>({})
 
 
 
@@ -114,7 +103,6 @@ export const deviceDataValidator = getValidator(deviceDataSchema, dataValidator)
 export const deviceDataResolver = resolve<Device, HookContext>({
   devicetype: async () => undefined,
   _devicetype: async () => undefined,
-  // _tree: async () => undefined,
 })
 
 
@@ -136,7 +124,6 @@ export const devicePatchValidator = getValidator(devicePatchSchema, dataValidato
 export const devicePatchResolver = resolve<Device, HookContext>({
   devicetype: async () => undefined,
   _devicetype: async () => undefined,
-  // _tree: async () => undefined,
 })
 
 

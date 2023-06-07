@@ -5,10 +5,7 @@ import authenticationClient from '@feathersjs/authentication-client'
 import type { AuthenticationClientOptions } from '@feathersjs/authentication-client'
 
 import { measurementClient } from './services/measurements/measurements.shared'
-export type {
-  Measurement,
-  MeasurementQuery,
-} from './services/measurements/measurements.shared'
+export type { Measurement, MeasurementQuery } from './services/measurements/measurements.shared'
 
 import { sensorClient } from './services/sensors/sensors.shared'
 export type { Sensor, SensorData, SensorQuery, SensorPatch } from './services/sensors/sensors.shared'

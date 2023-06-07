@@ -12,7 +12,6 @@ import {
   devicePatchResolver,
   deviceQueryResolver,
   deviceTypeGenericResolver,
-  deviceAssociationResolver,
   deviceTypeIdResolver,
   deviceSensorsGenericResolver
 } from './devices.schema'
@@ -49,7 +48,6 @@ export const device = (app: Application) => {
           removeTimeStampsExternalResolver,
         ),
         schemaHooks.resolveResult(
-          deviceAssociationResolver,          // Populate the tree association
           deviceResolver,
           setResourceUrlExternalResolver,
         )

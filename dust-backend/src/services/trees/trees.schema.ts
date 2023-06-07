@@ -48,8 +48,9 @@ export const treeValidator = getValidator(treeSchema, dataValidator)
 export const treeResolver = resolve<Tree, HookContext>({})
 
 export const treeDevicesResolver = resolve<Tree, HookContext>({
-  // Populate the _devices association using the tree_id field
   _devices: virtual(async (tree, context) => {
+    if (!context.params.provider) return undefined;   // Don't populate when internal call - circular dependency !
+
     const result = await context.app.service('devices').find({
       query: {
         tree_id: tree._id,
@@ -59,9 +60,11 @@ export const treeDevicesResolver = resolve<Tree, HookContext>({
     return result.data;       // TODO Can't seem to disable pagination
   }),
 });
+
 export const treeSensorsResolver = resolve<Tree, HookContext>({
-  // Populate the _sensors association based on the _devices
   _sensors: virtual(async (tree, context) => {
+    if (!context.params.provider) return undefined;   // Don't populate when internal call - circular dependency !
+
     const deviceIds = tree._devices?.map(d => d._id) || [];
     const result = await context.app.service('sensors').find({ query: { device_id: { $in: deviceIds } } });
     return result.data;      // TODO Can't seem to disable pagination
