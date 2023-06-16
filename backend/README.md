@@ -44,7 +44,7 @@ $ feathers help                           # Show all commands
 
 Down below you can find a database model of how the MongoDB is organised.
 
-![Datamodel](../backend/img/backend-datamodel-third-iteration.drawio.png)
+![Datamodel](../backend/img/backend-datamodel-last-iteration.drawio.png)
 
 ## Help
 
