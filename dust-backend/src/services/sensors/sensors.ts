@@ -15,7 +15,7 @@ import {
   sensorValuesResolver,
 } from './sensors.schema'
 
-import type { Application } from '../../declarations'
+import type { Application, HookContext } from '../../declarations'
 import { SensorService, getOptions } from './sensors.class'
 import { sensorPath, sensorMethods } from './sensors.shared'
 import { nanoIdDataResolver, timestampsDataResolver } from '../../resolvers/data.resolvers'
@@ -61,7 +61,9 @@ export const sensor = (app: Application) => {
         schemaHooks.resolveQuery(sensorQueryResolver)
       ],
       find: [ disallow('external') ],
-      get: [],
+      get: [
+        extract_measurement_query_to_context,
+      ],
       create: [
         schemaHooks.validateData(sensorDataValidator),
         // Can't run this in "all" hook since we first need to validate before injecting extra props
@@ -88,6 +90,29 @@ export const sensor = (app: Application) => {
       all: []
     }
   })
+}
+
+// Bit of a back but we need to remove the query properties that are
+// needed for the measurements from params.query because these are used
+// for the sensor selection itself.
+const extract_measurement_query_to_context = (context: HookContext) => {
+  if (context.params.query) {
+    const { query: {
+        period, start, stop, every,
+        ...query
+      }
+    } = context.params;
+    
+    context.params = {
+      ...context.params,
+      query,
+      measurementQuery: {
+        period, start, stop, every
+      }
+    }
+
+    return context;
+  }
 }
 
 // Add this service to the service type index

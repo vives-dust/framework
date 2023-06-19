@@ -8,6 +8,14 @@ export enum Period {
   '1h', '24h', '7d', '31d', '1y', 'all', 'last'
 }
 
+export enum Interval {
+  M1 = '1m',
+  M5 = '5m',
+  M30 = '30m',
+  H2 = '2h',
+  H24 ='24h'
+}
+
 const periods = {
   '1h': { start: '-1h', every: '1m' },
   '24h': { start: '-24h', every: '5m' },
@@ -18,7 +26,8 @@ const periods = {
   'last': { start: '0', every: undefined as any }
 };
 
-export const valid_periods : string[] = Object.keys(periods);;
+export const valid_periods : string[] = Object.keys(periods);
+export const valid_intervals : string[] = Object.values(Interval);
 
 const QueryHelper = {
 
@@ -75,7 +84,7 @@ export interface InfluxDBQueryParams {
   period?: Period,        // Takes precedence over start/stop - last is default if start/stop is not specified either
   start?: string,
   stop?: string,
-  every?: string,         // Takes precedence over period.every
+  every?: Interval,         // Takes precedence over period.every
   aliases?: { [key: string]: string },
   pruneTags?: boolean
 }

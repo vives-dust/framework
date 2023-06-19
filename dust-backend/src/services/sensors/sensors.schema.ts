@@ -8,7 +8,7 @@ import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
 import { MetaSchema } from '../../typebox-types/meta'
 import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
-import { measurementSchema } from '../measurements/measurements.schema'
+import { measurementQueryProperties, measurementSchema } from '../measurements/measurements.schema'
 import { dataSourceSchema } from '../../typebox-types/datasource_spec'
 import { Query } from '@feathersjs/feathers'
 
@@ -57,14 +57,12 @@ export const sensorSchema = Type.Object(
 export type Sensor = Static<typeof sensorSchema>
 export const sensorValidator = getValidator(sensorSchema, dataValidator)
 
-
-
 //////////////////////////////////////////////////////////
 // RESULT RESOLVERS
 //////////////////////////////////////////////////////////
 
 // TODO: Refactor to utility / helper
-// TODO: Type for query
+// TODO: Fix query type
 // @context.query: Leave empty for just the last value
 const fetch_values = (sensor : Sensor, context : HookContext, query: Query) => context.app.service('measurements').find({
   query: {
@@ -110,7 +108,7 @@ export const sensorValuesResolver = resolve<Sensor, HookContext>({
   values: virtual(async (sensor, context) => {
     if (!context.params.provider) return undefined;   // Don't populate when internal call
 
-    const result = await fetch_values(sensor, context, context.query)
+    const result = await fetch_values(sensor, context, context.params.measurementQuery)
     return result;
   }),
 })
@@ -177,12 +175,14 @@ export const sensorQueryProperties = Type.Pick(sensorSchema, ['_id', 'device_id'
 export const sensorQuerySchema = Type.Intersect(
   [
     querySyntax(sensorQueryProperties),
+    Type.Partial(Type.Pick(measurementQueryProperties, [
+      'period', 'start', 'stop', 'every'    // Only these are allowed from via sensors endpoint to select measurements
+    ])),
     // Add additional query properties here
     Type.Object({}, { additionalProperties: false })
   ],
   { additionalProperties: false }
 )
-
 export type SensorQuery = Static<typeof sensorQuerySchema>
 export const sensorQueryValidator = getValidator(sensorQuerySchema, queryValidator)
 export const sensorQueryResolver = resolve<SensorQuery, HookContext>({})

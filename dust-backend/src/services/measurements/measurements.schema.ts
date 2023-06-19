@@ -2,7 +2,7 @@
 import { resolve } from '@feathersjs/schema'
 import { Type, getValidator, querySyntax, StringEnum } from '@feathersjs/typebox'
 import type { Static } from '@feathersjs/typebox'
-import { valid_periods } from '../../influxdb/query_builder';
+import { valid_intervals, valid_periods } from '../../influxdb/query_builder';
 
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
@@ -35,7 +35,7 @@ export const measurementQueryProperties = Type.Object(
     period: Type.Optional(StringEnum(valid_periods)),
     start: Type.Optional(Type.String()),
     stop: Type.Optional(Type.String()),
-    every: Type.Optional(Type.String()),
+    every: Type.Optional(StringEnum(valid_intervals)),
     aliases: Type.Optional(Type.Object({}, { additionalProperties: true })),
     pruneTags: Type.Optional(Type.Boolean()),
   }
