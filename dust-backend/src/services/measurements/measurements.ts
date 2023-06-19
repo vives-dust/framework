@@ -12,6 +12,7 @@ import {
 import type { Application } from '../../declarations'
 import { MeasurementService, getOptions } from './measurements.class'
 import { measurementPath, measurementMethods } from './measurements.shared'
+import { disallow } from 'feathers-hooks-common'
 
 export * from './measurements.class'
 export * from './measurements.schema'
@@ -35,7 +36,7 @@ export const measurement = (app: Application) => {
     },
     before: {
       all: [
-        // disallow('external'),          // TODO: Enable this !
+        disallow('external'),
         schemaHooks.validateQuery(measurementQueryValidator),
         schemaHooks.resolveQuery(measurementQueryResolver)
       ],
