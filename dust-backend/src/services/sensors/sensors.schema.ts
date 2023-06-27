@@ -11,6 +11,8 @@ import { sensorTypeSchema } from '../sensortypes/sensortypes.schema'
 import { measurementQueryProperties, measurementSchema } from '../measurements/measurements.schema'
 import { dataSourceSchema } from '../../typebox-types/datasource_spec'
 import { Query } from '@feathersjs/feathers'
+import { conversionModelSchema } from '../conversionmodels/conversionmodels.schema'
+import { ValueMapper } from '../conversionmodels/converters/value_mapper'
 
 // Main data model schema
 export const sensorSchema = Type.Object(
@@ -38,7 +40,7 @@ export const sensorSchema = Type.Object(
     _sensortype: Type.Optional(Type.Ref(sensorTypeSchema)),
     _tree: Type.Optional(Type.Any()),        // TODO: Have not been able to Ref treeSchema here
     // Fail: schema implicitly has type 'any' because it does not have a type annotation and is referenced directly or indirectly in its own initializer.ts(7022)
-
+    _conversion_model: Type.Optional(Type.Ref(conversionModelSchema)),
 
     // type, description and unit of sensor based on associated _sensortype
     type: Type.Optional(Type.String()),
@@ -95,10 +97,20 @@ export const sensorAssociationResolver = resolve<Sensor, HookContext>({
     const device = await context.app.service('devices').get(sensor.device_id);
     return context.app.service('trees').get(device.tree_id);
   }),
+  _conversion_model: virtual(async (sensor, context) => {
+    let model = (sensor.meta.conversion_model_id ? await context.app.service('conversionmodels').get(sensor.meta.conversion_model_id) : undefined)
+    if (model) {
+      sensor.meta.conversion_model_name = model.name;
+      sensor.meta.conversion_model_id = undefined;
+    }
+    return model;
+  }),
+})
+
+export const sensorLastValueResolver = resolve<Sensor, HookContext>({
   last_value: virtual(async (sensor, context) => {
-    // Populate the last value of this sensor
     const result = await fetch_values(sensor, context, {})
-    
+
     if (result.length == 0) throw new Error('Last value of measurement not found');    // TODO - Custom error handling
     return result[0];
   }),
@@ -110,6 +122,37 @@ export const sensorValuesResolver = resolve<Sensor, HookContext>({
 
     const result = await fetch_values(sensor, context, context.params.measurementQuery)
     return result;
+  }),
+})
+
+export const convertSampleValues = resolve<Sensor, HookContext>({
+  values: virtual(async (sensor, context) => {
+    if (!sensor._conversion_model || !sensor._sensortype || !sensor.values) return sensor.values;
+  
+    let mapper = new ValueMapper(sensor._conversion_model.samples);
+  
+    // Convert unit
+    if (sensor._sensortype.unit === sensor._conversion_model.input_unit) {
+      sensor.unit = sensor._conversion_model.output_unit;
+    } else {
+      throw new Error('Conversion model input unit does not match sample unit');
+    }
+
+    return mapper.convert_values(sensor.values);
+  }),
+  last_value: virtual(async (sensor, context) => {
+    if (!sensor._conversion_model || !sensor._sensortype || !sensor.last_value) return sensor.last_value;
+  
+    let mapper = new ValueMapper(sensor._conversion_model.samples);
+  
+    // Convert unit
+    if (sensor._sensortype.unit === sensor._conversion_model.input_unit) {
+      sensor.unit = sensor._conversion_model.output_unit;
+    } else {
+      throw new Error('Conversion model input unit does not match sample unit');
+    }
+
+    return mapper.convert_value(sensor.last_value);
   }),
 })
 
@@ -127,6 +170,7 @@ export const sensorExternalResolver = resolve<Sensor, HookContext>({
   sensortype_id: async () => undefined,
   data_source: async () => undefined,
   _tree: async () => undefined,
+  _conversion_model: async () => undefined,
 })
 
 

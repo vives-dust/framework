@@ -13,6 +13,8 @@ import {
   sensorQueryResolver,
   sensorAssociationResolver,
   sensorValuesResolver,
+  sensorLastValueResolver,
+  convertSampleValues,
 } from './sensors.schema'
 
 import type { Application, HookContext } from '../../declarations'
@@ -47,6 +49,8 @@ export const sensor = (app: Application) => {
           sensorAssociationResolver,        // Resolve _sensortype and _device associations first
           sensorResolver,
           setResourceUrlExternalResolver,
+          sensorLastValueResolver,
+          convertSampleValues,
         )
       ],
       get: [

@@ -6,6 +6,7 @@ import type { Static } from '@feathersjs/typebox'
 import type { HookContext } from '../../declarations'
 import { dataValidator, queryValidator } from '../../validators'
 import { NanoIdSchema } from '../../typebox-types/nano_id'
+import { conversionSampleSchema } from '../../typebox-types/conversion_sample'
 
 // Main data model schema
 export const conversionModelSchema = Type.Object(
@@ -16,10 +17,7 @@ export const conversionModelSchema = Type.Object(
     description: Type.String(),
     input_unit: Type.String(),
     output_unit: Type.String(),
-    samples: Type.Array(Type.Object({
-      input_value: Type.Number(),
-      output_value: Type.Number(),
-    }), { minItems: 1 }),
+    samples: Type.Array(conversionSampleSchema, { minItems: 1 }),     // TODO: Can't seem to Ref schema here ! Why not?
 
     // Auto-generated fields (also stored in database)
     createdAt: Type.String({ format: 'date-time' }),
