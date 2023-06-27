@@ -98,12 +98,7 @@ export const sensorAssociationResolver = resolve<Sensor, HookContext>({
     return context.app.service('trees').get(device.tree_id);
   }),
   _conversion_model: virtual(async (sensor, context) => {
-    let model = (sensor.meta.conversion_model_id ? await context.app.service('conversionmodels').get(sensor.meta.conversion_model_id) : undefined)
-    if (model) {
-      sensor.meta.conversion_model_name = model.name;
-      sensor.meta.conversion_model_id = undefined;
-    }
-    return model;
+    return (sensor.meta.conversion_model_id ? await context.app.service('conversionmodels').get(sensor.meta.conversion_model_id) : undefined)
   }),
 })
 
@@ -170,6 +165,15 @@ export const sensorExternalResolver = resolve<Sensor, HookContext>({
   sensortype_id: async () => undefined,
   data_source: async () => undefined,
   _tree: async () => undefined,
+  meta: async (meta, sensor, context) => {
+    return {
+      ...meta,
+      ...{
+        conversion_model_id: undefined,
+        conversion_model_name: sensor._conversion_model?.name
+      }
+    }
+  },
   _conversion_model: async () => undefined,
 })
 
@@ -181,7 +185,10 @@ export const sensorExternalResolver = resolve<Sensor, HookContext>({
 // Schema for creating new entries
 export const sensorDataSchema = Type.Intersect([
     Type.Partial(Type.Pick(sensorSchema, ['_id'])),                         // Allow _id but don't require it
-    Type.Pick(sensorSchema, ['sensortype_id', 'name', 'meta', 'data_source', 'device_id'])
+    Type.Object({
+      meta: Type.Pick(MetaSchema, ['depth', 'conversion_model_id'])
+    }),
+    Type.Pick(sensorSchema, ['sensortype_id', 'name', 'data_source', 'device_id'])
   ], {
   $id: 'SensorData'
 })
@@ -197,16 +204,31 @@ export const sensorDataResolver = resolve<Sensor, HookContext>({})
 //////////////////////////////////////////////////////////
 
 // Schema for updating existing entries
-export const sensorPatchSchema = Type.Partial(
-  // Need to Pick here because otherwise we can inject createdAt, resource_url, ...
-  // No need to disallow _id here, it is ignored; but it makes API more user friendly
-  Type.Pick(sensorSchema, ['_id', 'sensortype_id', 'name', 'meta', 'data_source', 'device_id']), {
-  $id: 'SensorPatch'
+export const sensorPatchSchema = Type.Intersect([
+    Type.Object({
+      meta: Type.Pick(MetaSchema, ['conversion_model_id'])
+    }),
+    Type.Partial(
+      // Need to Pick here because otherwise we can inject createdAt, resource_url, ...
+      // No need to disallow _id here, it is ignored; but it makes API more user friendly
+      Type.Pick(sensorSchema, ['_id', 'name']),
+    )
+  ], {
+  $id: 'SensorPatch',
+  additionalProperties: false
 })
 
 export type SensorPatch = Static<typeof sensorPatchSchema>
 export const sensorPatchValidator = getValidator(sensorPatchSchema, dataValidator)
-export const sensorPatchResolver = resolve<Sensor, HookContext>({})
+export const sensorPatchResolver = resolve<Sensor, HookContext>({
+  meta: async (meta, sensor, context) => {
+    // Need to fetch the original meta as otherwise we would overwrite the whole meta subdocument.
+    // TODO: Probable a better idea to later on move the conversion_model_id to top-level because this is not efficient
+    if (!context.id) return undefined
+    const originalSensor = (await context.app.service('sensors').get(context.id));
+    return { ...originalSensor?.meta, ...meta };
+  }
+})
 
 
 

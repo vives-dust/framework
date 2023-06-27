@@ -96,7 +96,6 @@ export const device = (app: Application) => {
 }
 
 async function create_sensors_for_device(context : HookContext) {
-  console.log(context.data)
   // We now need to build sensors based on these devicesensor "descriptions"
   const sensors: Array<Sensor> = context.data._devicesensors.map( (ds : DeviceSensor) => {
     return {
