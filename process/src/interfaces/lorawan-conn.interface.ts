@@ -1,7 +1,7 @@
 interface LoRaWAN {
   time: string,
   frequency: number,
-  codingRate: string,
+  codingRate: number,
   airtime: number,
   rssi: number,
   snr: number,
@@ -14,7 +14,7 @@ export default function processConnectionData(input :any) :LoRaWAN {
   return {
       time: input.received_at,
       frequency: input.uplink_message.settings.frequency,
-      codingRate: input.uplink_message.settings.coding_rate,
+      codingRate: input.uplink_message.settings.data_rate.lora.coding_rate,
       airtime: (input.uplink_message.consumed_airtime).replace('s', ''),
       rssi: getBestRssi(input.uplink_message.rx_metadata),
       snr: getBestSnr(input.uplink_message.rx_metadata),
