@@ -1,5 +1,5 @@
 import processConnectionData from "./lorawan-conn.interface";
-import { Point } from '@influxdata/influxdb-client'
+import {Point} from '@influxdata/influxdb-client'
 
 interface SapFlowISF {
   alphaInner: number,
