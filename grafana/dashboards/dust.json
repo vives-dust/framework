@@ -1852,21 +1852,21 @@
       {
         "current": {
           "selected": false,
-          "text": "eui-42bdfbb069abc2eb",
-          "value": "eui-42bdfbb069abc2eb"
+          "text": "eui-62a7c89dd28306fb",
+          "value": "eui-62a7c89dd28306fb"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "beb9e6ceb6d8c052"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
         "hide": 0,
         "includeAll": false,
         "label": "Device ID",
         "multi": false,
         "name": "DeviceId",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1899,6 +1899,6 @@
   "timezone": "",
   "title": "Dust Prototype",
   "uid": "Er4s9UVVz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
