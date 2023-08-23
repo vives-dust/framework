@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 8,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -73,7 +72,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "red"
+                "color": "red",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -195,7 +195,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -258,21 +259,21 @@
       {
         "current": {
           "selected": false,
-          "text": "eui-70b3d57ed005235e",
-          "value": "eui-70b3d57ed005235e"
+          "text": "eui-62a7c89dd28306fb",
+          "value": "eui-62a7c89dd28306fb"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "beb9e6ceb6d8c052"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
         "hide": 0,
         "includeAll": false,
         "label": "Device ID",
         "multi": false,
         "name": "deviceId",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.tagValues(bucket: \"dust\", tag: \"devId\")",
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -326,6 +327,6 @@
   "timezone": "browser",
   "title": "Correlations",
   "uid": "7EmERQV4z",
-  "version": 18,
+  "version": 1,
   "weekStart": ""
 }

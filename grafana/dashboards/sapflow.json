@@ -25,6 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 8,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -35,7 +36,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
+          "decimals": 5,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -95,7 +96,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"alphaInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -121,7 +122,7 @@
           ]
         }
       ],
-      "title": "Moisture -10cm",
+      "title": "Alpha Inner",
       "type": "stat"
     },
     {
@@ -131,7 +132,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
+          "decimals": 5,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -152,7 +153,7 @@
         "x": 4,
         "y": 0
       },
-      "id": 15,
+      "id": 26,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -191,14 +192,14 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_2\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"alphaInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "moistureLevel_3"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
@@ -217,7 +218,7 @@
           ]
         }
       ],
-      "title": "Moisture -20cm",
+      "title": "Alpha Inner",
       "type": "stat"
     },
     {
@@ -227,7 +228,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
+          "decimals": 5,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -248,7 +249,7 @@
         "x": 8,
         "y": 0
       },
-      "id": 14,
+      "id": 20,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -287,14 +288,14 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_3\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"betaInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "moistureLevel_2"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
@@ -313,7 +314,7 @@
           ]
         }
       ],
-      "title": "Moisture -45cm",
+      "title": "Beta Inner",
       "type": "stat"
     },
     {
@@ -323,7 +324,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
+          "decimals": 5,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -344,7 +345,7 @@
         "x": 12,
         "y": 0
       },
-      "id": 7,
+      "id": 21,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -383,14 +384,14 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"betaOuter\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "moistureLevel_1"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
@@ -409,7 +410,7 @@
           ]
         }
       ],
-      "title": "Moisture -60cm",
+      "title": "Beta Outer",
       "type": "stat"
     },
     {
@@ -419,7 +420,7 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 0,
+          "decimals": 3,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -430,7 +431,7 @@
               }
             ]
           },
-          "unit": "celsius"
+          "unit": "l/h"
         },
         "overrides": []
       },
@@ -440,7 +441,7 @@
         "x": 16,
         "y": 0
       },
-      "id": 17,
+      "id": 23,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -479,20 +480,20 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"internalTemperature\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "internalTemperature"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -505,7 +506,7 @@
           ]
         }
       ],
-      "title": "Internal Temperature",
+      "title": "Sap Flow",
       "type": "stat"
     },
     {
@@ -515,22 +516,14 @@
       },
       "fieldConfig": {
         "defaults": {
-          "decimals": 2,
+          "decimals": 3,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 2.8
-              },
-              {
                 "color": "green",
-                "value": 3
+                "value": null
               }
             ]
           },
@@ -544,7 +537,7 @@
         "x": 20,
         "y": 0
       },
-      "id": 10,
+      "id": 22,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
@@ -583,20 +576,20 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "battery"
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "last"
               }
             ]
           ],
@@ -729,8 +722,8 @@
         ]
       },
       "gridPos": {
-        "h": 10,
-        "w": 18,
+        "h": 11,
+        "w": 12,
         "x": 0,
         "y": 4
       },
@@ -772,7 +765,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\" or r[\"_field\"] == \"moistureLevel_2\" or r[\"_field\"] == \"moistureLevel_3\" or r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"alphaInner\" or r[\"_field\"] == \"alphaOuter\" or r[\"_field\"] == \"betaInner\" or r[\"_field\"] == \"betaOuter\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -939,7 +932,7 @@
           ]
         }
       ],
-      "title": "Soil Moisture",
+      "title": "Alpha - Beta Evolution",
       "type": "timeseries"
     },
     {
@@ -949,6 +942,42 @@
       },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "always",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
           "displayName": "${__field.name}",
           "links": [],
           "mappings": [],
@@ -956,15 +985,20 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "transparent",
                 "value": null
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 29000
+              },
+              {
+                "color": "transparent",
+                "value": 49000
               }
             ]
-          }
+          },
+          "unit": "none"
         },
         "overrides": [
           {
@@ -1018,30 +1052,28 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 6,
-        "x": 18,
+        "h": 11,
+        "w": 12,
+        "x": 12,
         "y": 4
       },
-      "id": 18,
+      "id": 24,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
         },
-        "showUnfilled": true
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "9.1.8",
+      "pluginVersion": "8.3.3",
       "targets": [
         {
-          "alias": "-10cm",
+          "alias": "-60cm",
           "datasource": {
             "type": "influxdb",
             "uid": "beb9e6ceb6d8c052"
@@ -1063,61 +1095,14 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"moistureLevel_1\" or r[\"_field\"] == \"moistureLevel_2\" or r[\"_field\"] == \"moistureLevel_3\" or r[\"_field\"] == \"moistureLevel_4\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
-          "refId": "D",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "moistureLevel_4"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "devId",
-              "operator": "=~",
-              "value": "/^$DeviceId$/"
-            }
-          ]
-        },
-        {
-          "alias": "-20cm",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "beb9e6ceb6d8c052"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "tph",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "moistureLevel_3"
+                  "moistureLevel_1"
                 ],
                 "type": "field"
               },
@@ -1183,7 +1168,7 @@
           ]
         },
         {
-          "alias": "-60cm",
+          "alias": "-20cm",
           "datasource": {
             "type": "influxdb",
             "uid": "beb9e6ceb6d8c052"
@@ -1205,13 +1190,60 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "refId": "A",
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "moistureLevel_1"
+                  "moistureLevel_3"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        },
+        {
+          "alias": "-10cm",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
                 ],
                 "type": "field"
               },
@@ -1230,8 +1262,8 @@
           ]
         }
       ],
-      "title": "Soil Moisture",
-      "type": "bargauge"
+      "title": "Sap Flow Evolution",
+      "type": "timeseries"
     },
     {
       "aliasColors": {},
@@ -1246,7 +1278,7 @@
         "defaults": {
           "displayName": "Frequency",
           "links": [],
-          "unit": "rothz"
+          "unit": "celsius"
         },
         "overrides": [
           {
@@ -1257,7 +1289,7 @@
             "properties": [
               {
                 "id": "displayName",
-                "value": "LoRaWAN connectivity"
+                "value": "Outer Temperature"
               }
             ]
           }
@@ -1269,7 +1301,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 12,
@@ -1332,7 +1364,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"frequency\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperatureOuter\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1407,7 +1439,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "LoRaWAN",
+      "title": "Outer Temperature Evolution",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1423,7 +1455,7 @@
         {
           "$$hashKey": "object:54",
           "decimals": 2,
-          "format": "rothz",
+          "format": "celsius",
           "logBase": 1,
           "show": true
         },
@@ -1463,7 +1495,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 15
       },
       "hiddenSeries": false,
       "id": 2,
@@ -1515,7 +1547,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1543,7 +1575,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Battery",
+      "title": "Battery Voltage Evolution",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1583,9 +1615,8 @@
       },
       "fieldConfig": {
         "defaults": {
-          "displayName": "Internal Temperature",
-          "links": [],
-          "unit": "celsius"
+          "displayName": "RSSI",
+          "links": []
         },
         "overrides": []
       },
@@ -1595,10 +1626,10 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 23
+        "y": 24
       },
       "hiddenSeries": false,
-      "id": 11,
+      "id": 25,
       "legend": {
         "avg": false,
         "current": false,
@@ -1617,16 +1648,22 @@
       },
       "percentage": false,
       "pluginVersion": "9.1.8",
-      "pointradius": 2,
+      "pointradius": 0.5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:268",
+          "alias": "SNR",
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Frequency",
+          "alias": "Number of gateways",
           "datasource": {
             "type": "influxdb",
             "uid": "beb9e6ceb6d8c052"
@@ -1640,7 +1677,7 @@
             },
             {
               "params": [
-                "null"
+                "none"
               ],
               "type": "fill"
             }
@@ -1648,14 +1685,14 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"internalTemperature\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)",
-          "refId": "D",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rssi\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "internalTemperature"
+                  "gateways"
                 ],
                 "type": "field"
               },
@@ -1676,7 +1713,7 @@
       ],
       "thresholds": [],
       "timeRegions": [],
-      "title": "Internal Temperature",
+      "title": "LoRaWAN - RSSI",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1690,12 +1727,13 @@
       },
       "yaxes": [
         {
-          "format": "celsius",
+          "decimals": 0,
+          "format": "none",
           "logBase": 1,
           "show": true
         },
         {
-          "format": "short",
+          "format": "dB",
           "logBase": 1,
           "show": true
         }
@@ -1726,7 +1764,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 23
+        "y": 24
       },
       "hiddenSeries": false,
       "id": 13,
@@ -1785,7 +1823,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dust-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"gateways\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"gateways\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -1841,6 +1879,766 @@
       "yaxis": {
         "align": false
       }
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "cm/h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 33
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"heatVelocityInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Heat Velocity Inner",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "cm/h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 33
+      },
+      "id": 30,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"heatVelocityInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Heat Velocity Inner",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 33
+      },
+      "id": 28,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"minVoltage\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Minimum Voltage",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "volt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 33
+      },
+      "id": 29,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"maxVoltage\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Maximum Voltage",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 38
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"tmaxInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Tmax Inner",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 38
+      },
+      "id": 31,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"tmaxOuter\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Tmax Outer",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 38
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"upstreamTmaxInner\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Upstream Tmax Inner",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 3,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 38
+      },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "tph",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"upstreamTmaxOuter\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "moistureLevel_4"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "last"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "devId",
+              "operator": "=~",
+              "value": "/^$DeviceId$/"
+            }
+          ]
+        }
+      ],
+      "title": "Upstream Tmax Outer",
+      "type": "stat"
     }
   ],
   "refresh": false,
@@ -1852,21 +2650,21 @@
       {
         "current": {
           "selected": false,
-          "text": "eui-62a7c89dd28306fb",
-          "value": "eui-62a7c89dd28306fb"
+          "text": "19208",
+          "value": "19208"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "beb9e6ceb6d8c052"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
+        "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"device_id\",\r\n    measurement: \"sapflow-sensor\",\r\n)",
         "hide": 0,
         "includeAll": false,
         "label": "Device ID",
         "multi": false,
         "name": "DeviceId",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dust-sensor\",\r\n)",
+        "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"device_id\",\r\n    measurement: \"sapflow-sensor\",\r\n)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -1897,8 +2695,8 @@
     ]
   },
   "timezone": "",
-  "title": "Dust Prototype",
-  "uid": "Er4s9UVVz",
-  "version": 2,
+  "title": "Dust SapFlow Sensors",
+  "uid": "HsH6m1gIk",
+  "version": 7,
   "weekStart": ""
 }
