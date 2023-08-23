@@ -130,9 +130,9 @@ services:
     ports:
       - "8081:8081"
 
-  backend:
+  backendv5:
     build:
-      context: ./backend
+      context: ./backendv5
       dockerfile: Dockerfile.dev
     ports:
       - "3030:3030"
@@ -155,37 +155,9 @@ services:
       - BACKEND_API_URL=${BACKEND_API_URL}
     restart: unless-stopped
     volumes:
-      - ./backend/src:/app/src
-      - ./backend/config:/app/config
-
-  backendv5:
-    build:
-      context: ./dust-backend
-      dockerfile: Dockerfile.dev
-    ports:
-      - "3031:3030"
-    depends_on:
-      - influxdb
-      - mongodb
-    environment:
-      - MONGODB_HOST=${MONGODB_HOST}
-      - MONGODB_PORT=${MONGODB_PORT}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
-      - MONGODB_ROOT_USERNAME=${MONGODB_ROOT_USERNAME}
-      - MONGODB_ROOT_PASSWORD=${MONGODB_ROOT_PASSWORD}
-      - INFLUXDB_HOST=${INFLUXDB_HOST}
-      - INFLUXDB_PORT=${INFLUXDB_PORT}
-      - INFLUXDB_BUCKET=${INFLUXDB_INIT_BUCKET}
-      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
-      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
-      - BACKEND_AUTH_SECRET=${BACKEND_AUTH_SECRET}
-      - BACKEND_DOMAIN=${BACKEND_DOMAIN}
-      - BACKEND_API_URL=${BACKEND_API_URL}
-    restart: unless-stopped
-    volumes:
-      - ./dust-backend/src:/app/src
-      - ./dust-backend/config:/app/config
-      - ./dust-backend/public:/app/public
+      - ./backendv5/src:/app/src
+      - ./backendv5/config:/app/config
+      - ./backendv5/public:/app/public
 
   api-docs:
     build:
