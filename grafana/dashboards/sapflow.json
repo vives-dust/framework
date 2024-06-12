@@ -1087,7 +1087,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: 24h, fn: sum, createEmpty: false)\r\n  |> yield(name: \"sum\")",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: 1d, fn: (tables=<-, column) => tables\r\n    |> integral(unit: 1h), createEmpty: false)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
@@ -2083,8 +2083,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2179,8 +2178,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2407,8 +2405,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2503,8 +2500,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2599,8 +2595,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2695,8 +2690,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2791,8 +2785,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -2887,8 +2880,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -3007,8 +2999,8 @@
     ]
   },
   "time": {
-    "from": "2024-05-28T03:29:14.198Z",
-    "to": "2024-05-28T08:45:50.897Z"
+    "from": "now-7d",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
