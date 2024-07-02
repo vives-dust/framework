@@ -50,6 +50,7 @@ export function saveISFData(data :any) {
   const point = new Point("sapflow-sensor")
     .tag( "protocol_version", data.protocol_version)
     .tag( "diagnostic", data.diagnostic)
+    .tag( "device_id", data.device_id)
     .timestamp( Date.parse(data.time))
     .floatField( "alphaInner", data.alphaInner)
     .floatField( "alphaOuter", data.alphaOuter)
