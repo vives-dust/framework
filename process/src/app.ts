@@ -36,7 +36,10 @@ let stop = false;
 
 ( async () => {
     while(!stop){
-        const input = JSON.parse((await redis.pull())[1] || "{}")
+        console.log(await redis.pull())
+        const result = await redis.pull()
+        if(result === null) { continue }
+        const input = JSON.parse(result['element'] || "{}")
         if( Object.keys(input).length === 0) { break }
         const fport = input.uplink_message.f_port
         if( !(fport in deviceFPortMap)) {

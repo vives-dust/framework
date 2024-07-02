@@ -19,7 +19,7 @@ export default class InfluxDbClient {
 
   public save( point :Point) {
     this.influxdb.writePoint(point)
-    console.log(point)
+    console.log(JSON.stringify(point))
 
     this.influxdb.flush().catch( (error) => console.log(error) )
   }
