@@ -1,7 +1,7 @@
-import processConnectionData from "./lorawan-conn.interface";
+import processConnectionData, { LoRaWAN } from "./lorawan-conn.interface";
 import {Point} from '@influxdata/influxdb-client'
 
-interface SapFlowISF {
+interface SapFlowISF extends LoRaWAN{
   alphaInner: number,
   alphaOuter: number,
   betaInner: number,
@@ -20,8 +20,6 @@ interface SapFlowISF {
   device_id: string,
   protocol_version: number,
   diagnostic: number,
-  dev_id: string,
-  hardwareSerial: string,
 }
 
 export default function processISFData(input :any) :SapFlowISF {
@@ -44,8 +42,6 @@ export default function processISFData(input :any) :SapFlowISF {
       device_id: input.uplink_message.decoded_payload.device_id,
       protocol_version: input.uplink_message.decoded_payload.protocol_version,
       diagnostic: input.uplink_message.decoded_payload.diagnostic.value,
-      dev_id: input.end_device_ids.device_id,
-      hardwareSerial: input.end_device_ids.dev_eui,
       ...processConnectionData(input)
   }
 }
