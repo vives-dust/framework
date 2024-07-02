@@ -44,10 +44,12 @@ export const addLoRaWANData = (point :Point, data :LoRaWAN): Point => {
 
 function getBestRssi(gateways :any) :number{
   const rssis = gateways.map( (gateway :any) => gateway.rssi)
+  .filter( (rssi :any) => rssi !== undefined)
   return Math.max(...rssis)
 }
 
 function getBestSnr(gateways :any) :number{
   const snrs = gateways.map( (gateway : any) => gateway.snr)
+  .filter( (snr :any) => snr !== undefined)
   return Math.max(...snrs)
 }
