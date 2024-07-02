@@ -1,4 +1,4 @@
-import processConnectionData, { LoRaWAN } from "./lorawan-conn.interface";
+import processConnectionData, { LoRaWAN, addLoRaWANData } from "./lorawan-conn.interface";
 import {Point} from '@influxdata/influxdb-client'
 
 interface SapFlowISF extends LoRaWAN{
@@ -48,14 +48,9 @@ export default function processISFData(input :any) :SapFlowISF {
 
 export function saveISFData(data :any) {
   const point = new Point("sapflow-sensor")
-    .tag( "codingRate", data.codingRate )
-    .tag( "devId", data.dev_id )
-    .tag( "hardwareSerial", data.hardwareSerial )
-    .tag( "device_id", data.device_id)
     .tag( "protocol_version", data.protocol_version)
     .tag( "diagnostic", data.diagnostic)
     .timestamp( Date.parse(data.time))
-    .intField( "frequency", data.frequency)
     .floatField( "alphaInner", data.alphaInner)
     .floatField( "alphaOuter", data.alphaOuter)
     .floatField( "betaInner", data.betaInner)
@@ -71,10 +66,7 @@ export function saveISFData(data :any) {
     .floatField( "upstreamTmaxInner", data.upstreamTmaxInner)
     .floatField( "upstreamTmaxOuter", data.upstreamTmaxOuter)
     .floatField( "battery", data.battery)
-    .floatField( "rssi", data.rssi)
-    .floatField( "snr", data.snr)
-    .intField( "counter", data.counter)
-    .intField( "gateways", data.gateways)
+  addLoRaWANData(point, data)
 
   return point
 }
