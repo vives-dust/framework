@@ -48,7 +48,9 @@ let stop = false;
         }
         try {
             // Process the input, create a point for saving in influx and save the point for each specific sensordevice
-            const point = deviceFPortMap[fport].save(deviceFPortMap[fport].process(input))
+            const save = deviceFPortMap[fport].save
+            const process = deviceFPortMap[fport].process
+            const point = save(process(input))
             influxdb.save(point)
         } catch (error) {
             console.error('Input has wrong format', input)
