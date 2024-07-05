@@ -36,7 +36,10 @@ let stop = false;
 
 ( async () => {
     while(!stop){
-        const input = JSON.parse((await redis.pull())[1] || "{}")
+        console.log(await redis.pull())
+        const result = await redis.pull()
+        if(result === null) { continue }
+        const input = JSON.parse(result['element'] || "{}")
         if( Object.keys(input).length === 0) { break }
         const fport = input.uplink_message.f_port
         if( !(fport in deviceFPortMap)) {
@@ -45,7 +48,9 @@ let stop = false;
         }
         try {
             // Process the input, create a point for saving in influx and save the point for each specific sensordevice
-            const point = deviceFPortMap[fport].save(deviceFPortMap[fport].process(input))
+            const save = deviceFPortMap[fport].save
+            const process = deviceFPortMap[fport].process
+            const point = save(process(input))
             influxdb.save(point)
         } catch (error) {
             console.error('Input has wrong format', input)

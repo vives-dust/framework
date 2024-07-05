@@ -26,7 +26,7 @@ export default class MqttClient extends EventEmitter{
             password
         } = options
         this.topic = topic
-        this.client = mqtt.connect({ host, port, protocol, username, password})
+        this.client = mqtt.connect(`${protocol}://${username}:${password}@${host}:${port}`)
         console.log(`MQTT settings: ${protocol}://${host}:${port}`)
         this.client.on('connect', this.onConnect)
         this.client.on('message', this.onMessage)

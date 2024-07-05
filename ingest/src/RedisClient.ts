@@ -1,4 +1,4 @@
-import { Tedis } from 'tedis'
+import { createClient, RedisClientType } from 'redis';
 
 interface Options {
     host?: string,
@@ -8,7 +8,7 @@ interface Options {
 
 export default class RedisClient{
 
-    private redis: Tedis
+    private redis: RedisClientType
     private key: string
 
     constructor(options: Options = {}) {
@@ -18,11 +18,19 @@ export default class RedisClient{
             key = 'test'
         } = options
         this.key = key 
-        this.redis = new Tedis({ port, host})
+        this.redis = createClient({
+            url: `redis://${host}:${port}`,
+            socket: {
+              reconnectStrategy: retries => Math.min(Math.pow(2,retries) * 100, 10000)
+            }
+          })
+        this.redis.on('error', (err: any) => console.log('Redis Client Error', err))
+        
+      
         this.redis.on("connect", () => {
             console.log(`Connected to Redis (${host}:${port})`)
         })
-        this.redis.on("error", (error) => {
+        this.redis.on("error", (error: Error) => {
             console.log("Redis error: ", error)
         })
         this.redis.on("close", () => {
@@ -31,13 +39,14 @@ export default class RedisClient{
         this.redis.on("timeout", () => {
             console.log("Redis timeout...")
         })
+        this.redis.connect();
     }
 
     public async push(value: string) {
-        await this.redis.rpush(this.key, value)
+        await this.redis.rPush(this.key, value)
     }
 
     public close() {
-        this.redis.close()
+        this.redis.quit()
     }
 }

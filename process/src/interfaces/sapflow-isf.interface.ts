@@ -1,7 +1,7 @@
-import processConnectionData from "./lorawan-conn.interface";
+import processConnectionData, { LoRaWAN, addLoRaWANData } from "./lorawan-conn.interface";
 import {Point} from '@influxdata/influxdb-client'
 
-interface SapFlowISF {
+interface SapFlowISF extends LoRaWAN{
   alphaInner: number,
   alphaOuter: number,
   betaInner: number,
@@ -20,8 +20,6 @@ interface SapFlowISF {
   device_id: string,
   protocol_version: number,
   diagnostic: number,
-  dev_id: string,
-  hardwareSerial: string,
 }
 
 export default function processISFData(input :any) :SapFlowISF {
@@ -44,22 +42,16 @@ export default function processISFData(input :any) :SapFlowISF {
       device_id: input.uplink_message.decoded_payload.device_id,
       protocol_version: input.uplink_message.decoded_payload.protocol_version,
       diagnostic: input.uplink_message.decoded_payload.diagnostic.value,
-      dev_id: input.end_device_ids.device_id,
-      hardwareSerial: input.end_device_ids.dev_eui,
       ...processConnectionData(input)
   }
 }
 
 export function saveISFData(data :any) {
   const point = new Point("sapflow-sensor")
-    .tag( "codingRate", data.codingRate )
-    .tag( "devId", data.dev_id )
-    .tag( "hardwareSerial", data.hardwareSerial )
-    .tag( "device_id", data.device_id)
     .tag( "protocol_version", data.protocol_version)
     .tag( "diagnostic", data.diagnostic)
+    .tag( "device_id", data.device_id)
     .timestamp( Date.parse(data.time))
-    .intField( "frequency", data.frequency)
     .floatField( "alphaInner", data.alphaInner)
     .floatField( "alphaOuter", data.alphaOuter)
     .floatField( "betaInner", data.betaInner)
@@ -75,10 +67,7 @@ export function saveISFData(data :any) {
     .floatField( "upstreamTmaxInner", data.upstreamTmaxInner)
     .floatField( "upstreamTmaxOuter", data.upstreamTmaxOuter)
     .floatField( "battery", data.battery)
-    .floatField( "rssi", data.rssi)
-    .floatField( "snr", data.snr)
-    .intField( "counter", data.counter)
-    .intField( "gateways", data.gateways)
+  addLoRaWANData(point, data)
 
   return point
 }
