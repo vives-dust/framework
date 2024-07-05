@@ -1,7 +1,6 @@
+import os
 import requests
 import time
-import json
-from dotenv import dotenv_values
 from influxdb_client import InfluxDBClient, Point
 from influxdb_client.client.write_api import SYNCHRONOUS
 
@@ -27,10 +26,10 @@ def setup():
     print("Sensors added to reporters.")
 
 def connectInfluxDB():
-    influx_url = 'http://' + config["INFLUXDB_HOST"] + ":" + config["INFLUXDB_PORT"]
+    influx_url = 'http://' + os.getenv("INFLUXDB_HOST") + ":" + os.getenv("INFLUXDB_PORT")
     print(f"Connecting to InfluxDB at {influx_url}")
-    influx_token = config["INFLUXDB_TOKEN"]
-    influx_org = config["INFLUXDB_ORG"]
+    influx_token = os.getenv("INFLUXDB_TOKEN")
+    influx_org = os.getenv("INFLUXDB_ORG")
     
     client = InfluxDBClient(url=influx_url, token=influx_token, org=influx_org)
     return client
@@ -79,19 +78,17 @@ def main():
     saveData()
 
     # delay for x minutes
-    print(f"Sleeping for {config['CRODEON_SAMPLE_FREQ_MIN']} minutes...")
-    time.sleep(config['CRODEON_SAMPLE_FREQ_MIN'] * 60)
+    print(f"Sleeping for {sample_freq} minutes...")
+    time.sleep(sample_freq * 60)
 
 if __name__ == "__main__":
     print("Starting script...")
-    # Load environment variables
-    config = dotenv_values(".env")
 
     # Get the CRODEON configuration values
-    base_url = config["CRODEON_BASE_URL"]
-    reporter_ids = config["CRODEON_REPORTERS"].split(",")
-    api_key = config["CRODEON_API_KEY"]
-    sample_freq = config["CRODEON_SAMPLE_FREQ_MIN"]
+    base_url = os.getenv("CRODEON_BASE_URL")
+    reporter_ids = os.getenv("CRODEON_REPORTERS").split(",")
+    api_key = os.getenv("CRODEON_API_KEY")
+    sample_freq = int(os.getenv("CRODEON_SAMPLE_FREQ_MIN"))
 
     # Create reporter objects
     reporters = []
@@ -106,7 +103,7 @@ if __name__ == "__main__":
 
     # InfluxDB configuration
     influx_client = connectInfluxDB()
-    influx_bucket = config["INFLUXDB_BUCKET"]
+    influx_bucket = os.getenv("INFLUXDB_BUCKET")
 
     setup()
     

@@ -120,6 +120,21 @@ services:
       - INFLUX_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
       - INFLUX_ORG=${INFLUXDB_INIT_ORG}
       - INFLUX_BUCKET=${INFLUXDB_INIT_BUCKET}
+
+  crodeon:
+    build:
+      context: ./devbit-crodeon
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    env_file:
+      - path: ./devbit-crodeon/.env
+        required: true
+    environment:
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_PORT=${INFLUXDB_PORT}
   
   mongodb:
     image: mongo:6.0.2
