@@ -36,15 +36,15 @@ let stop = false;
 
 ( async () => {
     while(!stop){
-        console.log(await redis.pull())
         const result = await redis.pull()
+        console.log(result)
         if(result === null) { continue }
         const input = JSON.parse(result['element'] || "{}")
-        if( Object.keys(input).length === 0) { break }
+        if( Object.keys(input).length === 0) { continue }
         const fport = input.uplink_message.f_port
         if( !(fport in deviceFPortMap)) {
             console.error('Data was sent through non-assigned FPort', input)
-            break
+            continue
         }
         try {
             // Process the input, create a point for saving in influx and save the point for each specific sensordevice
