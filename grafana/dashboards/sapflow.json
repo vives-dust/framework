@@ -1087,7 +1087,7 @@
           "measurement": "tph",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: 1d, fn: (tables=<-, column) => tables\r\n    |> integral(unit: 1h), createEmpty: false)",
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"sapflow-sensor\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"sapFlow\")\r\n  |> filter(fn: (r) => r[\"device_id\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> unique(column: \"_time\")\r\n  |> aggregateWindow(every: 1d, fn: (tables=<-, column) => tables\r\n    |> integral(unit: 1h), createEmpty: false)",
           "refId": "A",
           "resultFormat": "time_series",
           "select": [
