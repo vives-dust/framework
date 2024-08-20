@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 7,
+  "id": 6,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -132,6 +132,101 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "lengthmm"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "A"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Rain"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 8,
+      "options": {
+        "barRadius": 0,
+        "barWidth": 0.97,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "orientation": "auto",
+        "showValue": "auto",
+        "stacking": "none",
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "xTickLabelRotation": 0,
+        "xTickLabelSpacing": 0
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"weatherapi\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rain\")\r\n  |> filter(fn: (r) => r[\"location\"] == \"${location}\")\r\n  |> sort(columns: [\"_time\"], desc: false)\r\n  |> unique(column: \"_time\")\r\n  |> aggregateWindow(every: 1d, fn: (tables=<-, column) => tables\r\n    |> integral(unit: 1h), createEmpty: false)",
+          "refId": "A"
+        }
+      ],
+      "title": "Rain (Daily Sum)",
+      "type": "barchart"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -163,7 +258,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 3,
@@ -183,7 +278,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.1.4",
+      "pluginVersion": "9.1.8",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -265,7 +360,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 34
       },
       "hiddenSeries": false,
       "id": 4,
@@ -285,7 +380,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.1.4",
+      "pluginVersion": "9.1.8",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -367,7 +462,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 5,
@@ -387,7 +482,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.1.4",
+      "pluginVersion": "9.1.8",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -469,7 +564,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 43
       },
       "hiddenSeries": false,
       "id": 6,
@@ -489,7 +584,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.1.4",
+      "pluginVersion": "9.1.8",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -571,7 +666,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 52
       },
       "hiddenSeries": false,
       "id": 7,
@@ -591,7 +686,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.1.4",
+      "pluginVersion": "9.1.8",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -685,6 +780,6 @@
   "timezone": "",
   "title": "WeatherAPI",
   "uid": "X6VS6U44k",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
