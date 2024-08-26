@@ -67,6 +67,7 @@ def createPoint(reporter, sensor):
         .tag("location", reporter.location)\
         .tag("name", reporter.name)\
         .tag("reporter_id", reporter.id)\
+        .tag("sensor_id", sensor.id)\
         .time(sensor.parameters[0].timestamp)
     
     for parameter in sensor.parameters:
