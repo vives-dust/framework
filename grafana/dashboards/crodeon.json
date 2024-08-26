@@ -1178,7 +1178,7 @@
                 "type": "influxdb",
                 "uid": "beb9e6ceb6d8c052"
               },
-              "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"1149240095\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+              "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"${sensor_id}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
               "refId": "A"
             }
           ],
@@ -1267,7 +1267,7 @@
                 "type": "influxdb",
                 "uid": "beb9e6ceb6d8c052"
               },
-              "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"1149240095\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+              "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"${sensor_id}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
               "refId": "A"
             }
           ],
@@ -1275,199 +1275,10 @@
           "type": "timeseries"
         }
       ],
-      "title": "Soil Moisture (Volumetric Sensor 1)",
+      "repeat": "sensor_id",
+      "repeatDirection": "h",
+      "title": "Soil Moisture (Volumetric) - $sensor_id",
       "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 3
-      },
-      "id": 29,
-      "panels": [],
-      "title": "Soil Moisture (Volumetric Sensor 2)",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "beb9e6ceb6d8c052"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "displayName": "${__field.name}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "celsius"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 0,
-        "y": 4
-      },
-      "id": 30,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.1.8",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "beb9e6ceb6d8c052"
-          },
-          "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"temperature_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"1239417629\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
-          "refId": "A"
-        }
-      ],
-      "title": "Temperature Soil (Volumetric)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "beb9e6ceb6d8c052"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "decimals": 2,
-          "displayName": "${__field.name}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "%"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 12,
-        "y": 4
-      },
-      "id": 31,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "9.1.8",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "beb9e6ceb6d8c052"
-          },
-          "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"sensor_id\"] == \"1239417629\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
-          "refId": "A"
-        }
-      ],
-      "title": "Soil Water Content (Volumetric)",
-      "type": "timeseries"
     },
     {
       "collapsed": true,
@@ -1475,7 +1286,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 4
       },
       "id": 16,
       "panels": [
@@ -1526,8 +1337,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1615,8 +1425,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1704,8 +1513,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1793,8 +1601,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               },
@@ -1840,6 +1647,7 @@
       "type": "row"
     }
   ],
+  "refresh": false,
   "schemaVersion": 37,
   "style": "dark",
   "tags": [],
@@ -1868,6 +1676,35 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "definition": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> distinct(column: \"sensor_id\")\r\n  |> keep(columns: [\"sensor_id\"])\r\n  |> map(fn: (r) => ({sensor: r.sensor_id}))",
+        "hide": 0,
+        "includeAll": true,
+        "label": "SensorIDs",
+        "multi": true,
+        "name": "sensor_id",
+        "options": [],
+        "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> distinct(column: \"sensor_id\")\r\n  |> keep(columns: [\"sensor_id\"])\r\n  |> map(fn: (r) => ({sensor: r.sensor_id}))",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -1879,6 +1716,6 @@
   "timezone": "",
   "title": "Crodeon",
   "uid": "2Y8nJ_CIz",
-  "version": 7,
+  "version": 8,
   "weekStart": ""
 }
