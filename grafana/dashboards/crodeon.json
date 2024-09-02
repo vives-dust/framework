@@ -1645,6 +1645,95 @@
       ],
       "title": "Soil Moisture (Tensiometers)",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "beb9e6ceb6d8c052"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "displayName": "${__field.name}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "%"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "id": 31,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.1.8",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "query": "from(bucket: \"crodeon\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"crodeon\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"volumetric_water_content_soil_moisture_volumetric\")\r\n  |> filter(fn: (r) => r[\"name\"] == \"${name}\")\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+          "refId": "A"
+        }
+      ],
+      "title": "HISTORIC - Soil Water Content (Volumetric)",
+      "type": "timeseries"
     }
   ],
   "refresh": false,
@@ -1656,8 +1745,8 @@
       {
         "current": {
           "selected": true,
-          "text": "bemaling_Ardooie",
-          "value": "bemaling_Ardooie"
+          "text": "bemaling_Roeselare",
+          "value": "bemaling_Roeselare"
         },
         "datasource": {
           "type": "influxdb",
@@ -1709,13 +1798,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-30d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Crodeon",
   "uid": "2Y8nJ_CIz",
-  "version": 8,
+  "version": 9,
   "weekStart": ""
 }
