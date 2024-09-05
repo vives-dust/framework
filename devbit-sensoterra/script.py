@@ -57,16 +57,15 @@ def ingestData():
 def createPoint(probe):
     point = Point("sensoterra")\
         .tag("location", probe.location)\
+        .tag("latitude", probe.location.split(",")[0])\
+        .tag("longitude", probe.location.split(",")[1])\
         .tag("name", probe.name)\
         .tag("probe_id", probe.id)\
         .time(probe.parameters[0].timestamp)
     
     for parameter in probe.parameters:
             point.field(parameter.type, parameter.value)
-            point.field("unit", parameter.unit)
-            point.field("height", parameter.height)
-            point.field("latitude", probe.location.split(",")[0])
-            point.field("longitude", probe.location.split(",")[1])
+
     return point
 
 def saveData():
