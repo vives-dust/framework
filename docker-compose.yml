@@ -135,6 +135,21 @@ services:
       - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
       - INFLUXDB_HOST=${INFLUXDB_HOST}
       - INFLUXDB_PORT=${INFLUXDB_PORT}
+
+  sensoterra:
+    build:
+      context: ./devbit-sensoterra
+    depends_on:
+      - influxdb
+    restart: unless-stopped
+    env_file:
+      - path: ./devbit-sensoterra/.env
+        required: true
+    environment:
+      - INFLUXDB_TOKEN=${INFLUXDB_INIT_ADMIN_TOKEN}
+      - INFLUXDB_ORG=${INFLUXDB_INIT_ORG}
+      - INFLUXDB_HOST=${INFLUXDB_HOST}
+      - INFLUXDB_PORT=${INFLUXDB_PORT}
   
   mongodb:
     image: mongo:6.0.2
