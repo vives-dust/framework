@@ -50,6 +50,9 @@ def ingestData():
 
     for probe in probes:
         data = getMeasurement(probe.id)
+        if data == "[]":
+            print(f"No data found for reporter {probe.id}.")
+            continue
         probe.processMeasurement(data)
         print(f"Data ingested for reporter {probe.id}.")
 
@@ -72,6 +75,8 @@ def saveData():
     write_api = influx_client.write_api(write_options=SYNCHRONOUS)
 
     for probe in probes:
+        if len(probe.parameters) == 0:
+            continue
         new_point = createPoint(probe)
         write_api.write(bucket=influx_bucket, record=new_point)
         probe.clearParameters()
