@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 import requests
 import time
 import datetime
@@ -75,6 +74,7 @@ def saveData():
     for probe in probes:
         new_point = createPoint(probe)
         write_api.write(bucket=influx_bucket, record=new_point)
+        probe.clearParameters()
 
     print("Data saved to InfluxDB.")
 
@@ -90,8 +90,6 @@ def main():
 
 if __name__ == "__main__":
     print("Starting script...")
-
-    load_dotenv()
 
     # Get the SENSOTERRA configuration values
     base_url = os.getenv("SENSOTERRA_BASE_URL")
