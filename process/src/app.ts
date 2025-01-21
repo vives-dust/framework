@@ -2,17 +2,19 @@ import Redis from './RedisClient'
 import InfluxDB from './InfluxDbClient'
 import processDustData, { saveDustData } from './interfaces/dust-v3.interface';
 import processISFData, { saveISFData } from './interfaces/sapflow-isf.interface';
+import processDiverData, {saveDiverData } from './interfaces/divers.interface';
 
 interface dataProcessing {
     process: Function,
     save: Function
-
 }
 
 const deviceFPortMap: { [key: number] : dataProcessing } = {
     // FPort for each type of sensordevice
     1: {    process: processDustData,
             save: saveDustData },
+    2: {    process: processDiverData,
+            save: saveDiverData },
     10: {   process: processISFData,
             save: saveISFData },
 }
