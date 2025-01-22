@@ -17,7 +17,7 @@ export default function processDiverData(input :any) :SapFlowISF {
 }
 
 export function saveDiverData(data :any) {
-  const point = new Point("sapflow-sensor")
+  const point = new Point("dragino-diver")
     .tag( "protocol_version", data.protocol_version)
     .tag( "diagnostic", data.diagnostic)
     .tag( "device_id", data.device_id)
