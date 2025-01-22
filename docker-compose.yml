@@ -22,6 +22,20 @@ services:
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_KEY=${REDIS_KEY}
     restart: unless-stopped
+
+  ingest-divers:
+    build:
+      context: ./ingest
+    depends_on: 
+      - redis
+    environment:
+      - MQTT_HOST=${MQTT_HOST}
+      - MQTT_USERNAME=${MQTT_USERNAME_DIVERS}
+      - MQTT_PASSWORD=${MQTT_PASSWORD_DIVERS}
+      - MQTT_TOPIC=${MQTT_TOPIC}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_KEY=${REDIS_KEY}
+    restart: unless-stopped
   
   process:
     build:
