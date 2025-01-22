@@ -7,7 +7,7 @@ interface DraginoDiver extends LoRaWAN{
     status: boolean,
 }
 
-export default function processDiverData(input :any) :SapFlowISF {
+export default function processDiverData(input :any) :DraginoDiver {
   return {
         battery: input.uplink_message.decoded_payload.Bat_V,
         waterLevel: input.uplink_message.decoded_payload.Water_deep_cm,
