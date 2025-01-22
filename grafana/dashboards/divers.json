@@ -1,0 +1,1288 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 9,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "description": "Note: depth should always be increased with 20mm to account for sensor offset.",
+        "fieldConfig": {
+          "defaults": {
+            "decimals": 3,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "cm"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 0,
+          "y": 0
+        },
+        "id": 21,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"waterLevel\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_4"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "last"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "Sensor Depth",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "decimals": 3,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "volt"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 8,
+          "y": 0
+        },
+        "id": 20,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_4"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "last"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "Battery Voltage",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "mappings": [
+              {
+                "options": {
+                  "false": {
+                    "color": "dark-red",
+                    "index": 1,
+                    "text": "NOT WORKING"
+                  },
+                  "true": {
+                    "color": "dark-green",
+                    "index": 0,
+                    "text": "OK"
+                  }
+                },
+                "type": "value"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "bool"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 6,
+          "w": 8,
+          "x": 16,
+          "y": 0
+        },
+        "id": 22,
+        "options": {
+          "colorMode": "value",
+          "graphMode": "none",
+          "justifyMode": "auto",
+          "orientation": "auto",
+          "percentChangeColorMode": "standard",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "/^status \\{devId=\"dragino\\-pslb\\-diver\\-1\", hardwareSerial=\"A84041CBE05A76CB\"\\}$/",
+            "values": false
+          },
+          "showPercentChange": false,
+          "textMode": "auto",
+          "wideLayout": true
+        },
+        "pluginVersion": "11.2.0",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_4"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "last"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "Sensor Status",
+        "type": "stat"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "description": "Note: depth should always be increased with 20mm to account for sensor offset.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 1,
+              "pointSize": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "always",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "area"
+              }
+            },
+            "decimals": 3,
+            "displayName": "Depth",
+            "fieldMinMax": false,
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "transparent",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "cm"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 16,
+          "w": 24,
+          "x": 0,
+          "y": 6
+        },
+        "id": 34,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.3.3",
+        "targets": [
+          {
+            "alias": "-60cm",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"waterLevel\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_1"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          },
+          {
+            "alias": "-45cm",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "refId": "B",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_2"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          },
+          {
+            "alias": "-20cm",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "refId": "C",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_3"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          },
+          {
+            "alias": "-10cm",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "refId": "D",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "moistureLevel_4"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "Sensor Depth Evolution",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 2,
+            "displayName": "Battery Voltage",
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "volt"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 16,
+          "w": 24,
+          "x": 0,
+          "y": 22
+        },
+        "id": 2,
+        "maxDataPoints": 300,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.8",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"battery\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "battery"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "Battery Voltage Evolution",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 0,
+            "displayName": "RSSI",
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "SNR"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "dB"
+                },
+                {
+                  "id": "custom.axisPlacement",
+                  "value": "right"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 38
+        },
+        "id": 25,
+        "maxDataPoints": 250,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.8",
+        "targets": [
+          {
+            "alias": "Number of gateways",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"rssi\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "gateways"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "LoRaWAN - RSSI",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": false,
+          "type": "influxdb",
+          "uid": "beb9e6ceb6d8c052"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 10,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "never",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "decimals": 0,
+            "displayName": "Number of Gateways",
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "SNR"
+              },
+              "properties": [
+                {
+                  "id": "unit",
+                  "value": "dB"
+                },
+                {
+                  "id": "custom.axisPlacement",
+                  "value": "right"
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 38
+        },
+        "id": 13,
+        "maxDataPoints": 250,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.1.8",
+        "targets": [
+          {
+            "alias": "Number of gateways",
+            "datasource": {
+              "type": "influxdb",
+              "uid": "beb9e6ceb6d8c052"
+            },
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "tph",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: \"dust\")\r\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\r\n  |> filter(fn: (r) => r[\"_measurement\"] == \"dragino-diver\")\r\n  |> filter(fn: (r) => r[\"_field\"] == \"gateways\")\r\n  |> filter(fn: (r) => r[\"devId\"] == \"${DeviceId}\")\r\n  |> drop(columns: [\"codingRate\", \"diagnostic\"])\r\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\r\n  |> yield(name: \"last\")",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "gateways"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": [
+              {
+                "key": "devId",
+                "operator": "=~",
+                "value": "/^$DeviceId$/"
+              }
+            ]
+          }
+        ],
+        "title": "LoRaWAN - # Gateways",
+        "type": "timeseries"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 39,
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": true,
+            "text": "dragino-pslb-diver-1",
+            "value": "dragino-pslb-diver-1"
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "beb9e6ceb6d8c052"
+          },
+          "definition": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dragino-diver\",\r\n)",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Device ID",
+          "multi": false,
+          "name": "DeviceId",
+          "options": [],
+          "query": {
+            "0": "i",
+            "1": "m",
+            "2": "p",
+            "3": "o",
+            "4": "r",
+            "5": "t",
+            "6": " ",
+            "7": "\"",
+            "8": "i",
+            "9": "n",
+            "10": "f",
+            "11": "l",
+            "12": "u",
+            "13": "x",
+            "14": "d",
+            "15": "a",
+            "16": "t",
+            "17": "a",
+            "18": "/",
+            "19": "i",
+            "20": "n",
+            "21": "f",
+            "22": "l",
+            "23": "u",
+            "24": "x",
+            "25": "d",
+            "26": "b",
+            "27": "/",
+            "28": "s",
+            "29": "c",
+            "30": "h",
+            "31": "e",
+            "32": "m",
+            "33": "a",
+            "34": "\"",
+            "35": "\r",
+            "36": "\n",
+            "37": "\r",
+            "38": "\n",
+            "39": "s",
+            "40": "c",
+            "41": "h",
+            "42": "e",
+            "43": "m",
+            "44": "a",
+            "45": ".",
+            "46": "m",
+            "47": "e",
+            "48": "a",
+            "49": "s",
+            "50": "u",
+            "51": "r",
+            "52": "e",
+            "53": "m",
+            "54": "e",
+            "55": "n",
+            "56": "t",
+            "57": "T",
+            "58": "a",
+            "59": "g",
+            "60": "V",
+            "61": "a",
+            "62": "l",
+            "63": "u",
+            "64": "e",
+            "65": "s",
+            "66": "(",
+            "67": "\r",
+            "68": "\n",
+            "69": " ",
+            "70": " ",
+            "71": " ",
+            "72": " ",
+            "73": "b",
+            "74": "u",
+            "75": "c",
+            "76": "k",
+            "77": "e",
+            "78": "t",
+            "79": ":",
+            "80": " ",
+            "81": "\"",
+            "82": "d",
+            "83": "u",
+            "84": "s",
+            "85": "t",
+            "86": "\"",
+            "87": ",",
+            "88": "\r",
+            "89": "\n",
+            "90": " ",
+            "91": " ",
+            "92": " ",
+            "93": " ",
+            "94": "t",
+            "95": "a",
+            "96": "g",
+            "97": ":",
+            "98": " ",
+            "99": "\"",
+            "100": "d",
+            "101": "e",
+            "102": "v",
+            "103": "i",
+            "104": "c",
+            "105": "e",
+            "106": "_",
+            "107": "i",
+            "108": "d",
+            "109": "\"",
+            "110": ",",
+            "111": "\r",
+            "112": "\n",
+            "113": " ",
+            "114": " ",
+            "115": " ",
+            "116": " ",
+            "117": "m",
+            "118": "e",
+            "119": "a",
+            "120": "s",
+            "121": "u",
+            "122": "r",
+            "123": "e",
+            "124": "m",
+            "125": "e",
+            "126": "n",
+            "127": "t",
+            "128": ":",
+            "129": " ",
+            "130": "\"",
+            "131": "s",
+            "132": "a",
+            "133": "p",
+            "134": "f",
+            "135": "l",
+            "136": "o",
+            "137": "w",
+            "138": "-",
+            "139": "s",
+            "140": "e",
+            "141": "n",
+            "142": "s",
+            "143": "o",
+            "144": "r",
+            "145": "\"",
+            "146": ",",
+            "147": "\r",
+            "148": "\n",
+            "149": ")",
+            "query": "import \"influxdata/influxdb/schema\"\r\n\r\nschema.measurementTagValues(\r\n    bucket: \"dust\",\r\n    tag: \"devId\",\r\n    measurement: \"dragino-diver\",\r\n)"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        }
+      ]
+    },
+    "time": {
+      "from": "now-7d",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ]
+    },
+    "timezone": "",
+    "title": "Dragino Divers",
+    "uid": "cb09a955cf58",
+    "version": 1,
+    "weekStart": ""
+  }
