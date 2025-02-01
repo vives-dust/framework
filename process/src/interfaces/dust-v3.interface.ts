@@ -30,22 +30,27 @@ export default function processDustData(input :any) :DustV3SoilMoisture {
 
 export function saveDustData(data :DustV3SoilMoisture) {
   const point = new Point("dust-sensor")
-      .tag( "devId", data.dev_id )
-      .tag( "hardwareSerial", data.hardwareSerial )
-      .timestamp( Date.parse(data.time))
-      .intField( "frequency", data.frequency)
-      .intField( "moistureLevel_1", data.moistureLevel_1)
-      .intField( "moistureLevel_2", data.moistureLevel_2)
-      .intField( "moistureLevel_3", data.moistureLevel_3)
-      .intField( "moistureLevel_4", data.moistureLevel_4)
-      .floatField( "battery", data.battery)
-      .floatField( "internalTemperature", data.internalTemperature)
-      .floatField( "airTemperature", data.airTemperature)
-      .floatField( "soilTemperature", data.soilTemperature)
-      .floatField( "rssi", data.rssi)
-      .floatField( "snr", data.snr)
-      .intField( "counter", data.counter)
-      .intField( "gateways", data.gateways)
+      .tag("devId", data.dev_id)
+      .tag("hardwareSerial", data.hardwareSerial)
+      .timestamp(Date.parse(data.time))
+      .intField("frequency", data.frequency)
+      .intField("moistureLevel_1", data.moistureLevel_1)
+      .intField("moistureLevel_2", data.moistureLevel_2)
+      .intField("moistureLevel_3", data.moistureLevel_3)
+      .intField("moistureLevel_4", data.moistureLevel_4)
+      .floatField("battery", data.battery)
+      .floatField("internalTemperature", data.internalTemperature)
+      .floatField("rssi", data.rssi)
+      .floatField("snr", data.snr)
+      .intField("counter", data.counter)
+      .intField("gateways", data.gateways)
+
+    if(data.airTemperature !== null){
+      point.floatField("airTemperature", data.airTemperature)
+    }
+    if(data.soilTemperature !== null){
+      point.floatField("soilTemperature", data.soilTemperature)
+    }
     addLoRaWANData(point, data)
 
   return point
