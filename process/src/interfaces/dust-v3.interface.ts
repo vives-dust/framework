@@ -41,13 +41,17 @@ export function saveDustData(data :DustV3SoilMoisture) {
       .floatField("battery", data.battery)
       .floatField("internalTemperature", data.internalTemperature)
       .floatField("rssi", data.rssi)
-      .floatField("snr", data.snr)
       .intField("counter", data.counter)
       .intField("gateways", data.gateways)
+
+    if(data.snr !== null && data.snr !== -Infinity){
+      point.floatField("snr", data.snr)
+    }
 
     if(data.airTemperature !== null){
       point.floatField("airTemperature", data.airTemperature)
     }
+
     if(data.soilTemperature !== null){
       point.floatField("soilTemperature", data.soilTemperature)
     }
