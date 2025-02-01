@@ -40,6 +40,8 @@ export function saveDustData(data :DustV3SoilMoisture) {
       .intField( "moistureLevel_4", data.moistureLevel_4)
       .floatField( "battery", data.battery)
       .floatField( "internalTemperature", data.internalTemperature)
+      .floatField( "airTemperature", data.airTemperature)
+      .floatField( "soilTemperature", data.soilTemperature)
       .floatField( "rssi", data.rssi)
       .floatField( "snr", data.snr)
       .intField( "counter", data.counter)
