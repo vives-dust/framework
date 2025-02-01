@@ -44,7 +44,7 @@ export function saveDustData(data :DustV3SoilMoisture) {
       .intField("counter", data.counter)
       .intField("gateways", data.gateways)
 
-    if(data.snr !== null && data.snr !== -Infinity){
+    if(Number.isFinite(data.snr)){
       point.floatField("snr", data.snr)
     }
 
